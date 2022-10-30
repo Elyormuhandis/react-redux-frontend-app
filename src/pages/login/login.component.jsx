@@ -30,38 +30,46 @@ const Login = () => {
   }
 
   return (
-    <div className='login'>
-        <div className='login__container'>
-            <form onSubmit={handleSubmit(submitForm)}>
-               {error && <Error>{error}</Error>}
-            <input
-            {...register('username', {
-                required:"To'ldirilishi shart!",
-                minLength:{
-                value: 5,
-                message:"Belgilar soni 5 tadan kam!"
-                }
-            })}
-            required
-            />
-            {errors?.username && <p>{errors?.username?.message || "Error!"}</p>}
-            <input
-            type='password'
-            {...register('password',{
-                required:"To'ldirilishi shart!",
-                minLength:{
+        <div className="login">
+        <div className="login__container">
+            <form className='login__form' onSubmit={handleSubmit(submitForm)}>
+              <div className='no-border form-control-lg  input-group'>
+                <input
+                    className='form-control login__form-input'
+                    placeholder='Login kiriting...'
+                    {...register('username', {
+                    required:"To'ldirilishi shart!",
+                    minLength:{
                     value: 5,
                     message:"Belgilar soni 5 tadan kam!"
-                }
-            })}
-            required
-            />
-            {errors?.password && <p>{errors?.password?.message || "Error!"}</p>}
-            <button type='submit' disabled={!isValid}>KIRISH</button>
+                    }
+                })}
+                required
+                />
+              </div>
+              
+              {/* {errors?.username && <p>{errors?.username?.message || "Error!"}</p>} */}
+              <div className='no-border form-control-lg  input-group'>
+              <input
+              className='form-control login__form-input'
+              placeholder='Parol kiriting...'
+              type='password'
+              {...register('password',{
+                  required:"To'ldirilishi shart!",
+                  minLength:{
+                      value: 5,
+                      message:"Belgilar soni 5 tadan kam!"
+                  }
+              })}
+              required
+              />
+              </div>
+              {/* {errors?.password && <p>{errors?.password?.message || "Error!"}</p>} */}
+              <button className="mb-3 btn-round btn btn-primary btn-lg btn-block" type='submit' disabled={!isValid}>KIRISH</button>
             </form>
-        </div>
-    </div>
-  )
+            </div>
+            </div>
+ )
 }
 
 export default Login

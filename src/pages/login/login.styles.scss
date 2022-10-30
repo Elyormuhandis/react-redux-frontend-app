@@ -1,11 +1,34 @@
 .login{
-        width: 100vw;
-        height: 100vh;
-        background-color: aqua;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("../../assets/img/bg4.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    &__container{
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.8);
         display: flex;
-        align-items: center;
         justify-content: center;
-        &__container{
-
-            }
+        align-items: center;
     }
+
+    &__form{
+        width: 350px;
+
+
+        &-input{
+            color:rgba(211, 225, 236, 0.911)!important;
+            font-size: 14px!important;
+        }
+        &-input::placeholder{
+            color: rgba(211, 225, 236, 0.911)!important;
+        }
+    }
+
+    
+}
+
+
