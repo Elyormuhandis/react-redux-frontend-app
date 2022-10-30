@@ -65,7 +65,7 @@ const Login = () => {
               />
               </div>
               {/* {errors?.password && <p>{errors?.password?.message || "Error!"}</p>} */}
-              <button className="mb-3 btn-round btn btn-primary btn-lg btn-block" type='submit' disabled={!isValid}>KIRISH</button>
+              <button className="mb-3 btn-round btn btn-primary btn-lg btn-block login__form-btn" type='submit' disabled={!isValid}>KIRISH</button>
             </form>
             </div>
             </div>

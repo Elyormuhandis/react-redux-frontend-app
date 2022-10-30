@@ -1,20 +1,29 @@
+import { NavLink } from 'react-router-dom';
 import { sidebarData } from 'data/sidebarData';
-import {HiOutlineChevronDoubleLeft} from 'react-icons/hi'
-import React from 'react';
+import {HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight} from 'react-icons/hi'
+import React, { useState } from 'react';
+import './sidebar.styles.scss'
+
 
 const Sidebar = () => {
+    const [open, setopen] = useState(true);
+
+    const toggleOpen = () => {
+        setopen(!open)
+    }
+
     return (
-<div>
-    <button className={styles.menuBtn}>
-        <HiOutlineChevronDoubleLeft />
+<div className={open ? "sidenav" : "sidenavClosed"}>
+    <button className="menuBtn" onClick={toggleOpen}>
+            {open? <HiOutlineChevronDoubleLeft />: <HiOutlineChevronDoubleRight />}
     </button>
     {sidebarData.map(item =>{
-        return <div key={item.id} className={styles.sideitem}>
-	                {item.icon}
-	                <span className={styles.linkText}>{item.text}</span>
-		       </div>
-        })}
- </div>
+        return <NavLink key={item.id} className="sideitem" to={item.link}>
+                  <span className={open ? 'sidebar-icon' : 'sidebar-icon-toggle'}>{item.icon}</span>
+                   <span className={open ? "linkText" : "linkTextClosed"}>{item.text}</span>
+               </NavLink>
+     })}
+</div>
     );
 };
 

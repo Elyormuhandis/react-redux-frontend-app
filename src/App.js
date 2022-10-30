@@ -22,9 +22,9 @@ function App() {
             <Route element={<ProtectedRoute />}>
             <Route path='/user-profile' element={<ProfileScreen />} />
             <Route  path="/" element={<HomeScreen />}/>
-          <Route path="/explore" el ement={<Explore />} />
+          {/* <Route path="/explore" element={<Explore />} />
           <Route path="/statistics" element={<Statistics />}/>
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings" element={<Settings />} /> */}
           </Route>
         </Routes>
       </main>

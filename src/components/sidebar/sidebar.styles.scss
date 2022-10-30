@@ -2,38 +2,70 @@
     width: 250px;
     transition: width 0.3s ease-in-out;
     height: 100vh;
-    background-color: rgb(10,25,41);
-    padding-top: 28px;
+    background-color: rgb(11,43,38);
+    padding: 20px 5px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
 }
- 
 .sidenavClosed {
-    composes: sidenav;
+    @extend .sidenav;
     transition: width 0.3s ease-in-out;
-    width: 60px
+    width: 70px
 }
- 
 .sideitem {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
+    width: 100%;
+    height: 60px;
     cursor: pointer;
+    margin:8px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 20px;
     color: #B2BAC2;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: small;
     text-decoration: none;
+    overflow: hidden;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+    border-radius: 50px;
+
 }
- 
 .linkText {
+    margin-left: 20px;
+    transition: all 0.3s;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.linkTextClosed{
     padding-left: 16px;
-}
- 
-.linkTextClosed {
-    composes: linkText;
+    transition: all 0.3s;
+    opacity: 0;
     visibility: hidden;
+    transform: translateX(-20px);
 }
- 
+
+.sidebar-icon{
+    margin-left: 20px;
+    transition: all 0.3s;
+}
+
+.sidebar-icon-toggle{
+    margin-left: 2px;
+    margin-bottom: 2px;
+    transition: all 0.3s;
+}
+
+
+
 .sideitem:hover {
-    background-color: #244f7d1c;
+    border-radius: 50px;
+    background-color: rgb(35,83,71);
+    color: white;
+
 }
- 
 .menuBtn {
     align-self: center;
     align-self: flex-start;  
