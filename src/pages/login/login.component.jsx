@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from '../../features/user/userActions'
 import { useEffect } from 'react'
@@ -9,19 +9,20 @@ import './login.styles.scss'
 const Login = () => {
   const { loading, userInfo, error } = useSelector((state) => state.user)
   const dispatch = useDispatch()
-
+  const navigate = useNavigate()
+  const location = useLocation()
+  const fromPage = location.state?.from.pathname || '/';
+  
   const { 
     register, 
     handleSubmit, 
     formState:{errors, isValid} } = useForm({mode:"onBlur"});
-
-  const navigate = useNavigate()
-
-  // redirect authenticated user to profile screen
-  useEffect(() => {
-    if (userInfo) {
-        console.log(userInfo);
-      navigate('/')
+    
+    
+    // redirect authenticated user to profile screen
+    useEffect(() => {
+      if (userInfo) {
+      navigate('/');
     }
   }, [navigate, userInfo])
 

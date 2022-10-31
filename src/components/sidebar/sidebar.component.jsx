@@ -5,6 +5,8 @@ import React, { useState } from 'react';
 import './sidebar.styles.scss'
 
 
+
+
 const Sidebar = () => {
     const [open, setopen] = useState(false);
 
@@ -18,7 +20,7 @@ const Sidebar = () => {
             {open? <HiOutlineChevronDoubleLeft />: <HiOutlineChevronDoubleRight />}
     </button>
     {sidebarData.map(item =>{
-        return <NavLink key={item.id} className="sideitem" to={item.link}>
+        return <NavLink key={item.id} className={({isActive})=>(isActive ? "sideitem-active" : "sideitem")} to={item.link}>
                    <span className={open ? 'sidebar-icon' : 'sidebar-icon-toggle'}>{item.icon}</span>
                    <span className={open ? "linkText" : "linkTextClosed"}>{item.text}</span>
                </NavLink>

@@ -1,28 +1,28 @@
-import { Routes, Route, useNavigate } from 'react-router-dom'
-import RegisterScreen from './screens/RegisterScreen'
-import ProfileScreen from './screens/ProfileScreen'
+import { Routes, Route } from 'react-router-dom'
+import Layout from 'pages/layout/layout.component'
+import Dashboard from 'components/dashboard/dashboard.component'
+import { publicRoutes } from 'routes'
+import Authmiddleware from 'routes/authmiddleware'
 import './App.css'
-import Login from './pages/login/login.component'
-import Sidebar from 'components/sidebar/sidebar.component'
-import Home from 'pages/home/home.component'
-import { useState } from 'react'
 
-function App() {
-  const [logged, setLogged] = useState(false);
-  const navigate = useNavigate()
+const App = () => {
 
+
+  
   return (
      <div className='App'>
-      <main>
-        <Routes>
-            <Route path='/login' element={<Login/>}/>
-            <Route path='/' element={<Home />} />
-            {/* <Route path='/register' element={<RegisterScreen />} /> */}
-            <Route path='/user-profile' element={<ProfileScreen />} />
-         {/* <Route path="/statistics" element={<Statistics />}/>
-          <Route path="/settings" element={<Settings />} /> */}
-        </Routes>
-      </main>
+       <Routes>
+          <Route path='/' element={<Layout/>}>
+             <Route index element={<Dashboard/>}/> 
+               {
+                  publicRoutes.map((route, idx)=> (
+                     <Authmiddleware path={route.path} component={route.component}/>
+                  ))
+               } 
+          </Route>
+        </Routes> )     
+        
+
      </div>
   )
 }

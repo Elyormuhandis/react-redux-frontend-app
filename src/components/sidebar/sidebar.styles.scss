@@ -1,15 +1,41 @@
 .sidenav {
-    width: 275px;
+    width: 200px;
     transition: width 0.3s ease-in-out;
-    height: 100vh;
+    height: 92vh;
     background-color: rgb(5,31,32);
     padding: 20px 5px;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    z-index: 1;
 }
+
+@media only screen and (max-height: 650px) {
+    .sidenav {
+      overflow-y: scroll;
+      &::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    }
+  }
+  .sidenavClosed{
+    width: 88px !important;
+  }
+}
+
+
+
 .sidenavClosed {
     @extend .sidenav;
     transition: width 0.3s ease-in-out;
-    width: 70px
+    width: 70px;
 }
 .sideitem {
     width: 100%;
@@ -31,6 +57,20 @@
     border-radius: 50px;
 
 }
+
+.sideitem-active{
+    @extend .sideitem;
+    border-radius: 50px;
+    background-color: rgb(35,83,71);
+    color: white!important;
+}
+
+.sideitem:hover {
+    border-radius: 50px;
+    background-color: rgb(35,83,71);
+    color: white;
+
+}
 .linkText {
     margin-left: 20px;
     transition: all 0.3s;
@@ -48,7 +88,8 @@
 }
 
 .sidebar-icon{
-    margin-left: 20px;
+    margin-left: 2px;
+    margin-bottom: 2px;
     transition: all 0.3s;
 }
 
@@ -60,12 +101,7 @@
 
 
 
-.sideitem:hover {
-    border-radius: 50px;
-    background-color: rgb(35,83,71);
-    color: white;
 
-}
 .menuBtn {
     align-self: center;
     align-self: flex-start;  
