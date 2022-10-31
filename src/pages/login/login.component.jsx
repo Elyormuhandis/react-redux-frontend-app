@@ -21,7 +21,7 @@ const Login = () => {
   useEffect(() => {
     if (userInfo) {
         console.log(userInfo);
-      navigate('/user-profile')
+      navigate('/')
     }
   }, [navigate, userInfo])
 

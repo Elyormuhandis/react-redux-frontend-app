@@ -6,7 +6,7 @@ import './sidebar.styles.scss'
 
 
 const Sidebar = () => {
-    const [open, setopen] = useState(true);
+    const [open, setopen] = useState(false);
 
     const toggleOpen = () => {
         setopen(!open)
@@ -19,7 +19,7 @@ const Sidebar = () => {
     </button>
     {sidebarData.map(item =>{
         return <NavLink key={item.id} className="sideitem" to={item.link}>
-                  <span className={open ? 'sidebar-icon' : 'sidebar-icon-toggle'}>{item.icon}</span>
+                   <span className={open ? 'sidebar-icon' : 'sidebar-icon-toggle'}>{item.icon}</span>
                    <span className={open ? "linkText" : "linkTextClosed"}>{item.text}</span>
                </NavLink>
      })}

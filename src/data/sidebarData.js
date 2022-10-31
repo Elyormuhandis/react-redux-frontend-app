@@ -10,7 +10,7 @@ export const sidebarData = [
         id: 0,
         icon: <FiSend/>,
         text: "YARATISH",
-        link: "/"
+        link: "send"
     },
     {
         id: 1,
@@ -22,13 +22,13 @@ export const sidebarData = [
         id: 2,
         icon: <BiMailSend/>,
         text: "YUBORILGAN",
-        link: "statistics"
+        link: "sent"
     },
     {
         id: 3,
         icon: <MdOutlineDrafts/>,
         text: "QORALAMA",
-        link: "draft"
+        link: "drafts"
     },
     {
         id: 4,

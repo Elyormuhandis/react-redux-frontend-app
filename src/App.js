@@ -1,31 +1,26 @@
-import { Routes, Route } from 'react-router-dom'
-import Header from './components/Header'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
-import HomeScreen from './screens/HomeScreen'
-import ProtectedRoute from './routing/ProtectedRoute'
 import './App.css'
 import Login from './pages/login/login.component'
 import Sidebar from 'components/sidebar/sidebar.component'
+import Home from 'pages/home/home.component'
+import { useState } from 'react'
 
 function App() {
+  const [logged, setLogged] = useState(false);
+  const navigate = useNavigate()
+
   return (
      <div className='App'>
-      <Login/>
-      <Sidebar/>
-      <Header />
       <main>
         <Routes>
-            <Route path='/login' element={<Login />} />
-            <Route path='/' element={<HomeScreen />} />
-            <Route path='/register' element={<RegisterScreen />} />
-            <Route element={<ProtectedRoute />}>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/' element={<Home />} />
+            {/* <Route path='/register' element={<RegisterScreen />} /> */}
             <Route path='/user-profile' element={<ProfileScreen />} />
-            <Route  path="/" element={<HomeScreen />}/>
-          {/* <Route path="/explore" element={<Explore />} />
-          <Route path="/statistics" element={<Statistics />}/>
+         {/* <Route path="/statistics" element={<Statistics />}/>
           <Route path="/settings" element={<Settings />} /> */}
-          </Route>
         </Routes>
       </main>
      </div>
