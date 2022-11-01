@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Error from '../components/Error'
-import { registerUser } from '../features/user/userActions'
+import { registerUser } from '../store/features/user/userActions'
 
 const RegisterScreen = () => {
   const [customError, setCustomError] = useState(null)

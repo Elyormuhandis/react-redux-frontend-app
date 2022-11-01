@@ -3,8 +3,8 @@ import {MdOutlinePersonOutline} from 'react-icons/md'
 import {BsSearch} from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { getUserDetails } from '../../features/user/userActions'
-import { logout } from '../../features/user/userSlice'
+import { getUserDetails } from '../../store/features/user/userActions'
+import { logout } from '../../store/features/user/userSlice'
 import './header.styles.scss'
 
 const Header = () => {

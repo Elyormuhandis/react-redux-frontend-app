@@ -1,26 +1,30 @@
-const { default: Drafts } = require("components/drafts/drafts.component")
-const { default: Inbox } = require("components/inbox/inbox.component")
-const { default: Journal } = require("components/journal/journal.component")
-const { default: Send } = require("components/send/send.component")
-const { default: Sent } = require("components/sent/sent.component")
-const { default: Settings } = require("components/settings/settings.component")
-const { default: Statistics } = require("components/statistics/statistics.component")
-const { default: Trash } = require("components/trash/trash.component")
-const { default: Login } = require("pages/login/login.component")
+import Dashboard from "../views/dashboard/dashboard.component"
+import Send from "../views/send/send.component"
+import Inbox from "../views/inbox/inbox.component"
+import Sent from "../views/sent/sent.component"
+import Drafts from "../views/drafts/drafts.component"
+import Trash from "../views/trash/trash.component"
+import Journal from "../views/journal/journal.component"
+import Statistics from "../views/statistics/statistics.component"
+import Settings from "../views/settings/settings.component"
+import Login from "../pages/login/login.component"
+
 
 const publicRoutes = [
-    { path:'login', component:Login},
+    { path:'login', element:<Login/>},
 ]
 
 const authProtectedRoutes = [
-    { path:'send', component:Send},
-    { path:'inbox', component:Inbox},
-    { path:'sent', component:Sent}, 
-    { path:'drafts', component:Drafts}, 
-    { path:'trash', component:Trash}, 
-    { path:'journal', component:Journal}, 
-    { path:'statistics', component:Statistics}, 
-    { path:'settings', component:Settings} 
+    { path:null, index:true, element:<Dashboard/>},
+    { path:'send',  element:<Send/>},
+    { path:'inbox',  element:<Inbox/>},
+    { path:'sent',  element:<Sent/>}, 
+    { path:'drafts',  element:<Drafts/>}, 
+    { path:'trash',  element:<Trash/>}, 
+    { path:'journal',  element:<Journal/>}, 
+    { path:'statistics',  element:<Statistics/>}, 
+    { path:'settings',  element:<Settings/>}, 
+    { path:'logout',  element:<Settings/>} 
 ]
 
 export { authProtectedRoutes, publicRoutes }

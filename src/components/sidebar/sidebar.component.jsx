@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { sidebarData } from 'data/sidebarData';
+import { sidebarData } from '../../data/sidebarData';
 import {HiOutlineChevronDoubleLeft, HiOutlineChevronDoubleRight} from 'react-icons/hi'
 import React, { useState } from 'react';
 import './sidebar.styles.scss'

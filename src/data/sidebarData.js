@@ -5,6 +5,7 @@ import {BiMailSend} from 'react-icons/bi'
 import {AiOutlineBarChart} from 'react-icons/ai'
 import {RiSettingsLine} from 'react-icons/ri'
 
+
 export const sidebarData = [
     {
         id: 0,
@@ -52,6 +53,6 @@ export const sidebarData = [
         id: 8,
         icon: <RiSettingsLine/>,
         text: "SOZLAMALAR",
-        link: "settings"
+        link: "settings",
     }
 ]
