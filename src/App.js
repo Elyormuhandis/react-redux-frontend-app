@@ -33,9 +33,7 @@ const App = () => {
                            }/> 
                   ))}
              </Route>
-        </Routes> )     
-        
-
+        </Routes>    
      </div>
   )
 }

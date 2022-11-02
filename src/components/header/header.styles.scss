@@ -39,9 +39,11 @@
            border:none;
            outline: none;
            font-size: small;
+           border-radius: 20px;
+           height: 27px;
         }
         .personal{
-            padding: 5px ;
+            padding: 8px;
             border-radius: 5px;
             margin-left: 5px;
             &:hover{

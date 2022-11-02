@@ -1,11 +1,15 @@
-import React from 'react';
+
+
 
 const Send = () => {
-    return (
-        <div>
-            Send
-        </div>
-    );
-};
 
-export default Send;
+  return(
+    <div className="send">
+        Send
+    </div>
+  )  
+}
+    
+
+
+export default Send

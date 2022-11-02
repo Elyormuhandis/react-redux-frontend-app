@@ -15,7 +15,7 @@ const publicRoutes = [
 ]
 
 const authProtectedRoutes = [
-    { path:null, index:true, element:<Dashboard/>},
+    { path:'dashboard', index:true, element:<Dashboard/>},
     { path:'send',  element:<Send/>},
     { path:'inbox',  element:<Inbox/>},
     { path:'sent',  element:<Sent/>}, 

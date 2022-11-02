@@ -1,5 +1,5 @@
 import {BsTrash, BsJournalText} from 'react-icons/bs'
-import {FiSend} from 'react-icons/fi'
+import {FiSend, FiHome} from 'react-icons/fi'
 import {MdOutlineMarkEmailUnread, MdOutlineDrafts} from 'react-icons/md';
 import {BiMailSend} from 'react-icons/bi'
 import {AiOutlineBarChart} from 'react-icons/ai'
@@ -9,30 +9,36 @@ import {RiSettingsLine} from 'react-icons/ri'
 export const sidebarData = [
     {
         id: 0,
+        icon: <FiHome/>,
+        text: "DASHBOARD",
+        link: "dashboard"
+    },
+    {
+        id: 1,
         icon: <FiSend/>,
         text: "YARATISH",
         link: "send"
     },
     {
-        id: 1,
+        id: 2,
         icon: <MdOutlineMarkEmailUnread/>,
         text: "KELGAN",
         link: "inbox"
     },
     {
-        id: 2,
+        id: 3,
         icon: <BiMailSend/>,
         text: "YUBORILGAN",
         link: "sent"
     },
     {
-        id: 3,
+        id: 4,
         icon: <MdOutlineDrafts/>,
         text: "QORALAMA",
         link: "drafts"
     },
     {
-        id: 4,
+        id: 5,
         icon: <BsTrash/>,
         text: "KORZINKA",
         link: "trash"

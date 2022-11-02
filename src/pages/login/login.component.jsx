@@ -32,40 +32,42 @@ const Login = () => {
 
   return (
         <div className="login">
-        <div className="login__container">
-            <form className='login__form' onSubmit={handleSubmit(submitForm)}>
+          <div className="login__container">
+              <form className='login__form' onSubmit={handleSubmit(submitForm)}>
+                  <input
+                      autoComplete='off'
+                      className='form-control login__form-input'
+                      placeholder='Login kiriting...'
+                      {...register('username', {
+                      required:"To'ldirilishi shart!",
+                      minLength:{
+                      value: 5,
+                      message:"Belgilar soni 5 tadan kam!"
+                      }
+                  })}
+                  required
+                  />              
+                {/* {errors?.username && <p>{errors?.username?.message || "Error!"}</p>} */}
                 <input
-                    className='login__form-input'
-                    placeholder='Login kiriting...'
-                    {...register('username', {
+                className='form-control login__form-input'
+                placeholder='Parol kiriting...'
+                type='password'
+                {...register('password',{
                     required:"To'ldirilishi shart!",
                     minLength:{
-                    value: 5,
-                    message:"Belgilar soni 5 tadan kam!"
+                        value: 5,
+                        message:"Belgilar soni 5 tadan kam!"
                     }
                 })}
                 required
-                />              
-              {/* {errors?.username && <p>{errors?.username?.message || "Error!"}</p>} */}
-              <input
-              className='login__form-input'
-              placeholder='Parol kiriting...'
-              type='password'
-              {...register('password',{
-                  required:"To'ldirilishi shart!",
-                  minLength:{
-                      value: 5,
-                      message:"Belgilar soni 5 tadan kam!"
-                  }
-              })}
-              required
-              />
-              {/* {errors?.password && <p>{errors?.password?.message || "Error!"}</p>} */}
-              <button className="login__form-btn" type='submit' disabled={!isValid}>KIRISH</button>
-            </form>
-            </div>
-            </div>
- )
-}
+                />
+                {/* {errors?.password && <p>{errors?.password?.message || "Error!"</p>} */}
+                <button className="form-control login__form-btn" type='submit' disabled={!isValid}>KIRISH</button>
+              </form>
+              </div>
+            </div> 
+            )}
+
+
 
 export default Login
