@@ -8,46 +8,63 @@
     align-items: center;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
     z-index: 1;
+    border-bottom: 1px solid #B2BAC2;
     &__icon{
-        color:white;
+        color:#B2BAC2;
     }
     &__options{
-        color: white;
-        width: 320px;
+        color: #B2BAC2;
         display: flex;
         justify-content: space-between;
-        
+        width: 30%;
         .searchbox{
             margin-right: 10px;
             position: relative;
             &__input{
                 padding: 5px 20px;
-                border: none;
+                border: 1px solid #B2BAC2;
                 outline: none;
                 border-radius: 50px;
+                background-color: inherit;
+                color: #B2BAC2;
+                &::placeholder{
+                    color: #B2BAC2;
+                }
             }
             &__icon{
-                color: black;
-                background-color: white;
+                color: #B2BAC2;
+                background-color: rgb(5,31,32);
                 padding: 0 3px;
                 position: absolute;
                 top:3px;
                 right: 15px;
+                z-index: 2;
             }
         }
         .select{
-           border:none;
-           outline: none;
+            color: #B2BAC2;
+            border: 1px solid #B2BAC2;
+            background-color: rgb(5,31,32);
+            outline: none;
            font-size: small;
            border-radius: 20px;
            height: 27px;
+           &:hover{
+               background-color: rgb(35,83,71);
+               color: white;
+        }
         }
         .personal{
-            padding: 8px;
+            padding: 5px 8px;
             border-radius: 5px;
             margin-left: 5px;
+            background-color: inherit;
+            color: #B2BAC2;
+            border: 1px solid #B2BAC2;    
+            cursor: pointer;
             &:hover{
-                background-color: #0c344e;
+                background-color: rgb(35,83,71);
+                color: white;
             }
             }
     }

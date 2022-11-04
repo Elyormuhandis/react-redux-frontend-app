@@ -6,6 +6,7 @@
     padding: 20px 5px;
     box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
     z-index: 1;
+    border-right: 1px solid #B2BAC2;;
 }
 
 @media only screen and (max-height: 650px) {
@@ -60,12 +61,14 @@
 
 .sideitem-active{
     @extend .sideitem;
+    border: 1px solid #B2BAC2;
     border-radius: 50px;
     background-color: rgb(35,83,71);
     color: white!important;
 }
 
 .sideitem:hover {
+    border: 1px solid #B2BAC2;
     border-radius: 50px;
     background-color: rgb(35,83,71);
     color: white;
@@ -89,13 +92,11 @@
 
 .sidebar-icon{
     margin-left: 2px;
-    margin-bottom: 2px;
     transition: all 0.3s;
 }
 
 .sidebar-icon-toggle{
-    margin-left: 2px;
-    margin-bottom: 2px;
+    margin-left: 2px;   
     transition: all 0.3s;
 }
 
