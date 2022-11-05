@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { addDivision, editDivision, getDivisions } from './division.action'
+import { addDivision, deleteDivision, editDivision, getDivisions } from './division.action'
 
 
 // initialize userToken from local storage
@@ -43,6 +43,7 @@ const divisionSlice = createSlice({
         state.loading = false
         state.message = payload.message
         state.success = payload.success
+        state.divisions = payload.object
       },    
     [addDivision.rejected]: (state, {payload}) => {
         state.loading = false
@@ -54,12 +55,27 @@ const divisionSlice = createSlice({
           state.loading = true
         },
       [editDivision.fulfilled]: (state, {payload}) => {
-          console.log(payload);
           state.loading = false
           state.message = payload.message
           state.success = payload.success
+          state.divisions = payload.object
         },    
-      [editDivision.rejected]: (state, {payload}) => {
+        [editDivision.rejected]: (state, {payload}) => {
+          state.loading = false
+          state.error = payload
+        },
+        
+        //delete Division
+        [deleteDivision.pending]: (state) => {
+          state.loading = true
+        },
+        [deleteDivision.fulfilled]: (state, {payload}) => {
+          state.loading = false
+          state.message = payload.message
+          state.success = payload.success
+          state.divisions = payload.object
+        },    
+      [deleteDivision.rejected]: (state, {payload}) => {
           state.loading = false
           state.error = payload
         },

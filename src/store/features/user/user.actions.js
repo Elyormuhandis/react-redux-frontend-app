@@ -34,8 +34,8 @@ export const userLogin = createAsyncThunk(
   }
 )
 
-export const registerUser = createAsyncThunk(
-  'user/register',
+export const addUser = createAsyncThunk(
+  'user/add',
   async ({ firstName, username, password }, { rejectWithValue }) => {
     try {
       const config = {
@@ -59,7 +59,7 @@ export const registerUser = createAsyncThunk(
   }
 )
 
-export const getUserDetails = createAsyncThunk(
+export const getUser = createAsyncThunk(
   'user/getUserDetails',
   async (arg, { getState, rejectWithValue }) => {
     try {

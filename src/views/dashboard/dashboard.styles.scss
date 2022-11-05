@@ -1,17 +1,24 @@
 .dashboard{
     background-color: rgba(4, 6, 5, 0.9);
     height: 100%;
+    &__line{
+        border: none;
+        outline: none;
+        height: 3px;
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 50px;
+        margin-bottom: 5px;
+    }
     &__container{
         display: flex;
         justify-content: space-between;
         color: #B2BAC2;
         height: 100%;
+        padding: 15px 10px;
         li{
-            padding: 25px 20px;
             list-style-type: none;
         }
         .dashboard-input{
-            width: 150px;
             padding: 10px 15px;
             border: 1px solid #B2BAC2;
             color: #B2BAC2;
@@ -19,9 +26,12 @@
             border-radius: 50px;
             background-color: rgba(0, 0, 0, 0.2);
             transition: all .3s;
+            margin-bottom: 20px;
             &:hover{
                 transition: all .3s;
                 background-color: rgba(39, 38, 38, 0.2);
+                border: 1px solid white;
+                color: white;
             }
         }
         .dashboard-btn{
@@ -31,63 +41,48 @@
             border: 1px solid #B2BAC2;
             border-radius: 50px;
             background-color: rgba(0, 0, 0, 0.2);
-            margin-left: 10px;
+            transition: all .3s;
             &:hover{
                 transition: all .3s;
+                color: white;
                 background-color: rgba(39, 38, 38, 0.2);
             }
-        }
-        .division{
-        padding: 25px 20px;
-        width: 300px;
-        background-color: rgba(39, 40, 40, 0.8);
-        height: 100%;
-        border: 1px solid #B2BAC2;
-        &__form{
-            margin-bottom: 20px;
-        }
-        
-        &__label{
-            display: block;
-            margin-bottom: 10px;
-        }
-        
-        
-        
-        &__line{
-            border: none;
-            outline: none;
-            height: 3px;
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-
-        }
-        &__list{
-            padding:4px 8px;
-              &--item{
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+                &--success{
                 width: 100%;
+                background-color: rgb(13, 57, 10)!important;
+                transition: all .3s;
                 margin-bottom: 5px;
-                .item-name{
-                    display: flex;
-                    .id{
-                        width: 30px;
+                &:hover{
+                    background-color: rgb(17, 87, 12)!important;
                     }
                 }
-                .icons{
-                    width: 45px;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
+                &--cancel{
+                    width: 100%;
+                    background-color: rgb(129, 5, 7)!important;
+                    transition: all .3s;
+                    &:hover{
+                        transition: all .3s;
+                        background-color: rgb(155, 29, 31)!important;
+                        color: white!important;
                 }
             }
         }
     }
-
+    .icons{
+        width: 45px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    .edit-icon{
+        color: #0d9e6c;
+    }
+    .delete-icon{
+        color: #e84545;
+    }
     }
 
-   
-    
 }
+
+    
+
+    

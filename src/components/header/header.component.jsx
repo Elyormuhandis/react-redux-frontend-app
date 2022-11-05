@@ -3,18 +3,17 @@ import {MdOutlinePersonOutline} from 'react-icons/md'
 import {BsSearch} from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { getUserDetails } from '../../store/features/user/userActions'
-import { logout } from '../../store/features/user/userSlice'
+import { logout } from '../../store/features/user/user.slice'
 import './header.styles.scss'
 
 const Header = () => {
-  const { userInfo, userToken } = useSelector((state) => state.user)
+  const { userToken } = useSelector((state) => state.user)
   const dispatch = useDispatch()
 
-  // automatically authenticate user if token is found
+
   useEffect(() => {
     if (userToken) {
-      dispatch(getUserDetails())
+
     }
   }, [userToken, dispatch])
 
