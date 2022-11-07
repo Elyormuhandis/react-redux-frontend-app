@@ -3,28 +3,24 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const BASE_URL = "http://localhost:8080/";
 
+
+//Authentication User
 export const userLogin = createAsyncThunk(
   'user/login',
   async ({ username, password }, { rejectWithValue }) => {
+    
     try {
-      // configure header's Content-Type as JSON
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-
       const { data } = await axios.post(
-        `${BASE_URL}`+'api/auth/login',
+        `${BASE_URL}api/auth/login`,
         { username, password },
-        config
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
       )
-
-      localStorage.setItem(`${data.message}`, data.object)
-
       return data
     } catch (error) {
-      // return custom error message from API if any
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)
       } else {
@@ -34,21 +30,23 @@ export const userLogin = createAsyncThunk(
   }
 )
 
-export const addUser = createAsyncThunk(
-  'user/add',
-  async ({ firstName, username, password }, { rejectWithValue }) => {
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
 
-      await axios.post(
-        '/api/user/register',
-        { firstName, username, password },
-        config
-      )
+//get User by Id
+
+export const getUser = createAsyncThunk(
+  'user/getUserById',
+  async ({id}, { getState, rejectWithValue }) => {
+    try {
+      // get user data from store
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}api/user/?page=${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)
@@ -59,21 +57,126 @@ export const addUser = createAsyncThunk(
   }
 )
 
-export const getUser = createAsyncThunk(
-  'user/getUserDetails',
-  async (arg, { getState, rejectWithValue }) => {
+
+//get Users by page 
+
+export const getUsers = createAsyncThunk(
+  'user/getUsersByPage',
+  async ({page=0}, { getState, rejectWithValue }) => {
     try {
       // get user data from store
-      const { user } = getState()
-
-      // configure authorization header with user's token
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.userToken}`,
-        },
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}api/user/?page=0`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
       }
+    }
+  }
+)
 
-      const { data } = await axios.get(`/api/user/profile`, config)
+
+
+//add user asyncFunction
+export const addUser = createAsyncThunk(
+  'user/add',
+  async ({ firstName, username, password, prePassword, divisionId, roleId }, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const {data} = await axios.post(
+        `${BASE_URL}api/user/addUser`,
+        { firstName, username, password, prePassword, divisionId, roleId},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      )
+      return data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+
+//edit Users 
+export const editUser = createAsyncThunk(
+  'user/editUser',
+  async ({ firstName, username, password, prePassword, divisionId, roleId, Id }, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.put(
+        `${BASE_URL}api/user/${Id}`,
+        { firstName, username, password, prePassword, divisionId, roleId}, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          }
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+
+//get Roles
+export const getRoles = createAsyncThunk(
+  'user/getRoles',
+  async (arg, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}api/role`,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          }
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+//get Role by id 
+export const getRole = createAsyncThunk(
+  'user/getRole',
+  async ({ Id }, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}api/user/${Id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          }
+        })
       return data
     } catch (error) {
       if (error.response && error.response.data.message) {

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { MdDelete, MdEdit } from 'react-icons/md';
+import { MdDelete, MdOutlineRemoveRedEye } from 'react-icons/md';
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { addDivision, deleteDivision, editDivision, getDivisions } from '../../store/features/division/division.action';
+import { addUser, editUser, getRole, getRoles, getUsers } from '../../store/features/user/user.actions';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from "yup";
 import './users.styles.scss'
 
 
@@ -13,23 +15,40 @@ const Users = () => {
 const [formToggle, setFormTogge] = useState(false)
 
 const dispatch = useDispatch()
+
+const {userInfo, users, roles, role} = useSelector(state => state.user)
 const {message, divisions} = useSelector(state => state.division)
 
-const { 
-    register, 
-    handleSubmit, 
-    formState:{errors, isValid} } = useForm({mode:"onBlur"});
 
+const formSchema = Yup.object().shape({
+    password: Yup.string()
+        .required("Password is required")
+        .min(4, "Password length should be at least 4 characters")
+        .max(12, "Password cannot exceed more than 12 characters"),
+    prePassword: Yup.string()
+        .required("Confirm Password is required")
+        .min(4, "Password length should be at least 4 characters")
+        .max(12, "Password cannot exceed more than 12 characters")
+        .oneOf([Yup.ref("password")], "Passwords do not match")
+    });
 
-
-useEffect(()=>{
-    dispatch(getDivisions())
-}, [])
+const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    watch,
+    getValues
+    } = useForm({
+    mode: "onTouched",
+    resolver: yupResolver(formSchema)
+    });
 
 const submitForm = (data) => {
-    data.active = true //inputni valuesini bo'shatish kerak
-    // dispatch(addDivision(data));
-    }
+    console.log(data);
+    dispatch(addUser(data));
+    reset();
+}
     
 const editHandle = (e, val) => {
     e.preventDefault();
@@ -38,7 +57,7 @@ const editHandle = (e, val) => {
         name:val,
         active:true
     }
-    dispatch(editDivision(data));
+    dispatch(editUser(data));
 }
 const deleteHandle = (e, val) => {
     e.preventDefault();
@@ -48,7 +67,7 @@ const deleteHandle = (e, val) => {
         name:val+" deleted", //time qo'shish kerak
         active:false
     }
-    dispatch(deleteDivision(data));
+    dispatch(editUser(data));
 }
 
 const formToggeHandler = () => {
@@ -70,7 +89,7 @@ return (
                 type="text"
                 className='dashboard-input users-input'
                 placeholder='Ism sharifingiz...'
-                {...register('name', {
+                {...register('fullName', {
                     required:"To'ldirilishi shart!",
                 })}
                 required
@@ -81,7 +100,7 @@ return (
                 type="text"
                 className='dashboard-input users-input'
                 placeholder='Login...'
-                {...register('name', {
+                {...register('username', {
                     required:"To'ldirilishi shart!",
                 })}
                 required
@@ -92,38 +111,43 @@ return (
                 type="password"
                 className='dashboard-input users-input'
                 placeholder='Parol...'
-                {...register('name', {
+                {...register('password', {
                     required:"To'ldirilishi shart!",
                 })}
                 required
                 />
+                <p className='alerts'>{errors.password?.message}</p>
                 <label className='users__label' htmlFor='parol2-input'>Parolni tasdiqlang</label>
                 <input 
                 id='parol2-input'
                 type="password"
                 className='dashboard-input users-input'
                 placeholder='Parol...'
-                {...register('name', {
+                {...register('prePassword', {
                     required:"To'ldirilishi shart!",
                 })}
                 required
                 />
+                <p className='alerts'>{errors.password?.message}</p>
                 <label className='users__label' htmlFor='division-select'>Boshqarma</label>
-                <select className='users__select' id='division-select'>
+                <select className='users__select' id='division-select'
+                {...register("divisionId")}>
                     {
                     divisions ? divisions.filter((division)=>division.active===true).map((division, idx)=>(
-                        <option className='division__list--item' key={division.id}>
+                        <option className='division__list--item' key={division.id} value={division.id}>
                                 {division.name}
                         </option>
                     )) : <option>Server bilan aloqa yo'q</option>
                     }
                 </select>
                 <label className='users__label' htmlFor='role-select'>Foydalanuvchi turi</label>
-                <select className='users__select' id='role-select'>
+                <select className='users__select' id='role-select'
+                {...register("roleId")}
+                >
                     {
-                    divisions ? divisions.filter((division)=>division.active===true).map((division, idx)=>(
-                        <option className='division__list--item' key={division.id}>
-                                {division.name}
+                     roles ? roles.map((role, idx)=>(
+                        <option className='division__list--item' key={role.id} value={role.id}>
+                                {role.description}
                         </option>
                     )) : <option>Server bilan aloqa yo'q</option>
                     }
@@ -132,29 +156,45 @@ return (
                 <button type='button' className='dashboard-btn users-btn dashboard-btn--cancel' onClick={formToggeHandler}>BEKOR QILISH</button>
             </form>
             <hr className='dashboard__line'/>
-            <ul className='users__list'>
+            <table className=''>
+                <thead>
+                    <tr>
+                        <th>F.I.Sh.</th>
+                        <th>Boshqarma</th>
+                        <th>Toifasi</th>
+                        <th>Batafsil</th>
+                    </tr>
+                </thead>
+                <tbody>                   
                 {
-                divisions ? divisions.filter((division)=>division.active===true).map((division, idx)=>(
-                    <li className='division__list--item' key={division.id}>
-                        <div className='item-name'>
-                            <span className='id'>{idx+1}.</span>
-                            <span className='name'>{division.name}</span>
-                            </div>
-                            <div className='icons'>
-                            <span 
+                users.content ? users.content.map((user, idx)=>(
+                    <tr className='' key={user.id}>
+                        <td className=''>
+                            {user.fullName}
+                        </td>
+                        <td>
+                            <span>{user.division ? user.division : '-'}</span>
+                        </td>
+                        <td>
+                            <span>{user.role ? user.role.description : '-'}</span>
+                        </td>
+                        <td className='icons'>
+                        <span 
                             className='edit-icon'
                             onClick={(e)=> editHandle(e, prompt())} 
-                            id={division.id}
-                            ><MdEdit/></span>
+                            id={user.id}
+                            ><MdOutlineRemoveRedEye/>
+                            </span>
                             <span 
                             className='delete-icon'
-                            onClick={(e)=> deleteHandle(e, division.name)} 
-                            id={division.id}
+                            onClick={(e)=> deleteHandle(e, user.fullName)} 
+                            id={user.id}
                             ><MdDelete/></span>
-                            </div>
-                    </li>
-                )) : <li>Server bilan aloqa yo'q</li>}
-            </ul>
+                        </td>
+                    </tr>
+                )) : <tr><td>Server bilan aloqa yo'q</td></tr>}
+                </tbody>
+            </table>
         </div>
 );
 };

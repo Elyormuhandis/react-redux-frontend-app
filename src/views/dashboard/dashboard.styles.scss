@@ -49,11 +49,11 @@
             }
                 &--success{
                 width: 100%;
-                background-color: rgb(13, 57, 10)!important;
+                background-color: rgb(10, 101, 3)!important;
                 transition: all .3s;
                 margin-bottom: 5px;
                 &:hover{
-                    background-color: rgb(17, 87, 12)!important;
+                    background-color: rgb(33, 146, 25)!important;
                     }
                 }
                 &--cancel{
@@ -69,19 +69,36 @@
         }
     }
     .icons{
-        width: 45px;
+        width: 50px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-    .edit-icon{
-        color: #0d9e6c;
-    }
-    .delete-icon{
-        color: #e84545;
+        .edit-icon{
+            color: #0d9e6c;
+            font-size: small;
+            transition: all .3s;
+            &:hover{
+                transition: all .3s;
+                color: #14c889;
+                font-size: large;
+                
+            }
+        }
+        .delete-icon{
+            font-size: small;
+            transition: all .3s;
+            color: #fe4949;
+            &:hover{
+                transition: all .3s;
+                color: #e84545;
+                font-size: large;
+                
+            }
+        }
     }
     }
 
-}
+
 
     
 

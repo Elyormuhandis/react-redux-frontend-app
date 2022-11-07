@@ -47,7 +47,10 @@
             align-items: center;
             justify-content: space-between;
             width: 100%;
+            height: 25px;
             margin-bottom: 4px;
+            padding-bottom: 4px;
+            border-bottom: 1px dashed #B2BAC2;
             .item-name{
                 display: flex;
                 .id{

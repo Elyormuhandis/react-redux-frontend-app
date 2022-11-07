@@ -31,10 +31,6 @@ const {
 
 
 
-useEffect(()=>{
-    dispatch(getDivisions())
-}, [])
-
 const submitForm = (data) => {
     data.active = true //inputni valuesini bo'shatish kerak
     // dispatch(addDivision(data));
