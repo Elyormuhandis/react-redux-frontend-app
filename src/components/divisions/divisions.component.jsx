@@ -16,7 +16,8 @@ const {message, divisions} = useSelector(state => state.division)
 
 const { 
     register, 
-    handleSubmit, 
+    handleSubmit,
+    reset,
     formState:{errors, isValid} } = useForm({mode:"onBlur"});
 
 
@@ -32,8 +33,10 @@ const {
 
 
 const submitForm = (data) => {
-    data.active = true //inputni valuesini bo'shatish kerak
-    // dispatch(addDivision(data));
+    data.active = true
+    dispatch(addDivision(data));
+    reset();
+    setDivFormToggle(!divFormToggle);
     }
     
 const editHandle = (e, val) => {
@@ -50,7 +53,7 @@ const deleteHandle = (e, val) => {
 
     const data = {
         id:e.currentTarget.id,
-        name:val+" deleted", //time qo'shish kerak
+        name:val+" deleted"+Date.toLocaleString(),
         active:false
     }
     dispatch(deleteDivision(data));
@@ -73,7 +76,7 @@ return (
                 type="text"
                 className='dashboard-input'
                 id='division-input'
-                placeholder='Bosqarma...'
+                placeholder='Boshqarma...'
                 {...register('name', {
                     required:"To'ldirilishi shart!",
                 })}

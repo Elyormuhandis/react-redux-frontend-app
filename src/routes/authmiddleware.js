@@ -1,10 +1,12 @@
+import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router"
 
 const Authmiddleware = ({children}) =>  {
+    const {userToken} = useSelector(state=>state.user)
     const location = useLocation();
     
 
-    if(!window.localStorage.getItem('Token')){
+    if(!userToken){
         return <Navigate to='/login' state={{from: location}}/>
     }
     return children;

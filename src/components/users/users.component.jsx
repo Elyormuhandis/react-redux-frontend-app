@@ -24,11 +24,11 @@ const formSchema = Yup.object().shape({
     password: Yup.string()
         .required("Password is required")
         .min(4, "Password length should be at least 4 characters")
-        .max(12, "Password cannot exceed more than 12 characters"),
+        .max(20, "Password cannot exceed more than 12 characters"),
     prePassword: Yup.string()
         .required("Confirm Password is required")
         .min(4, "Password length should be at least 4 characters")
-        .max(12, "Password cannot exceed more than 12 characters")
+        .max(20, "Password cannot exceed more than 12 characters")
         .oneOf([Yup.ref("password")], "Passwords do not match")
     });
 
@@ -48,6 +48,7 @@ const submitForm = (data) => {
     console.log(data);
     dispatch(addUser(data));
     reset();
+    setFormTogge(!formToggle);
 }
     
 const editHandle = (e, val) => {
@@ -64,7 +65,7 @@ const deleteHandle = (e, val) => {
 
     const data = {
         id:e.currentTarget.id,
-        name:val+" deleted", //time qo'shish kerak
+        name:val+" deleted" + Date.toLocaleString(),
         active:false
     }
     dispatch(editUser(data));
@@ -130,23 +131,44 @@ return (
                 />
                 <p className='alerts'>{errors.password?.message}</p>
                 <label className='users__label' htmlFor='division-select'>Boshqarma</label>
-                <select className='users__select' id='division-select'
+                <select 
+                className='users__select' 
+                id='division-select'
+                defaultValue={'DEFAULT'}
                 {...register("divisionId")}>
+                    <option 
+                    value={'DEFAULT'}
+                    disabled 
+                    hidden>Boshqarma tanlang...</option>
                     {
                     divisions ? divisions.filter((division)=>division.active===true).map((division, idx)=>(
-                        <option className='division__list--item' key={division.id} value={division.id}>
+                        <option 
+                        className='division__list--item' 
+                        key={division.id} 
+                        value={division.id}
+                        >
                                 {division.name}
                         </option>
                     )) : <option>Server bilan aloqa yo'q</option>
                     }
                 </select>
                 <label className='users__label' htmlFor='role-select'>Foydalanuvchi turi</label>
-                <select className='users__select' id='role-select'
+                <select 
+                className='users__select' 
+                id='role-select'
+                defaultValue={'DEFAULT'}
                 {...register("roleId")}
                 >
+                    <option 
+                    value={'DEFAULT'}
+                    disabled 
+                    hidden>Foydalanuvchi toifasini tanlang...</option>
                     {
                      roles ? roles.map((role, idx)=>(
-                        <option className='division__list--item' key={role.id} value={role.id}>
+                        <option 
+                        className='division__list--item' 
+                        key={role.id} 
+                        value={role.id}>
                                 {role.description}
                         </option>
                     )) : <option>Server bilan aloqa yo'q</option>
@@ -173,7 +195,7 @@ return (
                             {user.fullName}
                         </td>
                         <td>
-                            <span>{user.division ? user.division : '-'}</span>
+                            <span>{user.division ? divisions.find((division)=>division.id===user.division.id).name  : '-'}</span>
                         </td>
                         <td>
                             <span>{user.role ? user.role.description : '-'}</span>
@@ -184,12 +206,7 @@ return (
                             onClick={(e)=> editHandle(e, prompt())} 
                             id={user.id}
                             ><MdOutlineRemoveRedEye/>
-                            </span>
-                            <span 
-                            className='delete-icon'
-                            onClick={(e)=> deleteHandle(e, user.fullName)} 
-                            id={user.id}
-                            ><MdDelete/></span>
+                        </span>
                         </td>
                     </tr>
                 )) : <tr><td>Server bilan aloqa yo'q</td></tr>}

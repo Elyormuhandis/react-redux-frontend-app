@@ -89,12 +89,12 @@ export const getUsers = createAsyncThunk(
 //add user asyncFunction
 export const addUser = createAsyncThunk(
   'user/add',
-  async ({ firstName, username, password, prePassword, divisionId, roleId }, { getState, rejectWithValue }) => {
+  async ({ fullName, username, password, prePassword, divisionId, roleId }, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user
       const {data} = await axios.post(
         `${BASE_URL}api/user/addUser`,
-        { firstName, username, password, prePassword, divisionId, roleId},
+        { fullName, username, password, prePassword, divisionId, roleId},
         {
           headers: {
             'Content-Type': 'application/json',
