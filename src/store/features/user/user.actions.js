@@ -117,17 +117,43 @@ export const addUser = createAsyncThunk(
 //edit Users 
 export const editUser = createAsyncThunk(
   'user/editUser',
-  async ({ firstName, username, password, prePassword, divisionId, roleId, Id }, { getState, rejectWithValue }) => {
+  async ({ fullName, username, password, prePassword, divisionId, roleId, id }, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user
       const { data } = await axios.put(
-        `${BASE_URL}api/user/${Id}`,
-        { firstName, username, password, prePassword, divisionId, roleId}, 
+        `${BASE_URL}api/user/${id}`,
+        { fullName, username, password, prePassword, divisionId, roleId}, 
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
           }
         })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+
+//edit Users 
+export const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async ({ id }, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.delete(
+        `${BASE_URL}api/user/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          }
+        })
+      console.log(data);
       return data
     } catch (error) {
       if (error.response && error.response.data.message) {

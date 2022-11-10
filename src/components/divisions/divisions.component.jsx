@@ -64,53 +64,51 @@ const divFormToggleHandler = () => {
 }
 
 return (
-
-        <div className='division'>
-                <div className='division__header'>
-                   <h4> Boshqarmalar</h4>
-                   <button className='dashboard-btn' onClick={divFormToggleHandler}>YARATISH</button>
-                </div>
-            <form className={divFormToggle ? 'division__form' : 'division__form--toggle'} onSubmit={handleSubmit((e)=>{submitForm(e)})}>
-                <label className='division__form--label' htmlFor='division-input'>Boshqarma nomi</label>
-                <input 
-                type="text"
-                className='dashboard-input'
-                id='division-input'
-                placeholder='Boshqarma...'
-                {...register('name', {
-                    required:"To'ldirilishi shart!",
-                })}
-                required
-                />
-                <button type='submit' className='dashboard-btn dashboard-btn--success'>QO'SHISH</button>
-                <button type='button' className='dashboard-btn dashboard-btn--cancel' onClick={divFormToggleHandler}>BEKOR QILISH</button>
-            </form>
-            <hr className='dashboard__line'/>
-            <ul className='division__list'>
-                {
-                divisions ? divisions.filter((division)=>division.active==true).map((division, idx)=>(
-                    <li className='division__list--item' key={division.id}>
-                        <div className='item-name'>
-                            <span className='id'>{idx+1}.</span>
-                            <span className='name'>{division.name}</span>
-                            </div>
-                            <div className='icons'>
-                            <span 
-                            className='edit-icon'
-                            onClick={(e)=> editHandle(e, prompt())} 
-                            id={division.id}
-                            ><MdEdit/></span>
-                            <span 
-                            className='delete-icon'
-                            onClick={(e)=> deleteHandle(e, division.name)} 
-                            id={division.id}
-                            ><MdDelete/></span>
-                            </div>
-                    </li>
-                )) : <li>Server bilan aloqa yo'q</li>}
-            </ul>
-        </div>
-);
-};
+    <div className='division'>
+            <div className='division__header'>
+                <h4> Boshqarmalar</h4>
+                <button className='dashboard-btn' onClick={divFormToggleHandler}>YARATISH</button>
+            </div>
+        <form className={divFormToggle ? 'division__form' : 'division__form--toggle'} onSubmit={handleSubmit((e)=>{submitForm(e)})}>
+            <label className='division__form--label' htmlFor='division-input'>Boshqarma nomi</label>
+            <input 
+            type="text"
+            className='dashboard-input'
+            id='division-input'
+            placeholder='Boshqarma...'
+            {...register('name', {
+                required:"To'ldirilishi shart!",
+            })}
+            required
+            />
+            <button type='submit' className='dashboard-btn dashboard-btn--success'>QO'SHISH</button>
+            <button type='button' className='dashboard-btn dashboard-btn--cancel' onClick={divFormToggleHandler}>BEKOR QILISH</button>
+        </form>
+        <hr className='dashboard__line'/>
+        <ul className='division__list'>
+            {
+            divisions ? divisions.filter((division)=>division.active==true).map((division, idx)=>(
+                <li className='division__list--item' key={division.id}>
+                    <div className='item-name'>
+                        <span className='id'>{idx+1}.</span>
+                        <span className='name'>{division.name}</span>
+                        </div>
+                        <div className='icons'>
+                        <span 
+                        className='edit-icon'
+                        onClick={(e)=> editHandle(e, prompt())} 
+                        id={division.id}
+                        ><MdEdit/></span>
+                        <span 
+                        className='delete-icon'
+                        onClick={(e)=> deleteHandle(e, division.name)} 
+                        id={division.id}
+                        ><MdDelete/></span>
+                        </div>
+                </li>
+            )) : <li>Server bilan aloqa yo'q</li>}
+        </ul>
+    </div>
+)};
 
 export default Divisions;

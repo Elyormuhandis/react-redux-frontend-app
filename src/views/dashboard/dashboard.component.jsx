@@ -9,6 +9,7 @@ import './dashboard.styles.scss'
 
 const Dashboard = () => {
     const dispatch = useDispatch();
+    
     useEffect(()=>{
         dispatch(getDivisions())
         dispatch(getRoles())

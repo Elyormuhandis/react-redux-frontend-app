@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MdDelete, MdOutlineRemoveRedEye } from 'react-icons/md';
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { addUser, editUser, getRole, getRoles, getUsers } from '../../store/features/user/user.actions';
+import { addUser, deleteUser, editUser, getRole, getRoles, getUsers } from '../../store/features/user/user.actions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import './users.styles.scss'
@@ -13,10 +13,12 @@ import './users.styles.scss'
 
 const Users = () => {
 const [formToggle, setFormTogge] = useState(false)
+const [create, setCreate] = useState(true)
+const [userId, setUserId] = useState(null)
 
 const dispatch = useDispatch()
 
-const {userInfo, users, roles, role} = useSelector(state => state.user)
+const {userInfo, users, roles, role, loading} = useSelector(state => state.user)
 const {message, divisions} = useSelector(state => state.division)
 
 
@@ -45,34 +47,39 @@ const {
     });
 
 const submitForm = (data) => {
-    console.log(data);
     dispatch(addUser(data));
     reset();
     setFormTogge(!formToggle);
 }
-    
-const editHandle = (e, val) => {
-    e.preventDefault();
-    const data = {
-        id:e.currentTarget.id,
-        name:val,
-        active:true
-    }
-    dispatch(editUser(data));
-}
-const deleteHandle = (e, val) => {
-    e.preventDefault();
 
-    const data = {
-        id:e.currentTarget.id,
-        name:val+" deleted" + Date.toLocaleString(),
-        active:false
-    }
+const editHandle = (data) => {
+    data.id=userId;
     dispatch(editUser(data));
+    setFormTogge(!formToggle);
+}
+
+
+
+const editHandler = async (e) => {
+    setUserId(e.currentTarget.id);
+    const user = users.find(user=>user.id==e.currentTarget.id);
+    reset({
+        fullName:user.fullName,
+        username:user.username,
+        divisionId:user.division?.id,
+        roleId:user.role.id
+    });
+    setFormTogge(true);
+    setCreate(false);
+}
+
+const deleteHandle = (e) => {
+    dispatch(deleteUser({id:e.currentTarget.id}));
 }
 
 const formToggeHandler = () => {
     setFormTogge(!formToggle);
+    setCreate(true);
 }
 
 
@@ -83,7 +90,7 @@ return (
             <h4>Foydalanuvchilar</h4>
             <button className='dashboard-btn' onClick={formToggeHandler}>YARATISH</button>
             </div>
-            <form className={formToggle ? 'users__form' : 'form-toggle'} onSubmit={handleSubmit((e)=>{submitForm(e)})}>
+            <form className={formToggle ? 'users__form' : 'form-toggle'} onSubmit={create? handleSubmit(submitForm) : handleSubmit(editHandle)}>
                 <label className='users__label' htmlFor='fish-input'>F.I.Sh</label>
                 <input 
                 id='fish-input'
@@ -189,24 +196,25 @@ return (
                 </thead>
                 <tbody>                   
                 {
-                users.content ? users.content.map((user, idx)=>(
+                !loading ? users?.map((user, idx)=>(
                     <tr className='' key={user.id}>
                         <td className=''>
                             {user.fullName}
                         </td>
                         <td>
-                            <span>{user.division ? divisions.find((division)=>division.id===user.division.id).name  : '-'}</span>
+                            <span>{user.division ? divisions?.find((division)=>division?.id===user?.division.id).name  : '-'}</span>
                         </td>
                         <td>
-                            <span>{user.role ? user.role.description : '-'}</span>
+                            <span>{user.role ? user?.role?.description : '-'}</span>
                         </td>
                         <td className='icons'>
                         <span 
                             className='edit-icon'
-                            onClick={(e)=> editHandle(e, prompt())} 
                             id={user.id}
+                            onClick={(e)=> editHandler(e)} 
                             ><MdOutlineRemoveRedEye/>
                         </span>
+                        <span className='delete-icon' id={user.id} onClick={(e)=>deleteHandle(e)}><MdDelete/></span>
                         </td>
                     </tr>
                 )) : <tr><td>Server bilan aloqa yo'q</td></tr>}

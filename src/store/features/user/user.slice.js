@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getUser, addUser, userLogin, getUsers, editUser, getRoles, getRole } from './user.actions'
+import { getUser, addUser, userLogin, getUsers, editUser, getRoles, getRole, deleteUser } from './user.actions'
 
 // initialize userToken from local storage
 const userToken = localStorage.getItem('Token')
@@ -82,8 +82,7 @@ const userSlice = createSlice({
     },
     [getUsers.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.users = payload
-      console.log(payload);
+      state.users = payload.content
     },
     [getUsers.rejected]: (state, { payload }) => {
       state.loading = false
@@ -101,6 +100,20 @@ const userSlice = createSlice({
       state.message = payload.message
     },
     [editUser.rejected]: (state, { payload }) => {
+      state.loading = false
+      state.error = payload
+    },
+    // delete User1171819+ 
+    [deleteUser.pending]: (state) => {
+      state.loading = true
+    },
+    [deleteUser.fulfilled]: (state, { payload }) => {
+      state.loading = false
+      state.users = payload.object
+      state.success = payload.success
+      state.message = payload.message
+    },
+    [deleteUser.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
     },
