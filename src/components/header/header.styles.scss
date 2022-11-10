@@ -17,30 +17,7 @@
         display: flex;
         justify-content: space-between;
         width: 30%;
-        .searchbox{
-            margin-right: 10px;
-            position: relative;
-            &__input{
-                padding: 5px 20px;
-                border: 1px solid #B2BAC2;
-                outline: none;
-                border-radius: 50px;
-                background-color: inherit;
-                color: #B2BAC2;
-                &::placeholder{
-                    color: #B2BAC2;
-                }
-            }
-            &__icon{
-                color: #B2BAC2;
-                background-color: rgb(5,31,32);
-                padding: 0 3px;
-                position: absolute;
-                top:3px;
-                right: 15px;
-                z-index: 2;
-            }
-        }
+        
         .select{
             color: #B2BAC2;
             border: 1px solid #B2BAC2;
@@ -67,5 +44,30 @@
                 color: white;
             }
             }
+    }
+}
+
+.searchbox{
+    margin-right: 10px;
+    position: relative;
+    &__input{
+        padding: 5px 20px;
+        border: 1px solid #B2BAC2;
+        outline: none;
+        border-radius: 50px;
+        background-color: inherit;
+        color: #B2BAC2;
+        &::placeholder{
+            color: #B2BAC2;
+        }
+    }
+    &__icon{
+        color: #B2BAC2;
+        background-color: inherit;
+        padding: 0 3px;
+        position: absolute;
+        top:3px;
+        right: 15px;
+        z-index: 2;
     }
 }

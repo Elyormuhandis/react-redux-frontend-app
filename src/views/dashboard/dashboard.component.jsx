@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Divisions from '../../components/divisions/divisions.component';
+import Statistics from '../../components/statistics/statistics.component';
 import Users from '../../components/users/users.component';
 import { getDivisions } from '../../store/features/division/division.action';
 import { getRoles, getUsers } from '../../store/features/user/user.actions';
@@ -22,9 +23,7 @@ const Dashboard = () => {
         <div className='dashboard__container'>
           <Divisions/>
           <Users/>
-            <div>
-                Statistika
-            </div>
+          <Statistics/>
         </div>
         </div>
     );

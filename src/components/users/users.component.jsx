@@ -6,6 +6,7 @@ import { addUser, deleteUser, editUser, getRole, getRoles, getUsers } from '../.
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from "yup";
 import './users.styles.scss'
+import { BsSearch } from 'react-icons/bs';
 
 
 
@@ -47,6 +48,7 @@ const {
     });
 
 const submitForm = (data) => {
+    console.log(data);
     dispatch(addUser(data));
     reset();
     setFormTogge(!formToggle);
@@ -86,15 +88,27 @@ const formToggeHandler = () => {
 return (
 
         <div className='users'>
-            <div className='users__header'>
             <h4>Foydalanuvchilar</h4>
-            <button className='dashboard-btn' onClick={formToggeHandler}>YARATISH</button>
+            <div className='users__header'>
+                <div className='searchbox'>
+                    <input className='searchbox__input' type='text' placeholder='Qidirish...'/>
+                    <span className='searchbox__icon'><BsSearch/></span>
+                </div>
+                <div className='users__sort'>
+                    <select className='users__select users__select--top'>
+                        <option className='users__option'>Barchasi</option>
+                        <option className='users__option'>Faol</option>
+                        <option className='users__option'>Nofaol</option>
+                    </select>  
+                    <button className='dashboard-btn' onClick={formToggeHandler}>YARATISH</button>
+                </div>                  
             </div>
             <form className={formToggle ? 'users__form' : 'form-toggle'} onSubmit={create? handleSubmit(submitForm) : handleSubmit(editHandle)}>
                 <label className='users__label' htmlFor='fish-input'>F.I.Sh</label>
                 <input 
                 id='fish-input'
                 type="text"
+                autoComplete='off'
                 className='dashboard-input users-input'
                 placeholder='Ism sharifingiz...'
                 {...register('fullName', {
@@ -106,6 +120,7 @@ return (
                 <input 
                 id='login-input'
                 type="text"
+                autoComplete='off'
                 className='dashboard-input users-input'
                 placeholder='Login...'
                 {...register('username', {
@@ -118,6 +133,7 @@ return (
                 id='parol-input'
                 type="password"
                 className='dashboard-input users-input'
+                autoComplete='off'
                 placeholder='Parol...'
                 {...register('password', {
                     required:"To'ldirilishi shart!",
@@ -129,6 +145,7 @@ return (
                 <input 
                 id='parol2-input'
                 type="password"
+                autoComplete='off'
                 className='dashboard-input users-input'
                 placeholder='Parol...'
                 {...register('prePassword', {
@@ -144,6 +161,7 @@ return (
                 defaultValue={'DEFAULT'}
                 {...register("divisionId")}>
                     <option 
+                    className='division__list--item' 
                     value={'DEFAULT'}
                     disabled 
                     hidden>Boshqarma tanlang...</option>
@@ -157,7 +175,7 @@ return (
                                 {division.name}
                         </option>
                     )) : <option>Server bilan aloqa yo'q</option>
-                    }
+                }
                 </select>
                 <label className='users__label' htmlFor='role-select'>Foydalanuvchi turi</label>
                 <select 
@@ -167,6 +185,7 @@ return (
                 {...register("roleId")}
                 >
                     <option 
+                    className='division__list--item' 
                     value={'DEFAULT'}
                     disabled 
                     hidden>Foydalanuvchi toifasini tanlang...</option>
@@ -181,23 +200,28 @@ return (
                     )) : <option>Server bilan aloqa yo'q</option>
                     }
                 </select>
-                <button type='submit' className='dashboard-btn dashboard-btn--success'>QO'SHISH</button>
-                <button type='button' className='dashboard-btn users-btn dashboard-btn--cancel' onClick={formToggeHandler}>BEKOR QILISH</button>
+                <div className='users__btn'>
+                <button type='submit' className='dashboard-btn  dashboard-btn--success'>{create ? "QO'SHISH" : "O'ZGARTIRISH"}</button>
+                <button type='button' className='dashboard-btn  dashboard-btn--cancel' onClick={formToggeHandler}>BEKOR QILISH</button>
+                </div>
             </form>
             <hr className='dashboard__line'/>
-            <table className=''>
-                <thead>
+            <table className='users__table'>
+                <thead className='users__table-header'>
                     <tr>
+                        <th><input type='checkbox'/></th>
                         <th>F.I.Sh.</th>
                         <th>Boshqarma</th>
                         <th>Toifasi</th>
-                        <th>Batafsil</th>
+                        <th>Statusi</th>
+                        <th>Harakatlar</th>
                     </tr>
                 </thead>
-                <tbody>                   
+                <tbody className='users__table-body'>                   
                 {
                 !loading ? users?.map((user, idx)=>(
                     <tr className='' key={user.id}>
+                        <td><input type='checkbox'/></td>
                         <td className=''>
                             {user.fullName}
                         </td>
@@ -206,6 +230,9 @@ return (
                         </td>
                         <td>
                             <span>{user.role ? user?.role?.description : '-'}</span>
+                        </td>
+                        <td>
+                            <span>{user.enabled ? 'AKTIV' : 'BLOKLANGAN'}</span>
                         </td>
                         <td className='icons'>
                         <span 
