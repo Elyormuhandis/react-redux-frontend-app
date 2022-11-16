@@ -1,0 +1,30 @@
+
+.send{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    
+}
+
+.board{
+    width: 400px;
+    height: 500px;
+    border-radius: 12px;
+    border: 4px solid;
+    margin: 20px;
+    padding: 20px;
+    &__title{
+        text-align: center;
+        color: white;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #fff;
+    }
+}
+
+.item{
+    cursor: grab;
+    border: 1px solid rgb(61, 182, 70);
+    margin-bottom: 10px;
+    padding: 10px;
+}

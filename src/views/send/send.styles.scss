@@ -1,0 +1,68 @@
+.send{
+    width: 100%;
+    height: 100%;
+    &__form{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+    &__container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #B2BAC2;
+    }
+
+    &__file-picker{
+        width: 30em;
+        padding: 10px 20px;
+        height: 100%;
+    }
+
+    &__file-sender{
+        
+    }
+
+
+    &__file-input{
+    width: 300px;
+    padding: 6px 105px;  
+    background-color: rgb(245,93,49);
+    color:rgb(224, 227, 230);
+    border:1px solid rgb(224, 227, 230);
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+        &--hidden{
+            width: 0;
+            height: 0;
+            visibility: hidden;
+            margin: 0;
+            padding: 0;
+        }
+    }
+}
+
+.drop-area{
+    height: 300px;
+    width: 300px;
+    border: 5px dashed white;
+    background-color: #034c25;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drag{
+    background-color: #034c25;
+    border:1px dashed white;
+    height: 300px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
