@@ -7,7 +7,7 @@ const store = configureStore({
   reducer: {
     user: userReducer,
     division: divisionReducer,
-    attechment:attachmentReducer
+    attachment:attachmentReducer
   },
 })
 

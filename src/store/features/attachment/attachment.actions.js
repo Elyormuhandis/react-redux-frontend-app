@@ -8,13 +8,11 @@ export const uploadFiles = createAsyncThunk(
   'attachment/upload',
   async ({toDivision, files}, { getState, rejectWithValue }) => {
     try {
-      // get user data from store
       const { userToken } = getState().user
-      //foreach not working with files
       const formData = new FormData();
-      for(let i=0; i<files.length; i++){
-         formData.append(`file${i}`, files[i]);
-      }
+      files.forEach((file, idx) => {
+        formData.append(`file${idx}`, file);
+      });
    
       const { data } = await axios.post(
         `${BASE_URL}attachment/uploadFileToFileSystem?toDivision=${toDivision}`, 
@@ -38,16 +36,42 @@ export const uploadFiles = createAsyncThunk(
 )
 
 
-//Fayl ko'rilganligini yoki ko'rilmaganligini beradi (textni jirniy yoki oddiy qilish uchun)
 
-export const setView = createAsyncThunk(
-  'user/getUsersByPage',
-  async ({page=0}, { getState, rejectWithValue }) => {
+//Boshqarmadan ketgan fayllar ro'yxatini olish uchun ishlatiladi
+
+export const getAllByFromDivision = createAsyncThunk(
+  'user/getAllByFromDivision',
+  async (arg, { getState, rejectWithValue }) => {
     try {
-      // get user data from store
       const { userToken } = getState().user
       const { data } = await axios.get(
-        `${BASE_URL}api/user/?page=0`, 
+        `${BASE_URL}attachment/getAllByFromDivision`, 
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+//Boshqarmaga kelgan fayllar ro'yxatini olish uchun ishlatiladi
+
+export const getAllByToDivision = createAsyncThunk(
+  'user/getAllByToDivision',
+  async (params, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}attachment/getAllByToDivision`, 
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -63,6 +87,162 @@ export const setView = createAsyncThunk(
     }
   }
 )
+
+
+
+//Fayl ko'rilganligini yoki ko'rilmaganligini beradi (textni jirniy yoki oddiy qilish uchun)
+
+export const setView = createAsyncThunk(
+  'user/setView',
+  async ({id}, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}attachment/setView/${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+//Fayl kelgani to'g'risida tasdiq beradi
+
+export const setPDTV = createAsyncThunk(
+  'user/setPDTV',
+  async ({id}, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}attachment/setPDTV/${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+//Bitta kelgan faylni olish uchun ishlatiladi
+
+export const getOneTo = createAsyncThunk(
+  'user/getOneTo',
+  async ({id}, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}attachment/getOneTo/${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+
+//Bitta ketgan faylni olish uchun ishlatiladi
+
+export const getOneFrom = createAsyncThunk(
+  'user/getOneFrom',
+  async ({id}, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}attachment/getOneFrom/${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+
+
+//Faylni skachat qilish uchun ishlatiladi
+
+export const downloadFileFromFileSystem = createAsyncThunk(
+  'user/downloadFileFromFileSystem',
+  async ({id}, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}attachment/downloadFileFromFileSystem/${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+//Fayl o'chiradi
+
+export const deleteOneTo = createAsyncThunk(
+  'user/deleteOneTo',
+  async ({id}, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.delete(
+        `${BASE_URL}attachment/deleteOneTo/${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
 
 
 

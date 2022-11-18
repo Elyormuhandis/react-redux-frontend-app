@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { uploadFiles } from "./attachment.actions";
+import { getAllByFromDivision, uploadFiles } from "./attachment.actions";
 
 const userToken = localStorage.getItem('Token')
   ? localStorage.getItem('Token')
@@ -10,6 +10,7 @@ const initialState = {
     files:[],
     loading: false,
     message: "",
+    yuborilganFayllar:[],
     userToken,
     error: null,
     success: false
@@ -17,7 +18,7 @@ const initialState = {
 }
 
 const attachmentSlice = createSlice({
-    name:"attechment",
+    name:"attachment",
     initialState,
     reducers:{
 
@@ -36,6 +37,23 @@ const attachmentSlice = createSlice({
 },
 
 [uploadFiles.rejected]: (state, { payload }) => {
+  state.loading = false
+  state.error = payload
+},
+    
+      
+// getAllByFromDivision
+[getAllByFromDivision.pending]: (state) => {
+  state.loading = true
+  state.error = null
+},
+[getAllByFromDivision.fulfilled]: (state, { payload }) => {
+  console.log(payload)
+  state.loading = false
+  state.yuborilganFayllar = [...payload]
+},
+
+[getAllByFromDivision.rejected]: (state, { payload }) => {
   state.loading = false
   state.error = payload
 },

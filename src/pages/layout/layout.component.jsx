@@ -6,16 +6,16 @@ import Sidebar from '../../components/sidebar/sidebar.component';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import './layout.styles.scss'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Layout = () => {
     const dispatch = useDispatch();
-
+    const {userToken} = useSelector(state=>state.user)
     useEffect(()=>{
         dispatch(getDivisions())
         dispatch(getRoles())
         dispatch(getUsers(0))
-    }, [])
+    }, [userToken])
 
 
     return (
