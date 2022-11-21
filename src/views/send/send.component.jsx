@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllByFromDivision } from "../../store/features/attachment/attachment.actions";
-import {FaCloudDownloadAlt, FaDownload, FaPlusCircle, FaTrash, FaTrashAlt, FaUpload} from 'react-icons/fa'
+import { uploadFiles } from "../../store/features/attachment/attachment.actions";
+import {FaPlusCircle, FaTrashAlt, FaUpload} from 'react-icons/fa'
 import './send.styles.scss'
-import { MdDelete, MdDone, MdDoneAll, MdMail } from "react-icons/md";
+
 
 
 const Send = () => {
@@ -12,25 +12,18 @@ const Send = () => {
   const [drag, setDrag] = useState(false);
   const [dragFiles, setDragFiles] = useState([]);
   const {divisions} = useSelector(state => state.division)
-  const { yuborilganFayllar} = useSelector(state => state.attachment)
+
   const {
     register,
     handleSubmit,
-    trigger,
     formState: { errors },
-    reset,
-    watch,
-    getValues
     } = useForm({
     mode: "onTouched"
     });
 
   const addFileHandler = (data) => {
     data.files=[...dragFiles]
-    // dispatch(uploadFiles(data))
-    console.log("click");
-    dispatch(getAllByFromDivision())
-
+    dispatch(uploadFiles(data))
   }
 
   const dragStartHandler = (e) => {
@@ -51,8 +44,6 @@ const Send = () => {
   const handlePick = (e) => {
     document.querySelector("#file-input-field").click();
   }
-
-  console.log(yuborilganFayllar);
 
   return(
     <div className="send">
@@ -120,17 +111,20 @@ const Send = () => {
             </select>
           <button className="send__form--btn" type="submit">< FaUpload className="upload-icon"/>YUKLASH</button>
           </div>
+          </div>
+      </form>
+          <div className="send__selected-files">
           <div className="send__selected-files--header">
               <h5>Tanlangan fayllar</h5>
               <span className="send__selected-files--clr-icon"><FaTrashAlt/></span>
           </div>
-          <div className="send__selected-files">
             <table >
                 <thead>
                     <tr>
                         <th><input type='checkbox'/></th>
                         <th>T/R</th>
                         <th>Faylning nomi</th>
+                        <th>Faylning hajmi (bayt)</th>
                     </tr>
                 </thead>
                 <tbody className='send__table-body'>                   
@@ -142,66 +136,14 @@ const Send = () => {
                         <td className="table-head-name">
                             {file.name}
                         </td>
+                        <td className="table-head-name">
+                            {file.size}
+                        </td>
                     </tr>
                 )) : ""}
                 </tbody>
             </table>
             </div>
-          </div>
-      </form>
-      <div className="send__list">
-        <h4>Fayllar</h4>
-        <hr className='dashboard__line'/>
-            <table className='send__table'>
-                <thead className='send__table-header'>
-                    <tr>
-                        <th><input type='checkbox'/></th>
-                        <th>N</th>
-                        <th>Nomi</th>
-                        <th>Fayl hajmi</th>
-                        <th>Kimdan</th>
-                        <th>Kimga</th>
-                        <th>Tasdiq</th>
-                        <th>Yuklab olish</th>
-                        <th>O'chirish</th>
-                    </tr>
-                </thead>
-                <tbody className='send__table-body'>                   
-                {
-                yuborilganFayllar ? yuborilganFayllar.map((file, idx)=>(
-                    <tr className='' key={idx}>
-                        <td><input type='checkbox'/></td>
-                        <td>{idx+1}</td>
-                        <td className=''>
-                            {file.originalName}
-                        </td>
-                        <td className=''>
-                            {file.size+"b"}
-                        </td>
-                        <td className=''>
-                        {divisions ? divisions.filter((division)=>division.id===file.fromDivision.id)[0].name: ''}
-                        </td>
-                        <td className=''>
-                        {divisions ? divisions.filter((division)=>division.id===file.toDivision.id)[0].name: ''}
-                        </td>
-                        <td className='icons'>
-                        {file.pdtv ? <MdDoneAll/> : <MdDone/>}
-                        </td>
-                        <td className='icons'>
-                          <span className='delete-icon'><FaCloudDownloadAlt/></span>
-                        </td>
-                        <td className='icons'>
-                          <span className='delete-icon'><FaTrashAlt/></span>
-                        </td>
-                    </tr>
-                )) : <tr>
-                        <td>
-                        Server bilan aloqa yo'q
-                        </td>
-                      </tr>}
-                </tbody>
-            </table>
-      </div>
     </div>
   )  
 }

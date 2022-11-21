@@ -7,6 +7,7 @@ const BASE_URL = "http://localhost:8080/";
 export const uploadFiles = createAsyncThunk(
   'attachment/upload',
   async ({toDivision, files}, { getState, rejectWithValue }) => {
+    console.log(toDivision, files);
     try {
       const { userToken } = getState().user
       const formData = new FormData();
@@ -67,13 +68,14 @@ export const getAllByFromDivision = createAsyncThunk(
 
 export const getAllByToDivision = createAsyncThunk(
   'user/getAllByToDivision',
-  async (params, { getState, rejectWithValue }) => {
+  async (arg, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user
       const { data } = await axios.get(
         `${BASE_URL}attachment/getAllByToDivision`, 
         {
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${userToken}`,
           },
         })
@@ -94,13 +96,15 @@ export const getAllByToDivision = createAsyncThunk(
 
 export const setView = createAsyncThunk(
   'user/setView',
-  async ({id}, { getState, rejectWithValue }) => {
+  async (id, { getState, rejectWithValue }) => {
+    console.log(id);
     try {
       const { userToken } = getState().user
       const { data } = await axios.get(
         `${BASE_URL}attachment/setView/${id}`, 
         {
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${userToken}`,
           },
         })
@@ -126,6 +130,7 @@ export const setPDTV = createAsyncThunk(
         `${BASE_URL}attachment/setPDTV/${id}`, 
         {
           headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${userToken}`,
           },
         })

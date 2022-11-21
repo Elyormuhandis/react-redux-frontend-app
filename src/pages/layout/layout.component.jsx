@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { getDivisions } from '../../store/features/division/division.action';
 import { getRoles, getUsers } from '../../store/features/user/user.actions';
+import { getAllByFromDivision, getAllByToDivision} from "../../store/features/attachment/attachment.actions";
 import Header from '../../components/header/header.component';
 import Sidebar from '../../components/sidebar/sidebar.component';
 import React from 'react';
@@ -15,6 +16,8 @@ const Layout = () => {
         dispatch(getDivisions())
         dispatch(getRoles())
         dispatch(getUsers(0))
+        dispatch(getAllByToDivision())
+        dispatch(getAllByFromDivision())
     }, [userToken])
 
 
