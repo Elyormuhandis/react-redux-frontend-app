@@ -15,15 +15,15 @@ export const sidebarData = [
     },
     {
         id: 1,
-        icon: <FiSend/>,
-        text: "YARATISH",
-        link: "send"
-    },
-    {
-        id: 2,
         icon: <MdOutlineMarkEmailUnread/>,
         text: "KELGAN",
         link: "inbox"
+    },
+    {
+        id: 2,
+        icon: <FiSend/>,
+        text: "YARATISH",
+        link: "send"
     },
     {
         id: 3,

@@ -147,8 +147,8 @@ export const setPDTV = createAsyncThunk(
 
 //Bitta kelgan faylni olish uchun ishlatiladi
 
-export const getOneTo = createAsyncThunk(
-  'user/getOneTo',
+export const getOneReceivedFile = createAsyncThunk(
+  'user/getOneReceivedFile',
   async ({id}, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user
@@ -173,8 +173,8 @@ export const getOneTo = createAsyncThunk(
 
 //Bitta ketgan faylni olish uchun ishlatiladi
 
-export const getOneFrom = createAsyncThunk(
-  'user/getOneFrom',
+export const getOneSentFile = createAsyncThunk(
+  'user/getOneSentFile',
   async ({id}, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user

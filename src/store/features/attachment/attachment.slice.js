@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllByFromDivision, getAllByToDivision, setView, uploadFiles } from "./attachment.actions";
+import { getAllByFromDivision, getAllByToDivision, getOneReceivedFile, getOneSentFile, setPDTV, setView, uploadFiles } from "./attachment.actions";
 
 const userToken = localStorage.getItem('Token')
   ? localStorage.getItem('Token')
@@ -11,6 +11,8 @@ const initialState = {
     loading: false,
     message: "",
     yuborilganFayllar:[],
+    OneReceivedFile:{},
+    OneSentFile:{},
     kelganFayllar:[],
     korildi:false,
     userToken,
@@ -74,6 +76,7 @@ const attachmentSlice = createSlice({
   state.loading = false
   state.error = payload
 },
+
 // setView
 [setView.pending]: (state) => {
   state.loading = true
@@ -86,6 +89,53 @@ const attachmentSlice = createSlice({
 },
 
 [setView.rejected]: (state, { payload }) => {
+  state.loading = false
+  state.error = payload
+},
+
+// setPDTV
+[setPDTV.pending]: (state) => {
+  state.loading = true
+  state.error = null
+},
+[setPDTV.fulfilled]: (state, { payload }) => {
+  state.loading = false
+  state.message = payload.message
+  state.success = payload.success
+},
+
+[setPDTV.rejected]: (state, { payload }) => {
+  state.loading = false
+  state.error = payload
+},
+
+// getOneReceivedFile
+[getOneReceivedFile.pending]: (state) => {
+  state.loading = true
+  state.error = null
+},
+[getOneReceivedFile.fulfilled]: (state, { payload }) => {
+  state.loading = false
+  state.OneReceivedFile = payload
+},
+
+[getOneReceivedFile.rejected]: (state, { payload }) => {
+  state.loading = false
+  state.error = payload
+},
+
+
+// getOneSentFile
+[getOneSentFile.pending]: (state) => {
+  state.loading = true
+  state.error = null
+},
+[getOneSentFile.fulfilled]: (state, { payload }) => {
+  state.loading = false
+  state.OneSentFile = payload
+},
+
+[getOneSentFile.rejected]: (state, { payload }) => {
   state.loading = false
   state.error = payload
 },

@@ -22,9 +22,9 @@ const Sent = () => {
                             <th>Fayl hajmi</th>
                             <th>Kimdan</th>
                             <th>Kimga</th>
-                            <th>Tasdiq</th>
-                            <th>Yuklab olish</th>
-                            <th>O'chirish</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody className='send__table-body'>                   

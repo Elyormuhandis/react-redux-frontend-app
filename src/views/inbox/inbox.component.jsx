@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {MdDone, MdDoneAll} from "react-icons/md"
-import { FaCloudDownloadAlt, FaTrashAlt } from "react-icons/fa";
+import { FaCloudDownloadAlt, FaTrashAlt, FaEye, FaEyeDropper, FaEyeSlash } from "react-icons/fa";
 import './inbox.styles.scss'
 import { setView } from "../../store/features/attachment/attachment.actions";
 
@@ -23,15 +23,15 @@ const Inbox = () => {
                 <table className='inbox__table'>
                     <thead className='inbox__table-header'>
                         <tr>
-                            <th><input type='checkbox'/></th>
-                            <th>N</th>
-                            <th>Nomi</th>
-                            <th>Fayl hajmi</th>
-                            <th>Kimdan</th>
-                            <th>Kimga</th>
-                            <th>Tasdiq</th>
-                            <th>Yuklab olish</th>
-                            <th>O'chirish</th>
+                            <th style={{color:"orange"}}><input type='checkbox'/></th>
+                            <th style={{color:"orange"}}>N</th>
+                            <th style={{color:"orange"}}>Nomi</th>
+                            <th style={{color:"orange"}}>Fayl hajmi</th>
+                            <th style={{color:"orange"}}>Kimdan</th>
+                            <th style={{color:"orange"}}>Kimga</th>
+                            <th style={{color:"orange"}}></th>
+                            <th><FaCloudDownloadAlt style={{color:"orange"}}/></th>
+                            <th><FaTrashAlt style={{color:"orange"}}/></th>
                         </tr>
                     </thead>
                     <tbody className='send__table-body'>                   
@@ -53,7 +53,7 @@ const Inbox = () => {
                             {divisions ? divisions.filter((division)=>division.id===file.toDivision.id)[0].name: ''}
                             </td>
                             <td className='icons'>
-                            {file.pdtv ? <MdDone/> : <MdDoneAll/>}
+                            {file.pdtv ? <FaEye/> : <FaEyeSlash/>}
                             </td>
                             <td className='icons'>
                             <span className='delete-icon'><FaCloudDownloadAlt/></span>
