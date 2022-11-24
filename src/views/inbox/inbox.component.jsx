@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {MdDone, MdDoneAll} from "react-icons/md"
 import { FaCloudDownloadAlt, FaTrashAlt, FaEye, FaEyeDropper, FaEyeSlash } from "react-icons/fa";
 import './inbox.styles.scss'
-import { setView } from "../../store/features/attachment/attachment.actions";
+import { downloadFileFromFileSystem, setView } from "../../store/features/attachment/attachment.actions";
 
 const Inbox = () => {
     const { kelganFayllar } = useSelector(state => state.attachment) 
@@ -14,6 +14,17 @@ const Inbox = () => {
         const id = e.currentTarget.id;
         dispatch(setView(id))
     }
+
+
+
+    const downloadRow = (e, fileName) => {
+          e.stopPropagation();
+          const id = e.currentTarget.id;
+          dispatch(downloadFileFromFileSystem({id, fileName}))
+        }  
+    
+
+
     
     return (
         <div className="inbox">
@@ -55,8 +66,10 @@ const Inbox = () => {
                             <td className='icons'>
                             {file.pdtv ? <FaEye/> : <FaEyeSlash/>}
                             </td>
-                            <td className='icons'>
-                            <span className='delete-icon'><FaCloudDownloadAlt/></span>
+                            <td className='icons' id={file.id} onClick={(e) => downloadRow(e, file.originalName)}>
+                            <span className='delete-icon'>
+                                <FaCloudDownloadAlt/>
+                            </span>
                             </td>
                             <td className='icons'>
                             <span className='delete-icon'><FaTrashAlt/></span>

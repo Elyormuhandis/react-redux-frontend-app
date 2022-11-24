@@ -200,19 +200,34 @@ export const getOneSentFile = createAsyncThunk(
 
 //Faylni skachat qilish uchun ishlatiladi
 
+
 export const downloadFileFromFileSystem = createAsyncThunk(
   'user/downloadFileFromFileSystem',
-  async ({id}, { getState, rejectWithValue }) => {
+  async ({id, fileName}, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user
       const { data } = await axios.get(
         `${BASE_URL}attachment/downloadFileFromFileSystem/${id}`, 
         {
+          responseType: 'blob',
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
+          // maxContentLength: Infinity,
+          // maxBodyLength: Infinity
         })
-      return data
+        .then((response) => {
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.style='display:none'
+          link.href = url;
+          link.setAttribute('download', fileName); //or any other extension
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          
+      })
+
     } catch (error) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)

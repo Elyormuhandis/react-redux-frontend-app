@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAllByFromDivision, getAllByToDivision, getOneReceivedFile, getOneSentFile, setPDTV, setView, uploadFiles } from "./attachment.actions";
+import { downloadFileFromFileSystem, getAllByFromDivision, getAllByToDivision, getOneReceivedFile, getOneSentFile, setPDTV, setView, uploadFiles } from "./attachment.actions";
 
 const userToken = localStorage.getItem('Token')
   ? localStorage.getItem('Token')
@@ -14,6 +14,7 @@ const initialState = {
     OneReceivedFile:{},
     OneSentFile:{},
     kelganFayllar:[],
+    downloadFileFromFileSystem: undefined,
     korildi:false,
     userToken,
     error: null,
@@ -67,7 +68,6 @@ const attachmentSlice = createSlice({
   state.error = null
 },
 [getAllByToDivision.fulfilled]: (state, { payload }) => {
-  console.log(payload)
   state.loading = false
   state.kelganFayllar = [...payload]
 },
@@ -136,6 +136,23 @@ const attachmentSlice = createSlice({
 },
 
 [getOneSentFile.rejected]: (state, { payload }) => {
+  state.loading = false
+  state.error = payload
+},
+
+
+// downloadFileFromFileSystem
+[downloadFileFromFileSystem.pending]: (state) => {
+  state.loading = true
+  state.error = null
+},
+[downloadFileFromFileSystem.fulfilled]: (state, { payload }) => {
+  state.loading = false
+  console.log(payload);
+  // state.downloadFileFromFileSystem = payload
+},
+
+[downloadFileFromFileSystem.rejected]: (state, { payload }) => {
   state.loading = false
   state.error = payload
 },
