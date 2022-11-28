@@ -2,41 +2,45 @@ import { useForm } from 'react-hook-form'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from '../../store/features/user/user.actions'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Error from '../../components/Error'
-import './login.styles.scss'
+import {LoginStyle, LoginContainerStyle, FromStyle, FromControlStyle, BtnStyle} from './login.styles.jsx'
+
 
 const Login = () => {
+  
   const { loading, userToken, error } = useSelector((state) => state.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = useLocation()
   const fromPage = location.state?.from?.pathname || '/';
-  
+ 
   const { 
     register, 
     handleSubmit, 
     formState:{errors, isValid} } = useForm({mode:"onBlur"});
     
     
+
     // redirect authenticated user to profile screen
     useEffect(() => {
       if (userToken) {
       navigate(fromPage);
     }
+    
   }, [navigate, userToken])
 
-  const submitForm = (data) => {
-    dispatch(userLogin(data))
-  }
+const submitForm = (data) => {
+  dispatch(userLogin(data))
+}
+  
 
   return (
-        <div className="login">
-          <div className="login__container">
-              <form className='login__form' onSubmit={handleSubmit(submitForm)}>
-                  <input
+        <LoginStyle>
+          <LoginContainerStyle>
+              <FromStyle onClick={handleSubmit(submitForm)}>
+                  <FromControlStyle
                       autoComplete='off'
-                      className='form-control login__form-input'
                       placeholder='Login kiriting...'
                       {...register('username', {
                       required:"To'ldirilishi shart!",
@@ -48,8 +52,7 @@ const Login = () => {
                   required
                   />              
                 {/* {errors?.username && <p>{errors?.username?.message || "Error!"}</p>} */}
-                <input
-                className='form-control login__form-input'
+                <FromControlStyle
                 placeholder='Parol kiriting...'
                 type='password'
                 {...register('password',{
@@ -62,10 +65,10 @@ const Login = () => {
                 required
                 />
                 {/* {errors?.password && <p>{errors?.password?.message || "Error!"</p>} */}
-                <button className="form-control login__form-btn" type='submit' disabled={!isValid}>KIRISH</button>
-              </form>
-              </div>
-            </div> 
+                <BtnStyle type='submit' disabled={!isValid}>KIRISH</BtnStyle>
+              </FromStyle>
+              </LoginContainerStyle>
+            </LoginStyle> 
             )}
 
 
