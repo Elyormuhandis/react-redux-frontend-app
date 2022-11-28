@@ -11,54 +11,72 @@ export const sidebarData = [
         id: 0,
         icon: <FiHome/>,
         text: "DASHBOARD",
-        link: "dashboard"
+        link: "dashboard",
+        className:"sidebar-dashboard"
+        
     },
     {
         id: 1,
-        icon: <MdOutlineMarkEmailUnread/>,
-        text: "KELGAN",
-        link: "inbox"
+        icon: <FiSend/>,
+        text: "YARATISH",
+        link: "send",
+        className:"sidebar__send"
+        
     },
     {
         id: 2,
-        icon: <FiSend/>,
-        text: "YARATISH",
-        link: "send"
+        icon: <BiMailSend/>,
+        text: "YUBORILGAN",
+        link: "sent",
+        className:"sidebar__sent"
+        
     },
     {
         id: 3,
-        icon: <BiMailSend/>,
-        text: "YUBORILGAN",
-        link: "sent"
+        icon: <MdOutlineMarkEmailUnread/>,
+        text: "KELGAN",
+        link: "inbox",
+        className:"sidebar__inbox"
+        
     },
     {
         id: 4,
         icon: <MdOutlineDrafts/>,
         text: "QORALAMA",
-        link: "drafts"
+        link: "drafts",
+        className:"sidebar__drafts"
+        
     },
-    {
-        id: 5,
-        icon: <BsTrash/>,
-        text: "KORZINKA",
-        link: "trash"
-    },
+    // {
+    //     id: 5,
+    //     icon: <BsTrash/>,
+    //     text: "KORZINKA",
+    //     link: "trash",
+    //     className:"sidebar__trash"
+        
+    // },
     {
         id: 6,
         icon: <BsJournalText/>,
         text: "JURNAL",
-        link: "journal"
+        link: "journal",
+        className:"sidebar__journal"
+        
     },
-    {
-        id: 7,
-        icon: <AiOutlineBarChart/>,
-        text: "STATISTIKA",
-        link: "statistics"
-    },
+    // {
+    //     id: 7,
+    //     icon: <AiOutlineBarChart/>,
+    //     text: "STATISTIKA",
+    //     link: "statistics",
+    //     className:"sidebar__statistics"
+        
+    // },
     {
         id: 8,
         icon: <RiSettingsLine/>,
         text: "SOZLAMALAR",
         link: "settings",
+        className:"sidebar__settings"
+        
     }
 ]

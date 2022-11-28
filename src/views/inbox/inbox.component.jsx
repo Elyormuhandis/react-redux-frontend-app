@@ -3,11 +3,12 @@ import {MdDone, MdDoneAll} from "react-icons/md"
 import { FaCloudDownloadAlt, FaTrashAlt, FaEye, FaEyeDropper, FaEyeSlash } from "react-icons/fa";
 import './inbox.styles.scss'
 import { downloadFileFromFileSystem, setView } from "../../store/features/attachment/attachment.actions";
+import { useState } from "react";
 
 const Inbox = () => {
     const { kelganFayllar } = useSelector(state => state.attachment) 
     const {divisions} = useSelector(state => state.division)
-
+    const [pdtvModal, setPdtvModal] = useState(false)
     const dispatch = useDispatch()
 
     const setViewHandler = (e) => {
@@ -23,6 +24,9 @@ const Inbox = () => {
           dispatch(downloadFileFromFileSystem({id, fileName}))
         }  
     
+    const pdtvModalHandler = (e) => {
+        setPdtvModal(!pdtvModal);
+    }
 
 
     
@@ -40,6 +44,9 @@ const Inbox = () => {
                             <th style={{color:"orange"}}>Fayl hajmi</th>
                             <th style={{color:"orange"}}>Kimdan</th>
                             <th style={{color:"orange"}}>Kimga</th>
+                            <th style={{color:"orange"}}>
+                                <button className="all-pdtv-btn pdtv-btn">Tasdiqlash</button>
+                            </th>
                             <th style={{color:"orange"}}></th>
                             <th><FaCloudDownloadAlt style={{color:"orange"}}/></th>
                             <th><FaTrashAlt style={{color:"orange"}}/></th>
@@ -62,6 +69,11 @@ const Inbox = () => {
                             </td>
                             <td className=''>
                             {divisions ? divisions.filter((division)=>division.id===file.toDivision.id)[0].name: ''}
+                            </td>
+                            <td className='icons'>
+                            <button className="pdtv-btn" onClick={(e)=>{pdtvModalHandler(e)}}>
+                                <span>Tasdiqlash</span>                                
+                            </button>
                             </td>
                             <td className='icons'>
                             {file.pdtv ? <FaEye/> : <FaEyeSlash/>}

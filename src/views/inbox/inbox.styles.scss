@@ -29,8 +29,78 @@ table {
       }
     tbody tr {
         transition: background-color 150ms ease-out;
-        &:hover {
-            background-color: #008d5e;
-          }
+        // &:hover {
+        //     background-color: #008d5e;
+        //   }
       }
   }
+
+  .all-pdtv-btn, .pdtv-btn{
+    position: relative;
+    outline:none;
+    border-radius: 2px;
+    padding: 4px 6px;
+    background-color:inherit;
+    color: rgb(241, 251, 246);
+    border: none;
+    transition: all .3s;
+    &:hover{
+      transition: all .3s;
+      color: white;
+      border: none;
+      background-color: #008d5e;
+    }
+  }
+  .all-pdtv-btn{
+    background-color: inherit;
+    color: rgb(255, 191, 71);
+    border: none;
+    &:hover{
+      transition: all .3s;
+      color: rgb(77, 245, 111);
+      border: none;
+      background-color: inherit;
+    }
+  }
+
+.pdtv-modal{
+  position: absolute;
+  border:1px solid white;
+  padding:7px;
+  top: -10px;
+  right: -15px;
+  background-color: #e3e4e4;
+  &__header{
+    color: #393737;
+    margin-bottom: 10px;
+  }
+  &__text{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  p{
+  padding: 4px 6px;
+  border-radius: 5px;
+  }
+  }
+  &__yes{
+    background-color: rgb(0, 105, 56);
+    transition: all .3s;
+    &:hover{
+      transition: all .3s;
+      background-color: rgb(0, 193, 103);
+    }
+  }
+  &__no{
+    background-color: red;
+    transition: all .3s;
+    &:hover{
+      transition: all .3s;
+      background-color: rgb(251, 94, 94);
+    }
+  }
+}
+
+.pdtv-modal-none{
+  display: none;
+}
