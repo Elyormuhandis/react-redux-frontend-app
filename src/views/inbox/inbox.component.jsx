@@ -1,19 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import {MdDone, MdDoneAll} from "react-icons/md"
-import { FaCloudDownloadAlt, FaTrashAlt, FaEye, FaEyeDropper, FaEyeSlash } from "react-icons/fa";
+import { FaCloudDownloadAlt, FaTrashAlt, FaEye, FaEyeDropper, FaEyeSlash, FaInfoCircle } from "react-icons/fa";
 import './inbox.styles.scss'
-import { downloadFileFromFileSystem, setView } from "../../store/features/attachment/attachment.actions";
+import { downloadFileFromFileSystem, setPDTV, setView } from "../../store/features/attachment/attachment.actions";
 import { useState } from "react";
 
 const Inbox = () => {
     const { kelganFayllar } = useSelector(state => state.attachment) 
     const {divisions} = useSelector(state => state.division)
-    const [pdtvModal, setPdtvModal] = useState(false)
+    const [pdtvModal, setPdtvModal] = useState()
+    const [isView, setIsView] = useState(false)
     const dispatch = useDispatch()
 
-    const setViewHandler = (e) => {
-        const id = e.currentTarget.id;
+    const setViewHandler = (id) => {
         dispatch(setView(id))
+        setIsView(true);
     }
 
 
@@ -25,7 +25,14 @@ const Inbox = () => {
         }  
     
     const pdtvModalHandler = (e) => {
-        setPdtvModal(!pdtvModal);
+        setPdtvModal(e.currentTarget.id);
+    }
+
+
+
+    const setPdtvHandler = (id) => {
+        dispatch(setPDTV(id))
+        setPdtvModal(undefined);
     }
 
 
@@ -47,15 +54,14 @@ const Inbox = () => {
                             <th style={{color:"orange"}}>
                                 <button className="all-pdtv-btn pdtv-btn">Tasdiqlash</button>
                             </th>
-                            <th style={{color:"orange"}}></th>
+                            <th><FaInfoCircle style={{color:"orange"}}/></th>
                             <th><FaCloudDownloadAlt style={{color:"orange"}}/></th>
-                            <th><FaTrashAlt style={{color:"orange"}}/></th>
                         </tr>
                     </thead>
                     <tbody className='send__table-body'>                   
                     {
-                    kelganFayllar ? kelganFayllar .map((file, idx)=>(
-                        <tr className='' key={idx} id={file.id} onClick={e => setViewHandler(e)}>
+                    kelganFayllar ? kelganFayllar.filter(file => file.pdtv === false).map((file, idx)=>(
+                        <tr className={!file.view ? "file-text-bold" : "file-text-normal"} key={idx} onClick={e => setViewHandler(file.id)}>
                             <td><input type='checkbox'/></td>
                             <td>{idx+1}</td>
                             <td className=''>
@@ -70,21 +76,27 @@ const Inbox = () => {
                             <td className=''>
                             {divisions ? divisions.filter((division)=>division.id===file.toDivision.id)[0].name: ''}
                             </td>
-                            <td className='icons'>
-                            <button className="pdtv-btn" onClick={(e)=>{pdtvModalHandler(e)}}>
-                                <span>Tasdiqlash</span>                                
-                            </button>
+                            <td className='icons '>
+                                <button id={file.id} className="pdtv-btn" onClick={(e)=>{pdtvModalHandler(e)}}>
+                                    <span>Tasdiqlash</span>  
+                                </button>
+                                <div className="pdtv-td">
+                                <div className={pdtvModal==file.id ? "pdtv-modal " : "pdtv-modal-none " + "pdtv-modal-handler"} >
+                                    <h5 className="pdtv-modal__header">Tasdiqlaysizmi?</h5>
+                                    <div className="pdtv-modal__text">
+                                        <p className="pdtv-modal__yes" onClick={()=>{setPdtvHandler(file.id)}}>Ha</p>
+                                        <p className="pdtv-modal__no" onClick={()=>{setPdtvModal(undefined)}}>Yo'q</p>
+                                    </div>
+                                </div> 
+                                </div>
                             </td>
                             <td className='icons'>
-                            {file.pdtv ? <FaEye/> : <FaEyeSlash/>}
+                            <span className='delete-icon'><FaInfoCircle/></span>
                             </td>
                             <td className='icons' id={file.id} onClick={(e) => downloadRow(e, file.originalName)}>
                             <span className='delete-icon'>
                                 <FaCloudDownloadAlt/>
                             </span>
-                            </td>
-                            <td className='icons'>
-                            <span className='delete-icon'><FaTrashAlt/></span>
                             </td>
                         </tr>
                     )) : <tr>

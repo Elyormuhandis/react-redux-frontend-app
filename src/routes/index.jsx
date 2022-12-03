@@ -14,6 +14,12 @@ const publicRoutes = [
     { path:'login', element:<Login/>},
 ]
 
+const adminRoutes = [
+    { path:'dashboard', element:<Dashboard/>},
+    { path:'settings',  element:<Settings/>}, 
+    { path:'journal',  element:<Journal/>}, 
+]
+
 const authProtectedRoutes = [
     { path:'dashboard', element:<Dashboard/>},
     { path:'send',  element:<Send/>},
@@ -24,7 +30,6 @@ const authProtectedRoutes = [
     { path:'journal',  element:<Journal/>}, 
     { path:'statistics',  element:<Statistics/>}, 
     { path:'settings',  element:<Settings/>}, 
-    { path:'logout',  element:<Settings/>} 
 ]
 
-export { authProtectedRoutes, publicRoutes }
+export { authProtectedRoutes, adminRoutes, publicRoutes }

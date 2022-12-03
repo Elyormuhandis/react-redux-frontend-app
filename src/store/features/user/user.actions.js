@@ -193,11 +193,11 @@ export const getRoles = createAsyncThunk(
 //get Role by id 
 export const getRole = createAsyncThunk(
   'user/getRole',
-  async ({ Id }, { getState, rejectWithValue }) => {
+  async (args, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user
       const { data } = await axios.get(
-        `${BASE_URL}api/user/${Id}`,
+        `${BASE_URL}api/user/role`,
         {
           headers: {
             Authorization: `Bearer ${userToken}`,

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { MdDelete, MdEdit } from 'react-icons/md';
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { addDivision, deleteDivision, editDivision, getDivisions } from '../../store/features/division/division.action';
+import { addDivision, deleteDivision, editDivision } from '../../store/features/division/division.action';
 import './divisions.styles.scss'
 
 
@@ -21,14 +21,6 @@ const {
     formState:{errors, isValid} } = useForm({mode:"onBlur"});
 
 
-
-
-// const asyncFunc = async()=> {
-//     console.log("start")
-//     await new Promise((resolve, rejected)=> setTimeout(()=> resolve(), 2000))    
-//     console.log("end")
-// }
-// asyncFunc()
 
 
 
@@ -87,7 +79,7 @@ return (
         <hr className='dashboard__line'/>
         <ul className='division__list'>
             {
-            divisions ? divisions.filter((division)=>division.active==true).map((division, idx)=>(
+            divisions?.filter((division)=>division.active==true).map((division, idx)=>(
                 <li className='division__list--item' key={division.id}>
                     <div className='item-name'>
                         <span className='id'>{idx+1}.</span>
@@ -106,7 +98,7 @@ return (
                         ><MdDelete/></span>
                         </div>
                 </li>
-            )) : <li>Server bilan aloqa yo'q</li>}
+            ))}
         </ul>
     </div>
 )};

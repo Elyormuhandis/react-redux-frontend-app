@@ -166,7 +166,7 @@ return (
                     disabled 
                     hidden>Boshqarma tanlang...</option>
                     {
-                    divisions ? divisions.filter((division)=>division.active===true).map((division, idx)=>(
+                    divisions?.filter((division)=>division.active===true).map((division, idx)=>(
                         <option 
                         className='division__list--item' 
                         key={division.id} 
@@ -174,7 +174,7 @@ return (
                         >
                                 {division.name}
                         </option>
-                    )) : <option>Server bilan aloqa yo'q</option>
+                    ))
                 }
                 </select>
                 <label className='users__label' htmlFor='role-select'>Foydalanuvchi turi</label>
@@ -190,15 +190,14 @@ return (
                     disabled 
                     hidden>Foydalanuvchi toifasini tanlang...</option>
                     {
-                     roles ? roles.map((role, idx)=>(
+                     roles?.map((role, idx)=>(
                         <option 
                         className='division__list--item' 
                         key={role.id} 
                         value={role.id}>
                                 {role.description}
                         </option>
-                    )) : <option>Server bilan aloqa yo'q</option>
-                    }
+                    ))}
                 </select>
                 <div className='users__btn'>
                 <button type='submit' className='dashboard-btn  dashboard-btn--success'>{create ? "QO'SHISH" : "O'ZGARTIRISH"}</button>
@@ -218,33 +217,32 @@ return (
                     </tr>
                 </thead>
                 <tbody className='users__table-body'>                   
-                {
-                !loading ? users?.map((user, idx)=>(
-                    <tr className='' key={user.id}>
+                {users?.map((user, idx)=>(
+                    <tr className='' key={user?.id}>
                         <td><input type='checkbox'/></td>
                         <td className=''>
-                            {user.fullName}
+                            {user?.fullName}
                         </td>
                         <td>
-                            <span>{user.division ? divisions?.find((division)=>division?.id===user?.division.id).name  : '-'}</span>
+                            <span>{user?.division ? divisions?.find((division)=>division?.id===user?.division.id)?.name  : '-'}</span>
                         </td>
                         <td>
-                            <span>{user.role ? user?.role?.description : '-'}</span>
+                            <span>{user?.role ? user?.role?.description : '-'}</span>
                         </td>
                         <td>
-                            <span>{user.enabled ? 'AKTIV' : 'BLOKLANGAN'}</span>
+                            <span>{user?.enabled ? 'AKTIV' : 'BLOKLANGAN'}</span>
                         </td>
                         <td className='icons'>
                         <span 
                             className='edit-icon'
-                            id={user.id}
+                            id={user?.id}
                             onClick={(e)=> editHandler(e)} 
                             ><MdOutlineRemoveRedEye/>
                         </span>
-                        <span className='delete-icon' id={user.id} onClick={(e)=>deleteHandle(e)}><MdDelete/></span>
+                        <span className='delete-icon' id={user?.id} onClick={(e)=>deleteHandle(e)}><MdDelete/></span>
                         </td>
                     </tr>
-                )) : <tr><td>Server bilan aloqa yo'q</td></tr>}
+                ))}
                 </tbody>
             </table>
         </div>

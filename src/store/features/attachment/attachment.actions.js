@@ -24,7 +24,6 @@ export const uploadFiles = createAsyncThunk(
             Authorization: `Bearer ${userToken}`,
           },
         })
-      console.log(data);
       return data
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -97,7 +96,7 @@ export const getAllByToDivision = createAsyncThunk(
 export const setView = createAsyncThunk(
   'user/setView',
   async (id, { getState, rejectWithValue }) => {
-    console.log(id);
+
     try {
       const { userToken } = getState().user
       const { data } = await axios.get(
@@ -123,7 +122,8 @@ export const setView = createAsyncThunk(
 
 export const setPDTV = createAsyncThunk(
   'user/setPDTV',
-  async ({id}, { getState, rejectWithValue }) => {
+  async (id, { getState, rejectWithValue }) => {
+    console.log(id);
     try {
       const { userToken } = getState().user
       const { data } = await axios.get(
@@ -175,7 +175,7 @@ export const getOneReceivedFile = createAsyncThunk(
 
 export const getOneSentFile = createAsyncThunk(
   'user/getOneSentFile',
-  async ({id}, { getState, rejectWithValue }) => {
+  async (id, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user
       const { data } = await axios.get(
@@ -262,6 +262,7 @@ export const deleteOneTo = createAsyncThunk(
     }
   }
 )
+
 
 
 

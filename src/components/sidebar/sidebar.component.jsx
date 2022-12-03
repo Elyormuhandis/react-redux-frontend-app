@@ -12,6 +12,7 @@ import { SidebarItem } from './sidebar.styles';
 const Sidebar = () => {
     const [open, setopen] = useState(false);
     const {kelganFayllar} = useSelector(state=>state.attachment)
+    const {userRole} = useSelector(state=>state.user)
     const toggleOpen = () => {
         setopen(!open)
     }
@@ -22,9 +23,15 @@ const Sidebar = () => {
     <button className="menuBtn" onClick={toggleOpen}>
             {open? <HiOutlineChevronDoubleLeft />: <HiOutlineChevronDoubleRight />}
     </button>
-    {sidebarData.map(item =>{
+    {
+    userRole==="ADMIN" ? sidebarData.filter((item)=>((item.link!=="send") && (item.link!=="sent") && (item.link!=="drafts") && (item.link!=="inbox"))).map(item =>{
         return <NavLink key={item.id} className={({isActive})=>(isActive ? "sideitem-active" : "sideitem")} to={item.link}>
-                   <SidebarItem inboxCount = {inboxCount}><span className={open ? 'sidebar-icon ' : 'sidebar-icon-toggle ' + `${item.className}`}>{item.icon}</span></SidebarItem>
+                   <SidebarItem inboxCount = {inboxCount}><span className={`${item.className}`+ (open ? ' sidebar-icon' : ' sidebar-icon-toggle')}>{item.icon}</span></SidebarItem>
+                   <span className={open ? "linkText" : "linkTextClosed"}>{item.text}</span>
+               </NavLink>
+     }) : sidebarData.filter((item)=>item.link!=="dashboard").map(item =>{
+        return <NavLink key={item.id} className={({isActive})=>(isActive ? "sideitem-active" : "sideitem")} to={item.link}>
+                   <SidebarItem inboxCount = {inboxCount}><span className={`${item.className}`+ (open ? ' sidebar-icon' : ' sidebar-icon-toggle')}>{item.icon}</span></SidebarItem>
                    <span className={open ? "linkText" : "linkTextClosed"}>{item.text}</span>
                </NavLink>
      })}

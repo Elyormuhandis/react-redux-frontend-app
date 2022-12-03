@@ -2,12 +2,16 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './pages/layout/layout.component'
 import './App.css'
 import Login from './pages/login/login.component'
-import  {authProtectedRoutes} from './routes/index' 
+import  {adminRoutes, authProtectedRoutes} from './routes/index' 
 import Authmiddleware from './routes/authmiddleware'
+import { useSelector } from 'react-redux'
   
 
 
 const App = () => {
+
+   const {userRole} = useSelector(state=>state.user)
+
 
   return (
      <div className='App'>
@@ -33,7 +37,7 @@ const App = () => {
                   ))}
                   <Route
                   path="/"
-                  element={<Navigate replace to="dashboard" />}/>
+                  element={<Navigate replace to={userRole==="ADMIN" ? "dashboard" : "send"} />}/>
              </Route>
         </Routes>    
      </div>

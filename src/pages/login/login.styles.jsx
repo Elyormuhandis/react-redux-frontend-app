@@ -15,7 +15,8 @@ num = (getRandomInt(0, 9));
 export const LoginStyle = styled.div`
     width: 100vw;
     height: 100vh;
-    background-image: url(${require(`../../assets/img/bg${num}.jpg`)});
+    /* background-image: url(${require(`../../assets/img/bg${num ? num : 4}.jpg`)}); */
+    background-image: url(${require('../../assets/img/bg4.jpg')});
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;

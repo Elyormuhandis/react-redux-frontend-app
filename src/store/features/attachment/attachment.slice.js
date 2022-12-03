@@ -11,8 +11,8 @@ const initialState = {
     loading: false,
     message: "",
     yuborilganFayllar:[],
-    OneReceivedFile:{},
-    OneSentFile:{},
+    oneReceivedFile:{},
+    oneSentFile:{},
     kelganFayllar:[],
     downloadFileFromFileSystem: undefined,
     korildi:false,
@@ -86,6 +86,7 @@ const attachmentSlice = createSlice({
   state.loading = false
   state.message = payload.message
   state.success = payload.success
+  state.kelganFayllar = payload.object
 },
 
 [setView.rejected]: (state, { payload }) => {
@@ -102,6 +103,7 @@ const attachmentSlice = createSlice({
   state.loading = false
   state.message = payload.message
   state.success = payload.success
+  state.kelganFayllar = payload.object
 },
 
 [setPDTV.rejected]: (state, { payload }) => {
@@ -116,7 +118,7 @@ const attachmentSlice = createSlice({
 },
 [getOneReceivedFile.fulfilled]: (state, { payload }) => {
   state.loading = false
-  state.OneReceivedFile = payload
+  state.oneReceivedFile = payload
 },
 
 [getOneReceivedFile.rejected]: (state, { payload }) => {
@@ -132,7 +134,8 @@ const attachmentSlice = createSlice({
 },
 [getOneSentFile.fulfilled]: (state, { payload }) => {
   state.loading = false
-  state.OneSentFile = payload
+  console.log(payload);
+  state.oneSentFile = payload
 },
 
 [getOneSentFile.rejected]: (state, { payload }) => {

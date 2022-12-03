@@ -5,13 +5,17 @@ import { getUser, addUser, userLogin, getUsers, editUser, getRoles, getRole, del
 const userToken = localStorage.getItem('Token')
   ? localStorage.getItem('Token')
   : null
+const userRole = localStorage.getItem('role')
+  ? localStorage.getItem('role')
+  : null
+
 
 const initialState = {
   loading: false,
   users:[],
   roles:[],
   role:[],
-  userInfo: null,
+  userRole,
   userToken,
   error: null,
   success: false,
@@ -24,10 +28,11 @@ const userSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem('Token') // delete token from storage
+      localStorage.removeItem('role') // delete token from storage
       state.loading = false
       state.users = []
       state.roles = []
-      state.userInfo = null
+      state.userRole = null
       state.userToken = null
       state.error = null
       state.message = ''
@@ -40,10 +45,11 @@ const userSlice = createSlice({
       state.error = null
     },
     [userLogin.fulfilled]: (state, { payload }) => {
-      localStorage.setItem(`${payload.message}`, payload.object)
-      state.userToken = payload.object
+      localStorage.setItem(`${payload.message}`, payload.token)
+      localStorage.setItem("role", payload.object.name)
+      state.userToken = payload.token
       state.loading = false
-      state.userInfo = payload
+      state.userRole = payload.object.name
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false
@@ -130,14 +136,15 @@ const userSlice = createSlice({
       state.loading = false
       state.error = payload
     },
-
+    
     // get Role  
     [getRole.pending]: (state) => {
       state.loading = true
     },
     [getRole.fulfilled]: (state, { payload }) => {
+      localStorage.setItem("role", payload.name)
       state.loading = false
-      state.role = payload
+      state.userRole = payload.name
     },
     [getRole.rejected]: (state, { payload }) => {
       state.loading = false

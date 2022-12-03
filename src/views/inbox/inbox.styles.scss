@@ -1,3 +1,21 @@
+.inbox{
+  width: 100%;
+  height: 100%;
+  &__header{
+    margin-bottom: 15px;
+  }
+}
+
+.file-text-bold{
+  background-color: rgb(255, 0, 0);
+  font-weight: bold;
+}
+.file-text-normal{
+  background-color: #1e6300;
+  font-weight: normal;
+}
+
+
 table {
     background-color: inherit;
     border: 1px solid #8f8f8f;
@@ -17,7 +35,7 @@ table {
         color: #ffffff;
         border-bottom: solid 1px #d8d8d8;
         font-weight: normal;
-        background-color: rgb(0,47,38);
+        background-color: rgb(0, 30, 25);
         position: sticky;
         top: 0;
       }
@@ -34,13 +52,16 @@ table {
         //   }
       }
   }
+  .pdtv-td{
+    position: relative;
+
+  }
 
   .all-pdtv-btn, .pdtv-btn{
-    position: relative;
     outline:none;
     border-radius: 2px;
     padding: 4px 6px;
-    background-color:inherit;
+    background-color: #006845;
     color: rgb(241, 251, 246);
     border: none;
     transition: all .3s;
@@ -52,14 +73,14 @@ table {
     }
   }
   .all-pdtv-btn{
-    background-color: inherit;
     color: rgb(255, 191, 71);
+    background-color: #00412f;
     border: none;
     &:hover{
+      color: rgb(255, 201, 100);
       transition: all .3s;
-      color: rgb(77, 245, 111);
+      background-color: #00553a;
       border: none;
-      background-color: inherit;
     }
   }
 
@@ -67,9 +88,10 @@ table {
   position: absolute;
   border:1px solid white;
   padding:7px;
-  top: -10px;
-  right: -15px;
+  top: -25px;
+  left: 0px;
   background-color: #e3e4e4;
+  z-index: 2;
   &__header{
     color: #393737;
     margin-bottom: 10px;
@@ -78,24 +100,34 @@ table {
     display: flex;
     align-items: center;
     justify-content: space-between;
-  p{
-  padding: 4px 6px;
-  border-radius: 5px;
-  }
+    
+
   }
   &__yes{
+    color: #d8d8d8;
+    border:none;
+    outline:none;
+    padding: 4px 6px;
+    border-radius: 5px;
     background-color: rgb(0, 105, 56);
     transition: all .3s;
     &:hover{
       transition: all .3s;
+      color: #d8d8d8;
       background-color: rgb(0, 193, 103);
     }
   }
   &__no{
+    color: #d8d8d8;
+    border:none;
+    outline:none;
+    padding: 4px 6px;
+    border-radius: 5px;
     background-color: red;
     transition: all .3s;
     &:hover{
       transition: all .3s;
+      color: #d8d8d8;
       background-color: rgb(251, 94, 94);
     }
   }

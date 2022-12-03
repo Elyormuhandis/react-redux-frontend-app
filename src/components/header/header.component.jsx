@@ -1,26 +1,16 @@
-import { useEffect } from 'react'
 import {MdOutlinePersonOutline} from 'react-icons/md'
 import {BsSearch} from 'react-icons/bs'
-import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { logout } from '../../store/features/user/user.slice'
 import './header.styles.scss'
 
 const Header = () => {
-  const { userToken } = useSelector((state) => state.user)
   const dispatch = useDispatch()
-
-
-  useEffect(() => {
-    if (userToken) {
-
-    }
-  }, [userToken, dispatch])
-
+  
   return (
     <header className='header'>
       <div className='header__icon'>
-        Icon
+        FILE TRANSFER
       </div>
       <div className='header__options'>
         <div className='searchbox'>
@@ -32,15 +22,11 @@ const Header = () => {
             <option value="rus">RUS</option>
             </select>
         <span className='personal'><MdOutlinePersonOutline/></span>
-        {userToken ? (
+        {
             <button className='personal' onClick={() => dispatch(logout())}>
               Logout
             </button>
-          ) : (
-            <NavLink className='personal' to='/login'>
-              Login
-            </NavLink>
-          )}
+        } 
       </div>
     </header>
   )

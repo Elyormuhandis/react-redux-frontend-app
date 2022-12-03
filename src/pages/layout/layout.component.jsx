@@ -1,24 +1,25 @@
-import { useEffect } from 'react';
-import { getDivisions } from '../../store/features/division/division.action';
-import { getRoles, getUsers } from '../../store/features/user/user.actions';
-import { getAllByFromDivision, getAllByToDivision} from "../../store/features/attachment/attachment.actions";
 import Header from '../../components/header/header.component';
 import Sidebar from '../../components/sidebar/sidebar.component';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import './layout.styles.scss'
 import { useDispatch, useSelector } from 'react-redux';
+import { getRole, getRoles, getUsers } from '../../store/features/user/user.actions';
+import { getDivisions } from '../../store/features/division/division.action';
+import { getAllByFromDivision, getAllByToDivision } from '../../store/features/attachment/attachment.actions';
+
 
 const Layout = () => {
-    const dispatch = useDispatch();
-    const {userToken} = useSelector(state=>state.user)
+    const {userRole} = useSelector(state => state.user)
+    const dispatch = useDispatch() 
     useEffect(()=>{
         dispatch(getDivisions())
-        dispatch(getRoles())
-        dispatch(getUsers(0))
-        dispatch(getAllByToDivision())
-        dispatch(getAllByFromDivision())
-    }, [userToken])
+        if(userRole==="ADMIN") dispatch(getRoles())
+        if(userRole==="ADMIN") dispatch(getUsers(0))
+        if(userRole==="USER") dispatch(getAllByToDivision())
+        if(userRole==="USER") dispatch(getAllByFromDivision())
+        dispatch(getRole())
+    }, [])
 
 
     return (
