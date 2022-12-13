@@ -49,7 +49,7 @@
         tbody tr {
             transition: background-color 150ms ease-out;
             &:hover {
-                background-color: #c60000;
+                background-color: rgba(198, 0, 0, 0.4);
               }
           }
       }
@@ -91,11 +91,11 @@
 }
 
 .tasdiqlangan{
-  background-color: #197500;
+  background-color: rgba(25, 117, 0, 0.3);
   &:hover{
-    background-color: #219700!important;
+    background-color: rgba(33, 151, 0, 0.5)!important;
   }
 }
 .tasdiqlanmagan{
-  background-color: rgba(255, 0, 0, 0.4);
+  background-color: rgba(125, 0, 0, 0.3);
 }

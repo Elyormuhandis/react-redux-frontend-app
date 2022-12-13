@@ -159,21 +159,7 @@ const attachmentSlice = createSlice({
   state.loading = false
   state.error = payload
 },
-// downloadFileFromFileSystem
-[getAllStatistics.pending]: (state) => {
-  state.loading = true
-  state.error = null
-},
-[getAllStatistics.fulfilled]: (state, { payload }) => {
-  state.loading = false
-  console.log(payload);
-  // state.getAllStatistics = payload
-},
 
-[getAllStatistics.rejected]: (state, { payload }) => {
-  state.loading = false
-  state.error = payload
-},
 
 }
 })

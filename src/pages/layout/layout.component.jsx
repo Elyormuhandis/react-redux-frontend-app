@@ -1,6 +1,6 @@
 import Header from '../../components/header/header.component';
 import Sidebar from '../../components/sidebar/sidebar.component';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import './layout.styles.scss'
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,9 +9,13 @@ import { getDivisions } from '../../store/features/division/division.action';
 import { getAllByFromDivision, getAllByToDivision } from '../../store/features/attachment/attachment.actions';
 
 
+
 const Layout = () => {
     const {userRole} = useSelector(state => state.user)
     const dispatch = useDispatch() 
+    const [globalState, setGlobalState] = useState();
+
+
     useEffect(()=>{
         dispatch(getDivisions())
         if(userRole==="ADMIN") dispatch(getRoles())

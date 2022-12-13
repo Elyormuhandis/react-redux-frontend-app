@@ -1,46 +1,139 @@
 import React from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllStatistics } from "../../store/features/attachment/attachment.actions";
+import './journal.styles.scss'
+import { getAllStatistics, getAllStatisticsFromDivision, getAllStatisticsToDivision } from "../../store/features/statistics/statistics.actions";
 
 const Journal = () => {
-  // const {} = useSelector()
+  const {logs} = useSelector(state => state.statistics)
+  const {userRole} = useSelector(state => state.user)
+  const {userDivision} = useSelector(state => state.user)
+  const {divisions} = useSelector(state => state.division)
   const dispatch = useDispatch();
 
-  const getJournal = () => {
-    var axios = require("axios");
-    let start = "2022-10-11";
-    let end = "2022-12-11";
-    let divisionId = "12"
+  const { 
+    register, 
+    handleSubmit,
+    formState:{errors, isValid} } = useForm({mode:"onBlur"});
 
-    var config = {
-      method: "get",
-      url:
-        "http://localhost:8080/statistics/getallbycreatedatbetweenfromdivision?start=" +
-        start +
-        "&&end=" +
-        end +
-        "&&divisionId=" +
-        divisionId +
-        "",
-      headers: {
-        Authorization:
-          "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MDc0NTk0MCwiZXhwIjoxNjcwODMyMzQwLCJyb2xlcyI6IkFETUlOIn0.wACupjVMBfY0O9ocbYJuO5wCdI_Mvxjk4l3kiI682S0czC0z4LO2Tp6xryWmFNY_NrZV6XcypfO9mSTw4qyjMA",
-        "Content-Type": "application/json",
-      },
-    };
 
-    axios(config)
-      .then(function (response) {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+
+  const getJournal = (data) => {
+    console.log(data);
+    if(userDivision){
+      data.divisionId = userDivision
+    } 
+    const {sortType} = data;
+    if(sortType==='HAMMASI'){
+      dispatch(getAllStatistics(data))
+    } else if(sortType==='YUBORILGANLAR'){
+      dispatch(getAllStatisticsFromDivision(data))
+    } else if(sortType==='QABUL QILINGANLAR'){
+      dispatch(getAllStatisticsToDivision(data))
+    }
+    console.log(logs);
   };
 
   return (
-    <div>
-      <button onClick={getJournal}>getData</button>
+    <div className="journal">
+      <h4 className="journal__header">Yuborilgan va qabul qilingan fayllar jurnali</h4>
+      <form className='journal__form' onSubmit={handleSubmit(getJournal)}>
+            <input 
+            type="date"
+            className='journal__input'
+            id='date-start'
+            {...register('start', {})}
+            required
+            />
+            <label className='journal__label' htmlFor='date-start'>dan</label>
+            <input 
+            type="date"
+            className='journal__input'
+            id='date-end'
+            {...register('end', {})}
+            required
+            />
+            <label className='journal__label' htmlFor='date-end'>gacha</label>
+            <select 
+                className='journal__select' 
+                id='date-select'
+                defaultValue={'DEFAULT'}
+                {...register("sortType")}>
+                    <option 
+                    className='' 
+                    value={'DEFAULT'}
+                    disabled 
+                    hidden>TANLANG</option>
+                    {userRole==='ADMIN' ?  <option className='journal__select--options'>HAMMASI</option> : ''}
+                    <option className='journal__select--options'>YUBORILGANLAR</option>
+                    <option className='journal__select--options'>QABUL QILINGANLAR</option>                
+                </select>
+                {userRole==='ADMIN' 
+                &&                 
+                <select 
+                className='journal__select' 
+                id='division-select-send'
+                defaultValue={'DEFAULT'}
+              {...register("divisionId")}>
+                  <option 
+                  className='journal__select--options' 
+                  value={'DEFAULT'}
+                  disabled 
+                  hidden>Boshqarmalar...</option>
+                  {
+                  divisions ? divisions.filter((division)=>division.active===true).map((division, idx)=>(
+                      <option 
+                      className='journal__select--options' 
+                      key={division.id} 
+                      value={division.id}
+                      >
+                      {division.name}
+                      </option>
+                  )) : <option>Server bilan aloqa yo'q</option>
+                }
+                </select>}
+            <button className="journal__btn" type="submit">QIDIRISH</button>
+        </form>
+        <table className='sent__table'>
+                    <thead className='send__table-header'>
+                        <tr>
+                            <th>N</th>
+                            <th>Nomi</th>
+                            <th>Fayl hajmi</th>
+                            <th>Kimdan</th>
+                            <th>Kimga</th>
+                            <th>Yuborilgan vaqti</th>
+                            <th>Qabul qilingan vaqti</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody className='send__table-body'>                   
+                    {logs?.map((file, idx)=>(
+                        <tr className="tasdiqlangan"  key={idx}>
+                            <td>{idx+1}</td>
+                            <td className=''>
+                                {file.originalName}
+                            </td>
+                            <td className=''>
+                                {file.size+"b"}
+                            </td>
+                            <td className=''>
+                            {divisions?.filter((division)=>division.id===file.fromDivision.id)[0]?.name}
+                            </td>
+                            <td className=''>
+                            {divisions?.filter((division)=>division.id===file.toDivision.id)[0]?.name}
+                            </td>
+                            <td className='icons'>
+                            {file.fromDivision.createdAt}
+                            </td>
+                            <td className='icons'>
+                            {file.toDivision.createdAt}
+                            </td>
+                        </tr>
+                    )) }
+                    </tbody>
+                </table>
     </div>
   );
 };

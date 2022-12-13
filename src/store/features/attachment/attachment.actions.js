@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-const BASE_URL = "http://localhost:8080/";
+const BASE_URL = "http://192.168.1.114:8080/";
 
 //upload Files
 export const uploadFiles = createAsyncThunk(
@@ -262,69 +262,7 @@ export const deleteOneTo = createAsyncThunk(
 )
 
 
-//AttechmentStatistics uchun ishlatiladi
 
-export const getAllStatistics = createAsyncThunk(
-  'user/getAllStatistics',
-  async (id, { getState, rejectWithValue }) => {
-    try {
-      const start = "2022-11-01"
-      const end = "2022-12-01"
-      const { userToken } = getState().user
-      console.log(userToken);
-      const { data } = await axios.get(
-        `${BASE_URL}statistics/getallbycreatedatbetween`, 
-        {start, end},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userToken}`,
-          },
-        })
-      console.log(data)
-      return data
-    } catch (error) {
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message)
-      } else {
-        return rejectWithValue(error.message)
-      }
-    }
-  }
-)
-
-
-
-
-export const testRequest = createAsyncThunk(
-  'user/getstatistics',
-  async (id, { getState, rejectWithValue }) => {
-    
-    var axios = require('axios');
-    var data = JSON.stringify({
-      "start": "2022-11-01",
-      "end": "2022-12-01"
-    });
-    
-    var config = {
-      method: 'get',
-      url: 'http://localhost:8080/statistics/getallbycreatedatbetween',
-      headers: { 
-        'Authorization': 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY3MDY1MjgwMCwiZXhwIjoxNjcwNzM5MjAwLCJyb2xlcyI6IkFETUlOIn0.1eib67Q9rW6XT7m6d_xRi6RhhzYOw1XbSUoW-nlN1JkhWl-gk7vwwfZf1SUpLsVNURMNP79bTgrI-t8cFCyEZQ', 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-    
-    axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-)
 
 
 

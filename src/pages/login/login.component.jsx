@@ -3,9 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from '../../store/features/user/user.actions'
 import { useEffect, useState } from 'react'
-import Error from '../../components/Error'
 import {LoginStyle, LoginContainerStyle, FromStyle, FromControlStyle, BtnStyle} from './login.styles.jsx'
-
+import './login.styles.scss'
 
 const Login = () => {
   
@@ -36,7 +35,7 @@ const submitForm = (data) => {
   
 
   return (
-        <LoginStyle>
+        <LoginStyle className='login-style'>
           <LoginContainerStyle>
               <FromStyle onClick={handleSubmit(submitForm)}>
                   <FromControlStyle
@@ -51,7 +50,6 @@ const submitForm = (data) => {
                   })}
                   required
                   />              
-                {/* {errors?.username && <p>{errors?.username?.message || "Error!"}</p>} */}
                 <FromControlStyle
                 placeholder='Parol kiriting...'
                 type='password'
@@ -64,7 +62,6 @@ const submitForm = (data) => {
                 })}
                 required
                 />
-                {/* {errors?.password && <p>{errors?.password?.message || "Error!"</p>} */}
                 <BtnStyle type='submit' disabled={!isValid}>KIRISH</BtnStyle>
               </FromStyle>
               </LoginContainerStyle>
