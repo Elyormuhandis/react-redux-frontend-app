@@ -1,21 +1,58 @@
-
-
 import styled from 'styled-components'
+import img1 from '../../assets/img/bg1.jpg'
+import img2 from '../../assets/img/bg2.jpg'
+import img3 from '../../assets/img/bg3.jpg'
+import img4 from '../../assets/img/bg4.jpg'
+import img5 from '../../assets/img/bg5.jpg'
+import img6 from '../../assets/img/bg6.jpg'
+import img7 from '../../assets/img/bg7.jpg'
+import img8 from '../../assets/img/bg8.jpg'
+import img9 from '../../assets/img/bg9.jpg'
 
-let num = 0;
+
+let img;
 const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-num = (getRandomInt(0, 9));
-
+switch (getRandomInt(1, 9)) {
+    case 1:
+        img = img1;
+        break;
+    case 2:
+        img = img2;
+        break;
+    case 3:
+        img = img3;
+        break;
+    case 4:
+        img = img4;
+        break;
+    case 5:
+        img = img5;
+        break;
+    case 6:
+        img = img6;
+        break;
+    case 7:
+        img = img7;
+        break;
+    case 8:
+        img = img8;
+        break;
+    case 9:
+        img = img9;
+        break;
+    default:
+        img=img4
+        break;
+}
 
 export const LoginStyle = styled.div`
     width: 100vw;
     height: 100vh;
-    /* background-image: url(${require(`../../assets/img/bg${num ? num : 4}.jpg`)}); */
+    background-image: url(${img});
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -1;

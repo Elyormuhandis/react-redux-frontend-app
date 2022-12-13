@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from '../../store/features/user/user.actions'
 import { useEffect, useState } from 'react'
 import {LoginStyle, LoginContainerStyle, FromStyle, FromControlStyle, BtnStyle} from './login.styles.jsx'
-import './login.styles.scss'
 
 const Login = () => {
   

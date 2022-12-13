@@ -32,8 +32,7 @@ const statisticsSlice = createSlice({
 },
 [getAllStatistics.fulfilled]: (state, { payload }) => {
   state.loading = false
-  console.log(payload);
-  state.logs = payload
+  state.logs = payload.sort((a, b) => (a.id - b.id  ||  a.orginalName.localeCompare(b.orginalName)));
 },
 [getAllStatistics.rejected]: (state, { payload }) => {
   state.loading = false
@@ -46,7 +45,7 @@ const statisticsSlice = createSlice({
 },
 [getAllStatisticsFromDivision.fulfilled]: (state, { payload }) => {
   state.loading = false
-  state.logs = payload
+  state.logs = payload.sort((a, b) => (a.id - b.id  ||  a.orginalName.localeCompare(b.orginalName)));
 },
 [getAllStatisticsFromDivision.rejected]: (state, { payload }) => {
   state.loading = false
@@ -59,7 +58,7 @@ const statisticsSlice = createSlice({
 },
 [getAllStatisticsToDivision.fulfilled]: (state, { payload }) => {
   state.loading = false
-  state.logs = payload
+  state.logs = payload.sort((a, b) => (a.id - b.id  ||  a.orginalName.localeCompare(b.orginalName)));
 },
 [getAllStatisticsToDivision.rejected]: (state, { payload }) => {
   state.loading = false

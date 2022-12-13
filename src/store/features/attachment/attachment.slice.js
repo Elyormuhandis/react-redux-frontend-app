@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { downloadFileFromFileSystem, getAllByFromDivision, getAllByToDivision, getAllStatistics, getOneReceivedFile, getOneSentFile, setPDTV, setView, uploadFiles } from "./attachment.actions";
+import { baseUpdate, downloadFileFromFileSystem, getAllByFromDivision, getAllByToDivision, getAllStatistics, getOneReceivedFile, getOneSentFile, setPDTV, setView, uploadFiles } from "./attachment.actions";
 
 const userToken = localStorage.getItem('Token')
   ? localStorage.getItem('Token')
@@ -15,6 +15,7 @@ const initialState = {
     oneSentFile:{},
     kelganFayllar:[],
     downloadFileFromFileSystem: undefined,
+    isUpdate:false,
     korildi:false,
     userToken,
     error: null,
@@ -54,7 +55,9 @@ const attachmentSlice = createSlice({
 },
 [getAllByFromDivision.fulfilled]: (state, { payload }) => {
   state.loading = false
-  state.yuborilganFayllar = [...payload]
+  state.yuborilganFayllar = payload.sort(function(a, b) { 
+    return a.id - b.id  ||  a.orginalName.localeCompare(b.orginalName);
+  });
 },
 
 [getAllByFromDivision.rejected]: (state, { payload }) => {
@@ -69,7 +72,9 @@ const attachmentSlice = createSlice({
 },
 [getAllByToDivision.fulfilled]: (state, { payload }) => {
   state.loading = false
-  state.kelganFayllar = [...payload]
+  state.kelganFayllar = payload.sort(function(a, b) { 
+    return a.id - b.id  ||  a.orginalName.localeCompare(b.orginalName);
+  });
 },
 
 [getAllByToDivision.rejected]: (state, { payload }) => {
@@ -86,7 +91,9 @@ const attachmentSlice = createSlice({
   state.loading = false
   state.message = payload.message
   state.success = payload.success
-  state.kelganFayllar = payload.object
+  state.kelganFayllar = payload.object.sort(function(a, b) { 
+    return a.id - b.id  ||  a.orginalName.localeCompare(b.orginalName);
+  });
 },
 
 [setView.rejected]: (state, { payload }) => {
@@ -103,7 +110,9 @@ const attachmentSlice = createSlice({
   state.loading = false
   state.message = payload.message
   state.success = payload.success
-  state.kelganFayllar = payload.object
+  state.kelganFayllar = payload.object.sort(function(a, b) { 
+    return a.id - b.id  ||  a.orginalName.localeCompare(b.orginalName);
+  });
 },
 
 [setPDTV.rejected]: (state, { payload }) => {
@@ -151,11 +160,25 @@ const attachmentSlice = createSlice({
 },
 [downloadFileFromFileSystem.fulfilled]: (state, { payload }) => {
   state.loading = false
-  console.log(payload);
   // state.downloadFileFromFileSystem = payload
 },
 
 [downloadFileFromFileSystem.rejected]: (state, { payload }) => {
+  state.loading = false
+  state.error = payload
+},
+// Boshqarmaga fayl kelganmi yoki yo'qmi bilish uchun kerak
+[baseUpdate.pending]: (state) => {
+  state.loading = true
+  state.error = null
+},
+[baseUpdate.fulfilled]: (state, { payload }) => {
+  state.loading = false
+  console.log(payload);
+  state.isUpdate = payload
+},
+
+[baseUpdate.rejected]: (state, { payload }) => {
   state.loading = false
   state.error = payload
 },

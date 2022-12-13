@@ -70,7 +70,7 @@ const userSlice = createSlice({
     },
     [addUser.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.users = payload.object
+      state.users = payload.object.sort((a, b) => (a.id - b.id  ||  a.name.localeCompare(b.name)));
       state.success = payload.success
       state.message = payload.message
     },
@@ -96,7 +96,7 @@ const userSlice = createSlice({
     },
     [getUsers.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.users = payload.content
+      state.users = payload.content.sort((a, b) => (a.id - b.id  ||  a.name.localeCompare(b.name)));
     },
     [getUsers.rejected]: (state, { payload }) => {
       state.loading = false
@@ -109,7 +109,7 @@ const userSlice = createSlice({
     },
     [editUser.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.users = payload.object
+      state.users = payload.object.sort((a, b) => (a.id - b.id  ||  a.name.localeCompare(b.name)));
       state.success = payload.success
       state.message = payload.message
     },
@@ -123,7 +123,7 @@ const userSlice = createSlice({
     },
     [deleteUser.fulfilled]: (state, { payload }) => {
       state.loading = false
-      state.users = payload.object
+      state.users = payload.object.sort((a, b) => (a.id - b.id  ||  a.name.localeCompare(b.name)));
       state.success = payload.success
       state.message = payload.message
     },

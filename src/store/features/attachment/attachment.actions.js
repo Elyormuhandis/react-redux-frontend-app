@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-const BASE_URL = "http://192.168.1.114:8080/";
+const BASE_URL = "http://localhost:8080/";
 
 //upload Files
 export const uploadFiles = createAsyncThunk(
@@ -155,6 +155,7 @@ export const getOneReceivedFile = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
+            'Content-Type': 'application/json',
           },
         })
       return data
@@ -181,6 +182,7 @@ export const getOneSentFile = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
+            'Content-Type': 'application/json',
           },
         })
       return data
@@ -211,8 +213,8 @@ export const downloadFileFromFileSystem = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
-          // maxContentLength: Infinity,
-          // maxBodyLength: Infinity
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity
         })
         .then((response) => {
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -248,6 +250,31 @@ export const deleteOneTo = createAsyncThunk(
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
+          },
+        })
+      return data
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+//Boshqarmaga fayl kelganmi yoki yo'qmi bilish uchun kerak
+
+export const baseUpdate = createAsyncThunk(
+  'user/deleteOneTo',
+  async (id, { getState, rejectWithValue }) => {
+    try {
+      const { userToken } = getState().user
+      const { data } = await axios.get(
+        `${BASE_URL}baseUpdate/updatedBoolean?divisionId=${id}`, 
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            'Content-Type': 'application/json',
           },
         })
       return data

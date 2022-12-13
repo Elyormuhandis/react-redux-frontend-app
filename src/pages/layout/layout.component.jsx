@@ -6,15 +6,18 @@ import './layout.styles.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { getRole, getRoles, getUsers } from '../../store/features/user/user.actions';
 import { getDivisions } from '../../store/features/division/division.action';
-import { getAllByFromDivision, getAllByToDivision } from '../../store/features/attachment/attachment.actions';
+import { baseUpdate, getAllByFromDivision, getAllByToDivision } from '../../store/features/attachment/attachment.actions';
 
 
 
 const Layout = () => {
-    const {userRole} = useSelector(state => state.user)
+    const {userRole, userDivision} = useSelector(state => state.user)
     const dispatch = useDispatch() 
     const [globalState, setGlobalState] = useState();
 
+    // setInterval(()=>{
+    //     dispatch(baseUpdate(userDivision))
+    // }, 10000)
 
     useEffect(()=>{
         dispatch(getDivisions())

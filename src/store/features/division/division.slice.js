@@ -28,7 +28,9 @@ const divisionSlice = createSlice({
     },
     [getDivisions.fulfilled]: (state, {payload}) => {
         state.loading = false
-        state.divisions = payload 
+        state.divisions = payload.sort(function(a, b) { 
+          return a.id - b.id  ||  a.name.localeCompare(b.name);
+        });
       },    
     [getDivisions.rejected]: (state, {payload}) => {
         state.loading = false
@@ -43,7 +45,9 @@ const divisionSlice = createSlice({
         state.loading = false
         state.message = payload.message
         state.success = payload.success
-        state.divisions = payload.object
+        state.divisions = payload.object.sort(function(a, b) { 
+          return a.id - b.id  ||  a.name.localeCompare(b.name);
+        });
       },    
     [addDivision.rejected]: (state, {payload}) => {
         state.loading = false
@@ -58,7 +62,9 @@ const divisionSlice = createSlice({
           state.loading = false
           state.message = payload.message
           state.success = payload.success
-          state.divisions = payload.object
+          state.divisions = payload.object.sort(function(a, b) { 
+            return a.id - b.id  ||  a.name.localeCompare(b.name);
+          });
         },    
         [editDivision.rejected]: (state, {payload}) => {
           state.loading = false
@@ -73,7 +79,9 @@ const divisionSlice = createSlice({
           state.loading = false
           state.message = payload.message
           state.success = payload.success
-          state.divisions = payload.object
+          state.divisions = payload.object.sort(function(a, b) { 
+            return a.id - b.id  ||  a.name.localeCompare(b.name);
+          });
         },    
       [deleteDivision.rejected]: (state, {payload}) => {
           state.loading = false

@@ -4,27 +4,28 @@
     }
     &__form{
         width: 100%;
-        background-color: rgb(255, 140, 0);
+        background-color: #0c2d1c;
         color: white;
         padding: 10px;
+        border:1px solid white;
     }
     &__input{
-        background-color: rgb(255, 140, 0);
+        background-color: #0c2d1c;
         color: white;
         padding: 10px 15px;
         border: none;
         outline: none;
-        margin-right: 10px;
+
     }
     &__label{
-        margin-right: 10px;
+        margin-right: 15px;
     }
     &__btn{
         color: rgb(225, 225, 225);
         border: 1px solid rgb(225, 225, 225);
         outline: none;
         padding: 10px 15px;
-        background-color: rgb(255, 140, 0);
+        background-color: #0c2d1c;
         transition: all .3s;
         &:hover{
             transition: all .3s;
@@ -37,10 +38,10 @@
         border: 1px solid rgb(225, 225, 225);
         outline: none;
         padding: 10px 15px;
-        background-color: rgb(255, 140, 0);
+        background-color: #0c2d1c;
         margin-right: 10px;
         &--options{
-            background-color: rgb(255, 140, 0);      
+            background-color: #0c2d1c;      
             padding: 5px 0;      
        }
     }
