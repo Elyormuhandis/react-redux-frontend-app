@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadFiles } from "../../store/features/attachment/attachment.actions";
+import { getAllByFromDivision, uploadFiles } from "../../store/features/attachment/attachment.actions";
 import {FaPlusCircle, FaTrashAlt} from 'react-icons/fa'
 import {MdSend} from 'react-icons/md'
 import './send.styles.scss'
@@ -19,9 +19,7 @@ const Send = () => {
     register,
     handleSubmit,
     formState: { errors },
-    } = useForm({
-    mode: "onTouched"
-    });
+    } = useForm();
 
   const addFileHandler = (data) => {
     data.files=[...dragFiles]
@@ -64,8 +62,7 @@ const Send = () => {
               value={'DEFAULT'}
               disabled 
               hidden>Boshqarmalar...</option>
-              {
-              divisions ? divisions.filter((division)=>division.active===true).map((division, idx)=>(
+              {divisions?.filter((division)=>division.active===true)?.map((division, idx)=>(
                   <option 
                   className='send__form--option' 
                   key={division.id} 
@@ -73,8 +70,7 @@ const Send = () => {
                   >
                   {division.name}
                   </option>
-              )) : <option>Server bilan aloqa yo'q</option>
-            }
+              ))}
             </select>
           <button className="send__form--btn" type="submit"><MdSend className="upload-icon"/></button>
           </div>
@@ -135,8 +131,7 @@ const Send = () => {
                     </tr>
                 </thead>
                 <tbody className='send__table-body'>                   
-                {
-                dragFiles ? dragFiles.map((file, idx)=>(
+                {dragFiles?.map((file, idx)=>(
                     <tr key={idx} id={idx}>
                         <td><input type='checkbox' id={idx}/></td>
                         <td>{idx+1}</td>
@@ -147,13 +142,18 @@ const Send = () => {
                             {file.size}
                         </td>
                         <td className="table-head-name">
-                            upload
+                        <img
+                          src="../../assets/spinner.gif"
+                          style={{ width: '10px', margin: 'auto', display: 'block' }}
+                          alt="Loading..."
+                        />
+                       
                         </td>
                         <td className="table-head-name">
                            <FaTrashAlt className="send__selected-files--clr-icon" onClick={e => {setDragFiles(dragFiles.filter((file, idx)=>idx!=e.currentTarget.id))}}/>
                         </td>
                     </tr>
-                )) : ""}
+                ))}
                 </tbody>
             </table>
             </div>

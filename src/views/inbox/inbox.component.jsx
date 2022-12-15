@@ -3,20 +3,19 @@ import { FaCloudDownloadAlt, FaTrashAlt, FaEye, FaEyeDropper, FaEyeSlash, FaInfo
 import './inbox.styles.scss'
 import { downloadFileFromFileSystem, setPDTV, setView } from "../../store/features/attachment/attachment.actions";
 import { useState } from "react";
+import { hover } from "@testing-library/user-event/dist/hover";
 
 const Inbox = () => {
     const { kelganFayllar } = useSelector(state => state.attachment) 
     const {divisions} = useSelector(state => state.division)
     const [pdtvModal, setPdtvModal] = useState()
-    const [isView, setIsView] = useState(false)
     const dispatch = useDispatch()
 
     const setViewHandler = (id) => {
         dispatch(setView(id))
-        setIsView(true);
     }
 
-
+   
 
     const downloadRow = (e, fileName) => {
           e.stopPropagation();
@@ -24,6 +23,16 @@ const Inbox = () => {
           dispatch(downloadFileFromFileSystem({id, fileName}))
         }  
     
+    const downloadAll = (e) => {
+        e.stopPropagation();
+        kelganFayllar.filter(file => file.pdtv === false).forEach((file)=>{
+            dispatch(downloadFileFromFileSystem({
+                id:file.id, 
+                fileName:file.originalName
+            }))
+        })
+    }
+
     const pdtvModalHandler = (e) => {
         setPdtvModal(e.currentTarget.id);
     }
@@ -55,12 +64,12 @@ const Inbox = () => {
                                 <button className="all-pdtv-btn pdtv-btn">Tasdiqlash</button>
                             </th>
                             <th><FaInfoCircle style={{color:"orange"}}/></th>
-                            <th><FaCloudDownloadAlt style={{color:"orange"}}/></th>
+                            <th><FaCloudDownloadAlt className="download-icon" style={{color:"orange"}} 
+                            onClick={(e) => downloadAll(e)}/></th>
                         </tr>
                     </thead>
                     <tbody className='send__table-body'>                   
-                    {
-                    kelganFayllar ? kelganFayllar.filter(file => file.pdtv === false).map((file, idx)=>(
+                    {kelganFayllar?.filter(file => file.pdtv === false)?.map((file, idx)=>(
                         <tr className={!file.view ? "file-text-bold" : "file-text-normal"} key={idx} onClick={e => setViewHandler(file.id)}>
                             <td><input type='checkbox'/></td>
                             <td>{idx+1}</td>
@@ -71,10 +80,10 @@ const Inbox = () => {
                                 {file.size+"b"}
                             </td>
                             <td className=''>
-                            {divisions ? divisions.filter((division)=>division.id===file.fromDivision.id)[0].name: ''}
+                            {divisions?.filter((division)=>division.id===file.fromDivision.id)[0]?.name}
                             </td>
                             <td className=''>
-                            {divisions ? divisions.filter((division)=>division.id===file.toDivision.id)[0].name: ''}
+                            {divisions?.filter((division)=>division.id===file.toDivision.id)[0]?.name}
                             </td>
                             <td className='icons '>
                                 <button id={file.id} className="pdtv-btn" onClick={(e)=>{pdtvModalHandler(e)}}>
@@ -95,15 +104,11 @@ const Inbox = () => {
                             </td>
                             <td className='icons' id={file.id} onClick={(e) => downloadRow(e, file.originalName)}>
                             <span className='delete-icon'>
-                                <FaCloudDownloadAlt/>
+                                <FaCloudDownloadAlt className="download-icon"/>
                             </span>
                             </td>
                         </tr>
-                    )) : <tr>
-                            <td>
-                            Server bilan aloqa yo'q
-                            </td>
-                        </tr>}
+                    ))}
                     </tbody>
                 </table>
             </div>

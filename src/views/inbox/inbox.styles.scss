@@ -15,6 +15,12 @@
   font-weight: normal;
 }
 
+.download-icon{
+  color:rgb(242, 255, 0);
+  &:hover{
+    cursor: pointer;
+  }
+}
 
 table {
     background-color: inherit;

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {MdDone, MdDoneAll} from "react-icons/md"
-import { FaCloudDownloadAlt, FaInfoCircle, FaTrashAlt } from "react-icons/fa";
+import {FaInfoCircle } from "react-icons/fa";
 import './sent.styles.scss'
 import { useState } from "react";
 import { getOneSentFile } from "../../store/features/attachment/attachment.actions";

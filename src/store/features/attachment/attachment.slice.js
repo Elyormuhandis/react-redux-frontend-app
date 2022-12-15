@@ -15,7 +15,7 @@ const initialState = {
     oneSentFile:{},
     kelganFayllar:[],
     downloadFileFromFileSystem: undefined,
-    isUpdate:false,
+    isUpdate:'yoq',
     korildi:false,
     userToken,
     error: null,
@@ -174,8 +174,8 @@ const attachmentSlice = createSlice({
 },
 [baseUpdate.fulfilled]: (state, { payload }) => {
   state.loading = false
-  console.log(payload);
-  state.isUpdate = payload
+  state.success = payload.success
+  state.isUpdate = payload.message
 },
 
 [baseUpdate.rejected]: (state, { payload }) => {

@@ -12,22 +12,27 @@ import { baseUpdate, getAllByFromDivision, getAllByToDivision } from '../../stor
 
 const Layout = () => {
     const {userRole, userDivision} = useSelector(state => state.user)
+    const {isUpdate} = useSelector(state => state.attachment)
     const dispatch = useDispatch() 
-    const [globalState, setGlobalState] = useState();
 
-    // setInterval(()=>{
-    //     dispatch(baseUpdate(userDivision))
-    // }, 10000)
+    const MINUTE_MS = 6000;
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        if(userRole==="USER") dispatch(getAllByToDivision())
+      }, MINUTE_MS);
+      return () => clearInterval(interval)
+    }, [])
+
+    
 
     useEffect(()=>{
         dispatch(getDivisions())
         if(userRole==="ADMIN") dispatch(getRoles())
         if(userRole==="ADMIN") dispatch(getUsers(0))
-        if(userRole==="USER") dispatch(getAllByToDivision())
         if(userRole==="USER") dispatch(getAllByFromDivision())
         dispatch(getRole())
     }, [])
-
 
     return (
         <>

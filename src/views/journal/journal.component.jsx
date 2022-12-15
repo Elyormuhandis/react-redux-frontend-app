@@ -16,13 +16,11 @@ const Journal = () => {
     handleSubmit,
     formState:{errors, isValid} } = useForm({mode:"onBlur"});
 
-
+  console.log(userDivision);
 
   const getJournal = (data) => {
+    data.divisionId = userDivision
     console.log(data);
-    if(userDivision){
-      data.divisionId = userDivision
-    } 
     const {sortType} = data;
     if(sortType==='HAMMASI'){
       dispatch(getAllStatistics(data))
@@ -80,8 +78,7 @@ const Journal = () => {
                   value={'DEFAULT'}
                   disabled 
                   hidden>Boshqarmalar...</option>
-                  {
-                  divisions ? divisions.filter((division)=>division.active===true).map((division, idx)=>(
+                  {divisions?.filter((division)=>division.active===true).map((division, idx)=>(
                       <option 
                       className='journal__select--options' 
                       key={division.id} 
@@ -89,8 +86,7 @@ const Journal = () => {
                       >
                       {division.name}
                       </option>
-                  )) : <option>Server bilan aloqa yo'q</option>
-                }
+                  ))}
                 </select>}
             <button className="journal__btn" type="submit">QIDIRISH</button>
         </form>

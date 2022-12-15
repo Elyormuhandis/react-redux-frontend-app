@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { BASE_URL } from '../../url'
 
-const BASE_URL = "http://localhost:8080/";
 
 //Barcha keldi kettilar uchun ishlatiladi
 

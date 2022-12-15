@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-
-const BASE_URL = "http://localhost:8080/";
+import { BASE_URL } from '../../url'
 
 
 //Authentication User

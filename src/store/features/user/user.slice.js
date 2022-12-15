@@ -51,6 +51,7 @@ const userSlice = createSlice({
       state.error = null
     },
     [userLogin.fulfilled]: (state, { payload }) => {
+      console.log(payload);
       localStorage.setItem(`${payload.message}`, payload.token)
       localStorage.setItem("role", payload.object.name)
       localStorage.setItem("divisionId", payload.object2?.id)

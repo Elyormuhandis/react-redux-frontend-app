@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
+import { BASE_URL } from '../../url'
 
-const BASE_URL = "http://localhost:8080/";
 
 //upload Files
 export const uploadFiles = createAsyncThunk(
@@ -23,6 +23,7 @@ export const uploadFiles = createAsyncThunk(
             Authorization: `Bearer ${userToken}`,
           },
         })
+      console.log(data);
       return data
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -242,7 +243,7 @@ export const downloadFileFromFileSystem = createAsyncThunk(
 
 export const deleteOneTo = createAsyncThunk(
   'user/deleteOneTo',
-  async ({id}, { getState, rejectWithValue }) => {
+  async (id, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user
       const { data } = await axios.delete(
