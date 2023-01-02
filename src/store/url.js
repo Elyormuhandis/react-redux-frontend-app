@@ -1,2 +1,2 @@
-export const BASE_URL = "http://host.docker.internal:8080/";
+export const BASE_URL = 'http://192.168.0.1:8081/';
 //localhost

@@ -2,6 +2,7 @@
   "name": "redux-user-auth",
   "version": "0.1.0",
   "private": true,
+  "homepage": "frontend",
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
     "@reduxjs/toolkit": "^1.8.2",
