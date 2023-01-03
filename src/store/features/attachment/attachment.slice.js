@@ -9,6 +9,7 @@ const userToken = localStorage.getItem('Token')
 const initialState = {
     files:[],
     loading: false,
+    loadingFile:false,
     message: "",
     yuborilganFayllar:[],
     oneReceivedFile:{},
@@ -27,23 +28,23 @@ const attachmentSlice = createSlice({
     name:"attachment",
     initialState,
     reducers:{
-
     },
     extraReducers:{
       
 // upload files
 [uploadFiles.pending]: (state) => {
-  state.loading = true
+  state.loadingFile = true
   state.error = null
 },
 [uploadFiles.fulfilled]: (state, { payload }) => {
-  state.loading = false
+  console.log(payload)
+  state.loadingFile = false
   state.success = payload.success
   state.message = payload.message
 },
 
 [uploadFiles.rejected]: (state, { payload }) => {
-  state.loading = false
+  state.loadingFile = false
   state.error = payload
 },
     

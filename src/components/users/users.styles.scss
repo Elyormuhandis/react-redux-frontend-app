@@ -12,6 +12,7 @@
         padding: 10px 5px;
     }
     &__form{
+        z-index: 5;
         position: absolute;
         left:50%;
         top: 50%;
@@ -54,12 +55,28 @@
         width: 100%;
     }
     &__table-header{
-        
+        z-index: 1;
     }
     &__table-body{
         text-align:center;
     }
     
+}
+
+.ed-icon{
+    color:rgb(27, 103, 91);
+    &:hover{
+        cursor: pointer;
+        color:rgb(41, 157, 140);
+    }
+}
+
+.del-icon{
+    color:rgb(103, 27, 27);
+    &:hover{
+        cursor: pointer;
+        color:rgb(157, 41, 41);
+    }
 }
 
 .form-toggle{

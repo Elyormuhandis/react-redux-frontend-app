@@ -3,7 +3,7 @@ import React from 'react';
 const Settings = () => {
     return (
         <div>
-            Settings
+            Ushbu bo'lim tez kunlarda ishga tushadi
         </div>
     );
 };

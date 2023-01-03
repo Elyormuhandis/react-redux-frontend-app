@@ -10,7 +10,7 @@ const Header = () => {
   return (
     <header className='header'>
       <div className='header__icon'>
-        FILE TRANSFER
+        FANEX
       </div>
       <div className='header__options'>
         <div className='searchbox'>

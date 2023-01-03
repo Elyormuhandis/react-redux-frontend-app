@@ -1,4 +1,4 @@
-1. Login pageni validatsiyasini + backendni validatsiyasini yoqish
+1. Login pageni validatsiyasini + backendni validatsiyasini yoqish //done
 2. Jo'natmani yuborilganidan so'ng o'chirish
 3. JO'natma yuklanayotganida spinner ko'rinib tursin
 4. Person icon bosilganida user haqida info chiqsin
