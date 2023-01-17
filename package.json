@@ -5,6 +5,7 @@
   "homepage": "frontend",
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
+    "@ramonak/react-progress-bar": "^5.0.3",
     "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
