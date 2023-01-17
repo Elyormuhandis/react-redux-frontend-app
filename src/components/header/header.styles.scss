@@ -1,4 +1,5 @@
 .header {
+  position: relative;
   width: 100%;
   height: 8vh;
   background-color: rgb(5, 31, 32);
@@ -46,6 +47,123 @@
       }
     }
   }
+}
+
+.user-info {
+  &__modal {
+    display: block;
+    position: absolute;
+    padding: 2rem;
+    width: 24rem;
+    height: 26rem;
+    top: 10rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #b2bac2;
+    background-color: rgb(8, 35, 28);
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
+      rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+    &--option {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: large;
+    }
+    &--edit {
+      color: green;
+      &:hover {
+        cursor: pointer;
+        color: rgb(0, 198, 0);
+        transition: all 0.3s;
+      }
+    }
+    &--cancel {
+      transition: all 0.3s;
+      color: red;
+      &:hover {
+        cursor: pointer;
+        color: rgb(255, 63, 63);
+      }
+    }
+  }
+}
+.user-edit {
+  &__modal {
+    display: block;
+    position: absolute;
+    padding: 2rem;
+    width: 24rem;
+    height: 32rem;
+    top: 10rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(8, 35, 28);
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px,
+      rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    color: #b2bac2;
+  }
+  &__label {
+    margin-bottom: 0.5rem;
+  }
+  &__input {
+    color: #b2bac2;
+    padding: 5px 20px;
+    border: 1px solid #b2bac2;
+    outline: none;
+    border-radius: 50px;
+    background-color: inherit;
+    &::placeholder {
+      color: #b2bac2;
+    }
+  }
+  &__btns {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__ebtn {
+    padding: 10px 15px;
+    outline: none;
+    color: #b2bac2;
+    border: 1px solid #b2bac2;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    &:hover {
+      transition: all 0.3s;
+      color: white;
+      background-color: rgba(39, 38, 38, 0.2);
+    }
+  }
+  &__cbtn {
+    padding: 10px 15px;
+    outline: none;
+    color: #b2bac2;
+    border: 1px solid #b2bac2;
+    border-radius: 50px;
+    background-color: rgb(129, 5, 7) !important;
+    transition: all 0.3s;
+    &:hover {
+      transition: all 0.3s;
+      background-color: rgb(155, 29, 31) !important;
+      color: white !important;
+    }
+  }
+}
+.alerts {
+  color: rgb(255, 69, 69);
+  height: 1rem;
+  font-size: small;
+  margin-bottom: 1rem;
+}
+.hidden {
+  display: none;
+}
+.v-hidden {
+  visibility: hidden;
 }
 
 .searchbox {

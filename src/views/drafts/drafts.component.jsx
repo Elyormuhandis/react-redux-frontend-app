@@ -1,24 +1,22 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { MdDone, MdDoneAll } from "react-icons/md";
-import { FaCloudDownloadAlt, FaInfoCircle, FaTrashAlt } from "react-icons/fa";
-import "./drafts.styles.scss";
-import { getOneSentFile } from "../../store/features/attachment/attachment.actions";
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { MdDone, MdDoneAll } from 'react-icons/md';
+import { FaCloudDownloadAlt, FaInfoCircle, FaTrashAlt } from 'react-icons/fa';
+import './drafts.styles.scss';
+import { getOneReceivedFile } from '../../store/features/attachment/attachment.actions';
 import {
   deleteOneTo,
   downloadFileFromFileSystem,
-  setPDTV,
   setView,
-} from "../../store/features/attachment/attachment.actions";
+} from '../../store/features/attachment/attachment.actions';
 
 const Drafts = () => {
-  const { kelganFayllar } = useSelector((state) => state.attachment);
+  const { kelganFayllar, oneReceivedFile } = useSelector(
+    (state) => state.attachment
+  );
   const { divisions } = useSelector((state) => state.division);
   const [deleteFileModal, setDeleteFileModal] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { yuborilganFayllar, oneSentFile } = useSelector(
-    (state) => state.attachment
-  );
   const dispatch = useDispatch();
 
   const setViewHandler = (e) => {
@@ -39,90 +37,84 @@ const Drafts = () => {
   const deleteMessageHandler = (id) => {
     dispatch(deleteOneTo(id));
     setDeleteFileModal(undefined);
-};
+  };
 
   const downloadAll = (e) => {
-      e.stopPropagation();
-      kelganFayllar?.forEach((file) => {
-          dispatch(
-              downloadFileFromFileSystem({
-                  id: file.id,
-                  fileName: file.originalName,
-                })
-                );
-            });
+    e.stopPropagation();
+    kelganFayllar?.forEach((file) => {
+      dispatch(
+        downloadFileFromFileSystem({
+          id: file.id,
+          fileName: file.originalName,
+        })
+      );
+    });
   };
   const fileInfoHandler = (id) => {
-      dispatch(getOneSentFile(id));
-      setIsModalOpen(!isModalOpen);
-    };
-    
-    const deleteAllFileModal = () => {
-        setDeleteFileModal("all");
-    };
-    
+    dispatch(getOneReceivedFile(id));
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const deleteAllFileModal = () => {
+    setDeleteFileModal('all');
+  };
+
   const deleteAllFilesHandler = () => {
-      kelganFayllar.forEach((file) => {
-          dispatch(deleteOneTo(file.id));
-        });
-        setDeleteFileModal(undefined);
+    kelganFayllar.forEach((file) => {
+      dispatch(deleteOneTo(file.id));
+    });
+    setDeleteFileModal(undefined);
   };
 
   return (
-    <div className="inbox">
-      <div className="inbox__list">
-        <h4 className="inbox__header">Qabul qilingan fayllar</h4>
-        <hr className="dashboard__line" />
-        <table className="inbox__table">
-          <thead className="inbox__table-header">
+    <div className='inbox'>
+      <div className='inbox__list'>
+        <h4 className='inbox__header'>Qabul qilingan fayllar</h4>
+        <hr className='dashboard__line' />
+        <table className='inbox__table'>
+          <thead className='inbox__table-header'>
             <tr>
-              <th style={{ color: "orange" }}>
-                <input type="checkbox" />
-              </th>
-              <th style={{ color: "orange" }}>N</th>
-              <th style={{ color: "orange" }}>Nomi</th>
-              <th style={{ color: "orange" }}>Fayl hajmi</th>
-              <th style={{ color: "orange" }}>Kimdan</th>
-              <th style={{ color: "orange" }}>Kimga</th>
-              <th style={{ color: "orange" }}></th>
+              <th style={{ color: 'orange' }}>N</th>
+              <th style={{ color: 'orange' }}>Nomi</th>
+              <th style={{ color: 'orange' }}>Fayl hajmi</th>
+              <th style={{ color: 'orange' }}>Kimdan</th>
+              <th style={{ color: 'orange' }}>Kimga</th>
+              <th style={{ color: 'orange' }}></th>
               <th>
                 <FaCloudDownloadAlt
-                  className="download-file-icon"
-                  style={{ color: "orange" }}
+                  className='download-file-icon'
+                  style={{ color: 'orange' }}
                   onClick={(e) => downloadAll(e)}
                 />
               </th>
               <th>
                 <FaTrashAlt
-                  className="delete-file-icon"
-                  style={{ color: "orange" }}
+                  className='delete-file-icon'
+                  style={{ color: 'orange' }}
                   onClick={deleteAllFileModal}
                 />
-                <div className="delete-file-td">
+                <div className='delete-file-td'>
                   <div
                     className={
-                      deleteFileModal === "all"
-                        ? "delete-file-modal "
-                        : "delete-file-modal-none " +
-                          "delete-file-modal-handler"
-                    }
-                  >
-                    <h5 className="delete-file-modal__header">
+                      deleteFileModal === 'all'
+                        ? 'delete-file-modal '
+                        : 'delete-file-modal-none ' +
+                          'delete-file-modal-handler'
+                    }>
+                    <h5 className='delete-file-modal__header'>
                       Fayl serverdan o'chib ketadi, rozimisiz?
                     </h5>
-                    <div className="delete-file-modal__text">
+                    <div className='delete-file-modal__text'>
                       <p
-                        className="delete-file-modal__yes"
-                        onClick={deleteAllFilesHandler}
-                      >
+                        className='delete-file-modal__yes'
+                        onClick={deleteAllFilesHandler}>
                         Ha
                       </p>
                       <p
-                        className="delete-file-modal__no"
+                        className='delete-file-modal__no'
                         onClick={() => {
                           setDeleteFileModal(undefined);
-                        }}
-                      >
+                        }}>
                         Yo'q
                       </p>
                     </div>
@@ -131,91 +123,81 @@ const Drafts = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="send__table-body">
+          <tbody className='send__table-body'>
             {kelganFayllar
               ?.filter((file) => file.pdtv === true)
               ?.map((file, idx) => (
                 <tr
-                  className=""
+                  className=''
                   key={idx}
                   id={file.id}
-                  onClick={(e) => setViewHandler(e)}
-                >
-                  <td>
-                    <input type="checkbox" />
-                  </td>
+                  onClick={(e) => setViewHandler(e)}>
                   <td>{idx + 1}</td>
-                  <td className="">{file.originalName}</td>
-                  <td className="">{file.size + "b"}</td>
-                  <td className="">
+                  <td className=''>{file.originalName}</td>
+                  <td className=''>{file.size + 'b'}</td>
+                  <td className=''>
                     {
                       divisions?.filter(
                         (division) => division.id === file.fromDivision.id
                       )[0]?.name
                     }
                   </td>
-                  <td className="">
+                  <td className=''>
                     {
                       divisions?.filter(
                         (division) => division.id === file.toDivision.id
                       )[0]?.name
                     }
                   </td>
-                  <td className="icons">
+                  <td className='icons'>
                     <span
-                      className="sent__info-icon"
+                      className='sent__info-icon'
                       onClick={() => {
                         fileInfoHandler(file.id);
-                      }}
-                    >
+                      }}>
                       <FaInfoCircle />
                     </span>
                   </td>
                   <td
-                    className="icons"
+                    className='icons'
                     id={file.id}
-                    onClick={(e) => downloadRow(e, file.originalName)}
-                  >
-                    <span className="delete-icon">
-                      <FaCloudDownloadAlt className="download-file-icon" />
+                    onClick={(e) => downloadRow(e, file.originalName)}>
+                    <span className='delete-icon'>
+                      <FaCloudDownloadAlt className='download-file-icon' />
                     </span>
                   </td>
-                  <td className="icons">
+                  <td className='icons'>
                     <span
-                      className="delete-icon"
+                      className='delete-icon'
                       onClick={(e) => {
                         deleteModalHandler(file.id);
-                      }}
-                    >
-                      <FaTrashAlt className="delete-file-icon" />
+                      }}>
+                      <FaTrashAlt className='delete-file-icon' />
                     </span>
-                    <div className="delete-file-td">
+                    <div className='delete-file-td'>
                       <div
                         className={
                           deleteFileModal == file.id
-                            ? "delete-file-modal "
-                            : "delete-file-modal-none " +
-                              "delete-file-modal-handler"
-                        }
-                      >
-                        <h5 className="delete-file-modal__header">
+                            ? 'delete-file-modal '
+                            : 'delete-file-modal-none ' +
+                              'delete-file-modal-handler'
+                        }>
+                        <h5 className='delete-file-modal__header'>
                           Fayl serverdan o'chib ketadi, rozimisiz?
                         </h5>
-                        <div className="delete-file-modal__text">
+                        <div className='delete-file-modal__text'>
                           <p
-                            className="delete-file-modal__yes"
+                            className='delete-file-modal__yes'
                             onClick={() => {
                               deleteMessageHandler(file.id);
-                            }}
-                          >
+                            }}>
                             Ha
                           </p>
                           <p
-                            className="delete-file-modal__no"
+                            className='delete-file-modal__no'
                             onClick={() => {
                               setDeleteFileModal(undefined);
-                            }}
-                          >
+                            }}>
                             Yo'q
                           </p>
                         </div>
@@ -228,38 +210,38 @@ const Drafts = () => {
         </table>
       </div>
       <div
-        className={isModalOpen ? "file-info-modal" : "file-info-modal--close"}
-      >
+        className={isModalOpen ? 'file-info-modal' : 'file-info-modal--close'}>
         {
           <div>
-            <div className="file-info-modal__header">
+            <div className='file-info-modal__header'>
               <h5>Fayl haqida ma'lumot</h5>
               <button
-                className="file-info-modal__btn"
+                className='file-info-modal__btn'
                 onClick={() => {
                   setIsModalOpen(false);
-                }}
-              >
+                }}>
                 X
               </button>
             </div>
             <hr />
-            <div>{`1. Fayl nomi: ${oneSentFile.originalName}`}</div>
+            <div>{`1. Fayl nomi: ${oneReceivedFile.originalName}`}</div>
             <div>{`2. Yuboruvchi: ${
               divisions?.filter(
-                (division) => division?.id === oneSentFile?.fromDivision?.id
+                (division) => division?.id === oneReceivedFile?.fromDivision?.id
               )[0]?.name
-            }, ${oneSentFile.createdAt}`}</div>
+            }, ${oneReceivedFile?.createdAt
+              ?.replace('T', ', ')
+              .slice(0, 17)}`}</div>
             <div>{`3. Qabul qiluvchi: ${
               divisions?.filter(
-                (division) => division?.id === oneSentFile?.toDivision?.id
+                (division) => division?.id === oneReceivedFile?.toDivision?.id
               )[0]?.name
             }`}</div>
             <div>{`4. Holati: ${
-              oneSentFile?.view ? "ko'rildi" : "ko'rilmadi"
+              oneReceivedFile?.view ? "ko'rildi" : "ko'rilmadi"
             }`}</div>
             <div>{`5. Tasdiq: ${
-              oneSentFile?.pdtv ? "tasdiqlangan" : "yo'q"
+              oneReceivedFile?.pdtv ? 'tasdiqlangan' : "yo'q"
             }`}</div>
           </div>
         }
