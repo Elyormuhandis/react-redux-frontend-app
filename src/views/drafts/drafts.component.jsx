@@ -9,6 +9,7 @@ import {
   downloadFileFromFileSystem,
   setView,
 } from '../../store/features/attachment/attachment.actions';
+import { formatBytes } from '../../helpers/helper.functions';
 
 const Drafts = () => {
   const { kelganFayllar, oneReceivedFile } = useSelector(
@@ -134,7 +135,7 @@ const Drafts = () => {
                   onClick={(e) => setViewHandler(e)}>
                   <td>{idx + 1}</td>
                   <td className=''>{file.originalName}</td>
-                  <td className=''>{file.size + 'b'}</td>
+                  <td className=''>{formatBytes(file.size)}</td>
                   <td className=''>
                     {
                       divisions?.filter(

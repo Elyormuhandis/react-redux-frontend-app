@@ -135,6 +135,35 @@ export const editUser = createAsyncThunk(
 );
 
 //edit Users
+export const editSimpleUser = createAsyncThunk(
+  'user/editUser',
+  async (
+    { passwordNow, username, password, prePassword },
+    { getState, rejectWithValue }
+  ) => {
+    try {
+      const { userToken } = getState().user;
+      const { data } = await axios.put(
+        `${BASE_URL}api/user`,
+        { username, passwordNow, password, prePassword },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message);
+      } else {
+        return rejectWithValue(error.message);
+      }
+    }
+  }
+);
+
+//delete Users
 export const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async ({ id }, { getState, rejectWithValue }) => {

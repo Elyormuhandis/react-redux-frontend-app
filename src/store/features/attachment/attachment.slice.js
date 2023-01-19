@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   baseUpdate,
   downloadFileFromFileSystem,
@@ -10,23 +10,25 @@ import {
   setPDTV,
   setView,
   uploadFiles,
-} from "./attachment.actions";
+} from './attachment.actions';
 
-const userToken = localStorage.getItem("Token")
-  ? localStorage.getItem("Token")
+const userToken = localStorage.getItem('Token')
+  ? localStorage.getItem('Token')
   : null;
 
 const initialState = {
   files: [],
+  dragFileList: [],
+  progress: 0,
   loading: false,
   loadingFile: false,
-  message: "",
+  message: '',
   yuborilganFayllar: [],
   oneReceivedFile: {},
   oneSentFile: {},
   kelganFayllar: [],
   downloadFileFromFileSystem: undefined,
-  isUpdate: "yoq",
+  isUpdate: 'yoq',
   korildi: false,
   userToken,
   error: null,
@@ -34,9 +36,23 @@ const initialState = {
 };
 
 const attachmentSlice = createSlice({
-  name: "attachment",
+  name: 'attachment',
   initialState,
-  reducers: {},
+  reducers: {
+    setDragFileList: (state, action) => {
+      state.dragFileList = [...state.dragFileList, ...action.payload];
+    },
+    editDragFileList: (state, action) => {
+      state.dragFileList = [...action.payload];
+    },
+    clearDragFileList: (state) => {
+      state.dragFileList = [];
+    },
+    setProgress: (state, payload) => {
+      state.progress = payload;
+    },
+  },
+
   extraReducers: {
     // upload files
     [uploadFiles.pending]: (state) => {
@@ -189,4 +205,10 @@ const attachmentSlice = createSlice({
   },
 });
 
+export const {
+  setDragFileList,
+  editDragFileList,
+  clearDragFileList,
+  setProgress,
+} = attachmentSlice.actions;
 export default attachmentSlice.reducer;

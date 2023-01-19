@@ -3,7 +3,10 @@ import { BsSearch } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/features/user/user.slice';
 import './header.styles.scss';
-import { getUser, editUser } from '../../store/features/user/user.actions';
+import {
+  getUser,
+  editSimpleUser,
+} from '../../store/features/user/user.actions';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useState } from 'react';
@@ -15,13 +18,17 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  const { users, userRole, loading, userId, userInfo, userDivision } =
-    useSelector((state) => state.user);
+  const { userRole, loading, userId, userInfo, userDivision } = useSelector(
+    (state) => state.user
+  );
   const { message, divisions } = useSelector((state) => state.division);
 
   const formSchema = Yup.object().shape({
-    fullName: Yup.string().required('Ushbu maydon to`ldirilishi shart!'),
     username: Yup.string().required('Ushbu maydon to`ldirilishi shart!'),
+    passwordNow: Yup.string()
+      .required('Ushbu maydon to`ldirilishi shart!')
+      .min(8, 'Parol eng kam uzunligi 8ta belgi!')
+      .max(20, 'Parol eng ko`p uzunligi 20ta belgi!'),
     password: Yup.string()
       .required('Ushbu maydon to`ldirilishi shart!')
       .min(8, 'Parol eng kam uzunligi 8ta belgi!')
@@ -46,10 +53,8 @@ const Header = () => {
   });
 
   const editHandle = (data) => {
-    data.divisionId = userDivision;
-    data.id = userId;
-    data.roleId = userRole === 'USER' ? 2 : '';
-    dispatch(editUser(data));
+    console.log(data);
+    dispatch(editSimpleUser(data));
     setFormTogge(!formToggle);
     reset();
   };
@@ -60,10 +65,7 @@ const Header = () => {
   };
   const editHandler = async (e) => {
     reset({
-      fullName: userInfo.fullName,
       username: userInfo.username,
-      divisionId: userInfo.division?.id,
-      roleId: userInfo.role.id,
     });
     setModalToggle(false);
     setFormTogge(true);
@@ -121,23 +123,6 @@ const Header = () => {
         <form
           className={formToggle ? 'user-edit__form' : 'hidden'}
           onSubmit={handleSubmit(editHandle)}>
-          <label className='user-edit__label' htmlFor='fish-input'>
-            F.I.Sh
-          </label>
-          <input
-            id='fish-input'
-            type='text'
-            autoComplete='off'
-            className='user-edit__input'
-            placeholder='Ism sharifingiz...'
-            {...register('fullName', {
-              required: "To'ldirilishi shart!",
-            })}
-            required
-          />
-          <p className={errors.fullName ? 'alerts' : 'alerts v-hidden'}>
-            {errors.fullName?.message}
-          </p>
           <label className='user-edit__label' htmlFor='login-input'>
             Login kiriting
           </label>
@@ -155,11 +140,28 @@ const Header = () => {
           <p className={errors.username ? 'alerts' : 'alerts v-hidden'}>
             {errors.username?.message}
           </p>
-          <label className='users__label' htmlFor='parol-input'>
-            Parol kiriting
+          <label className='users__label' htmlFor='passwordNow-input'>
+            Joriy parolni kiriting
           </label>
           <input
-            id='parol-input'
+            id='passwordNow-input'
+            type='password'
+            className='user-edit__input'
+            autoComplete='off'
+            placeholder='Parol...'
+            {...register('passwordNow', {
+              required: "To'ldirilishi shart!",
+            })}
+            required
+          />
+          <p className={errors.passwordNow ? 'alerts' : 'alerts v-hidden'}>
+            {errors.passwordNow?.message}
+          </p>
+          <label className='users__label' htmlFor='password-input'>
+            Yangi parolni kiriting
+          </label>
+          <input
+            id='password-input'
             type='password'
             className='user-edit__input'
             autoComplete='off'
@@ -172,11 +174,11 @@ const Header = () => {
           <p className={errors.password ? 'alerts' : 'alerts v-hidden'}>
             {errors.password?.message}
           </p>
-          <label className='user-edit__label' htmlFor='parol2-input'>
-            Parolni tasdiqlang
+          <label className='user-edit__label' htmlFor='prePassword-input'>
+            Yangi parolni tasdiqlang
           </label>
           <input
-            id='parol2-input'
+            id='prePassword-input'
             type='password'
             autoComplete='off'
             className='user-edit__input'

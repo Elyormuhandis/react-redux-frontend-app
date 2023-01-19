@@ -7,6 +7,7 @@ import {
   getAllStatisticsFromDivision,
   getAllStatisticsToDivision,
 } from '../../store/features/statistics/statistics.actions';
+import { formatBytes } from '../../helpers/helper.functions';
 
 const Journal = () => {
   const { logs } = useSelector((state) => state.statistics);
@@ -23,7 +24,6 @@ const Journal = () => {
 
   const getJournal = (data) => {
     data.divisionId = userDivision;
-    console.log(data);
     const { sortType } = data;
     if (sortType === 'HAMMASI') {
       dispatch(getAllStatistics(data));
@@ -32,7 +32,6 @@ const Journal = () => {
     } else if (sortType === 'QABUL QILINGANLAR') {
       dispatch(getAllStatisticsToDivision(data));
     }
-    console.log(logs);
   };
 
   return (
@@ -42,7 +41,8 @@ const Journal = () => {
       </h4>
       <form className='journal__form' onSubmit={handleSubmit(getJournal)}>
         <input
-          type='date'
+          type='datetime-local'
+          // defaultValue={}
           className='journal__input'
           id='date-start'
           {...register('start', {})}
@@ -52,7 +52,7 @@ const Journal = () => {
           dan
         </label>
         <input
-          type='date'
+          type='datetime-local'
           className='journal__input'
           id='date-end'
           {...register('end', {})}
@@ -108,46 +108,52 @@ const Journal = () => {
           QIDIRISH
         </button>
       </form>
-      <table className='sent__table'>
-        <thead className='send__table-header'>
-          <tr>
-            <th>N</th>
-            <th>Nomi</th>
-            <th>Fayl hajmi</th>
-            <th>Kimdan</th>
-            <th>Kimga</th>
-            <th>Yuborilgan vaqti</th>
-            <th>Qabul qilingan vaqti</th>
-            <th></th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody className='send__table-body'>
-          {logs?.map((file, idx) => (
-            <tr className='tasdiqlangan' key={idx}>
-              <td>{idx + 1}</td>
-              <td className=''>{file.originalName}</td>
-              <td className=''>{file.size + 'b'}</td>
-              <td className=''>
-                {
-                  divisions?.filter(
-                    (division) => division.id === file.fromDivision.id
-                  )[0]?.name
-                }
-              </td>
-              <td className=''>
-                {
-                  divisions?.filter(
-                    (division) => division.id === file.toDivision.id
-                  )[0]?.name
-                }
-              </td>
-              <td className='icons'>{file.fromDivision.createdAt}</td>
-              <td className='icons'>{file.toDivision.createdAt}</td>
+      {logs.length !== 0 && (
+        <table className='sent__table'>
+          <thead className='send__table-header'>
+            <tr>
+              <th>N</th>
+              <th>Nomi</th>
+              <th>Fayl hajmi</th>
+              <th>Kimdan</th>
+              <th>Kimga</th>
+              <th>Yuborilgan vaqti</th>
+              <th>Qabul qilingan vaqti</th>
+              <th></th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className='send__table-body'>
+            {logs?.map((file, idx) => (
+              <tr className='tasdiqlangan' key={idx}>
+                <td>{idx + 1}</td>
+                <td className=''>{file.originalName}</td>
+                <td className=''>{formatBytes(file.size)}</td>
+                <td className=''>
+                  {
+                    divisions?.filter(
+                      (division) => division.id === file.fromDivision.id
+                    )[0]?.name
+                  }
+                </td>
+                <td className=''>
+                  {
+                    divisions?.filter(
+                      (division) => division.id === file.toDivision.id
+                    )[0]?.name
+                  }
+                </td>
+                <td className='icons'>
+                  {file.fromDivision.createdAt.replace('T', ', ').slice(0, 17)}
+                </td>
+                <td className='icons'>
+                  {file.toDivision.createdAt.replace('T', ', ').slice(0, 17)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };

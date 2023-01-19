@@ -1,5 +1,5 @@
 1. Login validate + backend validate 8 talik yoqish
-2. Jo'natmani yuborilganidan so'ng o'chirish, process bar qo'shish
+2. Jo'natmani yuborilganidan so'ng o'chirish, process bar qo'shish(state managment problem)
 3. Jo'natma yangi biriktirilganida, process barda alohida ketyotgan 
 va ketmayotganlar alohida ko'rinsin
 4. Jo'natma yuklanayotganida loadbar ko'rinib tursin
@@ -17,3 +17,9 @@ va ketmayotganlar alohida ko'rinsin
 0. Har bir viewda xabar soni ko'rinib tursin 
 5. Person icon bosilganida user haqida info chiqsin //done
 edit icon bo'lsin (11)
+
+
+//Backend kamchiliklari
+1. AttachmentStatistics Backendga vaqni qo'shish
+2. UserEditFOrUserda user.password.equals(PasswordEndcoder.encode(dto.passwordNow)) ishlamayapti
+

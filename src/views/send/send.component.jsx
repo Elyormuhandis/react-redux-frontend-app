@@ -1,19 +1,24 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { uploadFiles } from "../../store/features/attachment/attachment.actions";
-import { FaPlusCircle, FaTrashAlt } from "react-icons/fa";
-import { MdSend } from "react-icons/md";
-import "./send.styles.scss";
-import ProgressBar from "@ramonak/react-progress-bar";
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadFiles } from '../../store/features/attachment/attachment.actions';
+import { FaPlusCircle, FaTrashAlt } from 'react-icons/fa';
+import { MdDoneOutline, MdSend } from 'react-icons/md';
+import './send.styles.scss';
+import ProgressBar from '@ramonak/react-progress-bar';
+import {
+  clearDragFileList,
+  editDragFileList,
+  setDragFileList,
+} from '../../store/features/attachment/attachment.slice';
+import { formatBytes } from '../../helpers/helper.functions';
 
-const Send = () => {
+const Send = (props) => {
   const dispatch = useDispatch();
   const [drag, setDrag] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [dragFiles, setDragFiles] = useState([]);
   const { divisions } = useSelector((state) => state.division);
-  let { success, message } = useSelector((state) => state.attachment);
+  let { dragFileList } = useSelector((state) => state.attachment);
 
   const {
     register,
@@ -22,8 +27,8 @@ const Send = () => {
   } = useForm();
 
   const addFileHandler = (data) => {
-    data.files = [...dragFiles];
     data.setProgress = setProgress;
+    data.files = [...dragFileList];
     dispatch(uploadFiles(data));
   };
 
@@ -38,85 +43,80 @@ const Send = () => {
 
   const dropHandler = (e) => {
     e.preventDefault();
-    setDragFiles([...dragFiles, ...e.dataTransfer.files]);
+    dispatch(setDragFileList(e.dataTransfer.files));
     setDrag(false);
   };
 
   const handlePick = (e) => {
-    document.querySelector("#file-input-field").click();
+    document.querySelector('#file-input-field').click();
   };
 
   return (
-    <div className="send">
-      <form className="send__form" onSubmit={handleSubmit(addFileHandler)}>
-        <div className="send__container">
-          <div className="send__bottom">
+    <div className='send'>
+      <form className='send__form' onSubmit={handleSubmit(addFileHandler)}>
+        <div className='send__container'>
+          <div className='send__bottom'>
             <h4>Qayerga</h4>
-            <div className="send__file-sender-container">
+            <div className='send__file-sender-container'>
               <select
-                className="send__form--select"
-                id="division-select-send"
-                defaultValue={"DEFAULT"}
-                {...register("toDivision")}
-              >
+                className='send__form--select'
+                id='division-select-send'
+                defaultValue={'DEFAULT'}
+                {...register('toDivision')}>
                 <option
-                  className="send__form--option"
-                  value={"DEFAULT"}
+                  className='send__form--option'
+                  value={'DEFAULT'}
                   disabled
-                  hidden
-                >
+                  hidden>
                   Boshqarmalar...
                 </option>
                 {divisions
                   ?.filter((division) => division.active === true)
                   ?.map((division, idx) => (
                     <option
-                      className="send__form--option"
+                      className='send__form--option'
                       key={division.id}
-                      value={division.id}
-                    >
+                      value={division.id}>
                       {division.name}
                     </option>
                   ))}
               </select>
-              <button className="send__form--btn" type="submit">
-                <MdSend className="upload-icon" />
+              <button className='send__form--btn' type='submit'>
+                <MdSend className='upload-icon' />
               </button>
             </div>
           </div>
-          <div className="send__file-picker">
+          <div className='send__file-picker'>
             <h4>Fayllar</h4>
             <input
-              id="file-input-field"
-              type="file"
+              id='file-input-field'
+              type='file'
               multiple
               // accept="image/*, .png, .jpg, .gif"
-              className="send__file-input--hidden"
-              {...register("files", {
+              className='send__file-input--hidden'
+              {...register('files', {
                 onChange: (e) => {
-                  setDragFiles([...dragFiles, ...e.target.files]);
+                  dispatch(setDragFileList(e.target.files));
                 },
               })}
             />
             {drag ? (
               <div
-                className="drop-area"
+                className='drop-area'
                 onDragStart={(e) => dragStartHandler(e)}
                 onDragLeave={(e) => dragOverHandler(e)}
                 onDragOver={(e) => dragStartHandler(e)}
-                onDrop={(e) => dropHandler(e)}
-              >
+                onDrop={(e) => dropHandler(e)}>
                 Qo'yib yuboring...
               </div>
             ) : (
               <div
-                className="drag"
+                className='drag'
                 onClick={(e) => handlePick(e)}
                 onDragStart={(e) => dragStartHandler(e)}
                 onDragLeave={(e) => dragOverHandler(e)}
-                onDragOver={(e) => dragStartHandler(e)}
-              >
-                <FaPlusCircle className="upload-icon" />
+                onDragOver={(e) => dragStartHandler(e)}>
+                <FaPlusCircle className='upload-icon' />
                 <span>YUKLASH</span>
               </div>
             )}
@@ -125,50 +125,57 @@ const Send = () => {
           <textarea className='send__message' type='text' /> */}
         </div>
       </form>
-      <div className="send__selected-files">
-        <div className="send__selected-files--header"></div>
+      <div className='send__selected-files'>
+        <div className='send__selected-files--header'></div>
         <table>
           <thead>
             <tr>
-              <th style={{ color: "orange" }}>T/R</th>
-              <th style={{ color: "orange" }}>Nomi</th>
-              <th style={{ color: "orange" }}>Hajmi</th>
-              <th style={{ color: "orange" }}>Holati</th>
-              <th style={{ color: "orange" }}>
+              <th style={{ color: 'orange' }}>T/R</th>
+              <th style={{ color: 'orange' }}>Nomi</th>
+              <th style={{ color: 'orange' }}>Hajmi</th>
+              <th style={{ color: 'orange' }}>Holati</th>
+              <th style={{ color: 'orange' }}>
                 <FaTrashAlt
-                  className="send__selected-files--clr-icon"
-                  onClick={() => setDragFiles([])}
+                  className='send__selected-files--clr-icon'
+                  onClick={() => {
+                    // setDragFiles([])
+                    dispatch(clearDragFileList());
+                  }}
                 />
               </th>
             </tr>
           </thead>
-          <tbody className="send__table-body">
-            {dragFiles?.map((file, idx) => (
+          <tbody className='send__table-body'>
+            {dragFileList?.map((file, idx) => (
               <tr key={idx} id={idx}>
                 <td>{idx + 1}</td>
-                <td className="table-head-name">{file.name}</td>
-                <td className="table-head-name">{file.size}</td>
-                <td className="table-head-name">
-                  {dragFiles && (
+                <td className='table-head-name'>{file.name}</td>
+                <td className='table-head-name'>{formatBytes(file.size)}</td>
+                <td className='table-head-name'>
+                  {progress < 100 ? (
                     <ProgressBar
                       completed={progress}
-                      height="0.8rem"
-                      labelSize="8px"
-                      transitionDuration=".3s"
-                      transitionTimingFunction="linear"
+                      height='0.8rem'
+                      labelSize='8px'
+                      transitionDuration='.3s'
+                      transitionTimingFunction='linear'
                       maxCompleted={100}
-                      baseBgColor="#b2bac2"
-                      bgColor="rgb(245, 93, 49)"
+                      baseBgColor='#b2bac2'
+                      bgColor='rgb(245, 93, 49)'
                     />
+                  ) : (
+                    <MdDoneOutline />
                   )}
                 </td>
-                <td className="table-head-name">
+                <td className='table-head-name'>
                   <FaTrashAlt
-                    className="send__selected-files--clr-icon"
+                    className='send__selected-files--clr-icon'
                     onClick={(e) => {
-                      setDragFiles(
-                        dragFiles.filter(
-                          (file, idx) => idx != e.currentTarget.id
+                      dispatch(
+                        editDragFileList(
+                          dragFileList.filter(
+                            (file, idx) => idx != e.currentTarget.id
+                          )
                         )
                       );
                     }}

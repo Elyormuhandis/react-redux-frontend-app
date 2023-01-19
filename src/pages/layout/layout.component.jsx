@@ -17,6 +17,7 @@ import {
 } from '../../store/features/attachment/attachment.actions';
 
 const Layout = () => {
+  const [progress, setProgress] = useState(0);
   const { userRole, userDivision } = useSelector((state) => state.user);
   const { isUpdate } = useSelector((state) => state.attachment);
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const Layout = () => {
             <Header />
           </header>
           <main className='layout__main'>
-            <Sidebar />
+            <Sidebar progress={progress} setProgress={setProgress} />
             <div className='layout__main__container'>
               <div className='layout__main__box'>
                 <Outlet />

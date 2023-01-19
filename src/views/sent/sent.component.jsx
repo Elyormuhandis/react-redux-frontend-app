@@ -4,6 +4,7 @@ import { FaInfoCircle } from 'react-icons/fa';
 import './sent.styles.scss';
 import { useState } from 'react';
 import { getOneSentFile } from '../../store/features/attachment/attachment.actions';
+import { formatBytes } from '../../helpers/helper.functions';
 
 const Sent = () => {
   const { yuborilganFayllar, oneSentFile } = useSelector(
@@ -43,7 +44,7 @@ const Sent = () => {
                 key={idx}>
                 <td>{idx + 1}</td>
                 <td className=''>{file.originalName}</td>
-                <td className=''>{file.size + 'b'}</td>
+                <td className=''>{formatBytes(file.size)}</td>
                 <td className=''>
                   {file?.createdAt?.replace('T', ', ').slice(0, 17)}
                 </td>

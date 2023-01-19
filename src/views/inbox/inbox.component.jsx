@@ -8,6 +8,7 @@ import {
   setView,
 } from '../../store/features/attachment/attachment.actions';
 import { useState } from 'react';
+import { formatBytes } from '../../helpers/helper.functions';
 
 const Inbox = () => {
   const { kelganFayllar, oneReceivedFile } = useSelector(
@@ -133,7 +134,7 @@ const Inbox = () => {
                   onClick={(e) => setViewHandler(file.id)}>
                   <td>{idx + 1}</td>
                   <td className=''>{file.originalName}</td>
-                  <td className=''>{file.size + 'b'}</td>
+                  <td className=''>{formatBytes(file.size)}</td>
                   <td className=''>
                     {file?.createdAt?.replace('T', ', ').slice(0, 17)}
                   </td>

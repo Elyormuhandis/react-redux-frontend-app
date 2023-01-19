@@ -8,6 +8,7 @@ import {
   getRoles,
   getRole,
   deleteUser,
+  editSimpleUser,
 } from './user.actions';
 
 // initialize userToken from local storage
@@ -136,6 +137,21 @@ const userSlice = createSlice({
       state.message = payload.message;
     },
     [editUser.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
+
+    // edit simple User
+    [editSimpleUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [editSimpleUser.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.userToken = payload.token;
+      localStorage.setItem(`${payload.message}`, payload.token);
+      state.success = payload.success;
+    },
+    [editSimpleUser.rejected]: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
     },
