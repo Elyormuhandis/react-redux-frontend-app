@@ -18,6 +18,7 @@ export const getAllStatistics = createAsyncThunk(
           },
         }
       );
+
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {

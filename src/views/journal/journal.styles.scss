@@ -1,48 +1,51 @@
-.journal{
-    &__header{
-        margin-bottom: 15px;
+.journal {
+  &__header {
+    margin-bottom: 15px;
+  }
+  &__form {
+    width: 100%;
+    background-color: #0c2d1c;
+    color: white;
+    padding: 10px;
+    border: 1px solid white;
+  }
+  &__input {
+    background-color: #0c2d1c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+  }
+  &__label {
+    margin-right: 15px;
+  }
+  &__btn {
+    color: rgb(225, 225, 225);
+    border: 1px solid rgb(225, 225, 225);
+    outline: none;
+    padding: 10px 15px;
+    background-color: #0c2d1c;
+    transition: all 0.3s;
+    &:hover {
+      transition: all 0.3s;
+      color: rgb(255, 255, 255);
+      border: 1px solid rgb(255, 255, 255);
     }
-    &__form{
-        width: 100%;
-        background-color: #0c2d1c;
-        color: white;
-        padding: 10px;
-        border:1px solid white;
+    &:active {
+      transition: all 0.3s;
+      transform: translateY(10%);
     }
-    &__input{
-        background-color: #0c2d1c;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        outline: none;
-
+  }
+  &__select {
+    color: rgb(225, 225, 225);
+    border: 1px solid rgb(225, 225, 225);
+    outline: none;
+    padding: 10px 15px;
+    background-color: #0c2d1c;
+    margin-right: 10px;
+    &--options {
+      background-color: #0c2d1c;
+      padding: 5px 0;
     }
-    &__label{
-        margin-right: 15px;
-    }
-    &__btn{
-        color: rgb(225, 225, 225);
-        border: 1px solid rgb(225, 225, 225);
-        outline: none;
-        padding: 10px 15px;
-        background-color: #0c2d1c;
-        transition: all .3s;
-        &:hover{
-            transition: all .3s;
-            color: rgb(255, 255, 255);
-            border: 1px solid rgb(255, 255, 255);
-        }
-    }
-    &__select{
-        color: rgb(225, 225, 225);
-        border: 1px solid rgb(225, 225, 225);
-        outline: none;
-        padding: 10px 15px;
-        background-color: #0c2d1c;
-        margin-right: 10px;
-        &--options{
-            background-color: #0c2d1c;      
-            padding: 5px 0;      
-       }
-    }
+  }
 }

@@ -1,73 +1,80 @@
-.delete-file-td{
-    position: relative;
+.delete-file-td {
+  position: relative;
 }
 
-.delete-file-modal{
-    position: absolute;
-    border:1px solid white;
-    padding:7px;
-    top: -25px;
-    right: 0px;
-    background-color: #e3e4e4;
-    z-index: 2;
-    &__header{
-      color: #393737;
-      margin-bottom: 10px;
-    }
-    &__text{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      
-  
-    }
-    &__yes{
+.delete-file-modal {
+  position: absolute;
+  border: 1px solid white;
+  padding: 7px;
+  top: -25px;
+  right: 0px;
+  background-color: #e3e4e4;
+  z-index: 2;
+  &__header {
+    color: #393737;
+    margin-bottom: 10px;
+  }
+  &__text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__yes {
+    color: #d8d8d8;
+    border: none;
+    outline: none;
+    padding: 4px 6px;
+    border-radius: 5px;
+    background-color: rgb(0, 105, 56);
+    transition: all 0.3s;
+    &:hover {
+      transition: all 0.3s;
       color: #d8d8d8;
-      border:none;
-      outline:none;
-      padding: 4px 6px;
-      border-radius: 5px;
-      background-color: rgb(0, 105, 56);
-      transition: all .3s;
-      &:hover{
-        transition: all .3s;
-        color: #d8d8d8;
-        background-color: rgb(0, 193, 103);
-      }
-    }
-    &__no{
-      color: #d8d8d8;
-      border:none;
-      outline:none;
-      padding: 4px 6px;
-      border-radius: 5px;
-      background-color: red;
-      transition: all .3s;
-      &:hover{
-        transition: all .3s;
-        color: #d8d8d8;
-        background-color: rgb(251, 94, 94);
-      }
+      background-color: rgb(0, 193, 103);
     }
   }
-  
-  .delete-file-modal-none{
-    display: none;
-  }
-  
-  .delete-file-icon{
-      transition: all .3s;
-    &:hover{
-        transition: all .3s;
-        cursor: pointer;
-        color: rgb(255, 62, 62);
+  &__no {
+    color: #d8d8d8;
+    border: none;
+    outline: none;
+    padding: 4px 6px;
+    border-radius: 5px;
+    background-color: red;
+    transition: all 0.3s;
+    &:hover {
+      transition: all 0.3s;
+      color: #d8d8d8;
+      background-color: rgb(251, 94, 94);
     }
+  }
+}
+
+.delete-file-modal-none {
+  display: none;
+}
+
+.delete-file-icon {
+  transition: all 0.3s;
+  &:hover {
+    transition: all 0.3s;
+    cursor: pointer;
+    color: rgb(255, 62, 62);
   }
 
-  .download-file-icon{
-    &:hover{
-        transition: all .3s;
-        cursor: pointer;
-        color: rgb(140, 255, 52);
-    }
+  &:active {
+    transition: all 0.3s;
+    transform: translateY(10%);
   }
+}
+
+.download-file-icon {
+  &:hover {
+    transition: all 0.3s;
+    cursor: pointer;
+    color: rgb(140, 255, 52);
+  }
+  &:active {
+    transition: all 0.3s;
+    transform: translateY(10%);
+  }
+}

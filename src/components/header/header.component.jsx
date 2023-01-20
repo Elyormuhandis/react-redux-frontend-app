@@ -11,6 +11,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import logoLight from '../../assets/logo-light.svg';
+import logoGold from '../../assets/logo-gold.png';
 
 const Header = () => {
   const [formToggle, setFormTogge] = useState(false);
@@ -76,7 +78,10 @@ const Header = () => {
 
   return (
     <header className='header'>
-      <div className='header__icon'>FANEX</div>
+      <div className='header__icon'>
+        <img src={logoLight} width='150rem' />
+        {/* <img src={logoGold} width='150rem' /> */}
+      </div>
       <div className='header__options'>
         <div className='searchbox'>
           <input className='searchbox__input' placeholder='Nima qidiramiz...' />
@@ -84,10 +89,6 @@ const Header = () => {
             <BsSearch />
           </span>
         </div>
-        <select className='select'>
-          <option value='uzbek'>O'ZBEK</option>
-          <option value='rus'>RUS</option>
-        </select>
         <span onClick={getUserHandler} className='personal user-info'>
           <MdOutlinePersonOutline />
         </span>
