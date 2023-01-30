@@ -1,16 +1,13 @@
-import { useSelector } from "react-redux";
-import { Navigate, useLocation } from "react-router"
+import { useSelector } from 'react-redux';
+import { Navigate, useLocation } from 'react-router';
 
-const Authmiddleware = ({children}) =>  {
-    const {userToken, userRole} = useSelector(state=>state.user)
-    const location = useLocation();
+const Authmiddleware = ({ children }) => {
+  const { userToken } = useSelector((state) => state.user);
 
-    if(!userToken){
-        return <Navigate to='/login' state={{from: location}}/>
-    }
+  if (!userToken) {
+    return <Navigate to='/login' />;
+  }
 
-    return children;
+  return children;
 };
-  export default Authmiddleware;
-
-  
+export default Authmiddleware;

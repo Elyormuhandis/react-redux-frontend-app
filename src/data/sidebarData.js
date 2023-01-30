@@ -36,7 +36,7 @@ export const sidebarData = [
   {
     id: 4,
     icon: <MdOutlineDrafts />,
-    text: 'QORALAMA',
+    text: 'QABUL',
     link: 'drafts',
     className: 'sidebar__drafts',
   },

@@ -119,8 +119,6 @@ const Journal = () => {
               <th>Kimga</th>
               <th>Yuborilgan vaqti</th>
               <th>Qabul qilingan vaqti</th>
-              <th></th>
-              <th></th>
             </tr>
           </thead>
           <tbody className='send__table-body'>

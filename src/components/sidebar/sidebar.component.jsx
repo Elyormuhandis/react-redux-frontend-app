@@ -21,6 +21,7 @@ const Sidebar = () => {
   const inboxCount = kelganFayllar.filter((file) => file.pdtv === false).length;
   const draftCount = kelganFayllar.filter((file) => file.pdtv === true).length;
   const sentCount = yuborilganFayllar.length;
+
   return (
     <div className={open ? 'sidenav' : 'sidenavClosed'}>
       <button className='menuBtn' onClick={toggleOpen}>
@@ -73,6 +74,7 @@ const Sidebar = () => {
                   }
                   to={item.link}>
                   <SidebarItem
+                    props
                     sentCount={sentCount}
                     inboxCount={inboxCount}
                     draftCount={draftCount}>

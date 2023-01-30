@@ -1,15 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  uploadFiles,
   baseUpdate,
   downloadFileFromFileSystem,
   getAllByFromDivision,
   getAllByToDivision,
-  getAllStatistics,
   getOneReceivedFile,
   getOneSentFile,
   setPDTV,
   setView,
-  uploadFiles,
 } from './attachment.actions';
 
 const userToken = localStorage.getItem('Token')
@@ -19,9 +18,7 @@ const userToken = localStorage.getItem('Token')
 const initialState = {
   files: [],
   dragFileList: [],
-  progress: 0,
   loading: false,
-  loadingFile: false,
   message: '',
   yuborilganFayllar: [],
   oneReceivedFile: {},
@@ -33,175 +30,189 @@ const initialState = {
   userToken,
   error: null,
   success: false,
+  progress: 0,
 };
 
 const attachmentSlice = createSlice({
   name: 'attachment',
   initialState,
   reducers: {
-    setDragFileList: (state, action) => {
-      state.dragFileList = [...state.dragFileList, ...action.payload];
+    setDragFileList: (state, { payload }) => {
+      state.dragFileList.push({
+        id: new Date().getTime() + state.dragFileList.length,
+        file: payload,
+        progress: 0,
+        isSent: false,
+      });
     },
-    editDragFileList: (state, action) => {
-      state.dragFileList = [...action.payload];
+    editDragFileList: (state, { payload }) => {
+      state.dragFileList = [...payload];
     },
     clearDragFileList: (state) => {
       state.dragFileList = [];
     },
-    setProgress: (state, payload) => {
-      state.progress = payload;
+    setProgress: (state, { payload }) => {
+      state.dragFileList.find((file) => file.id === payload.id).progress =
+        payload.progress;
     },
   },
 
-  extraReducers: {
-    // upload files
-    [uploadFiles.pending]: (state) => {
-      state.loadingFile = true;
-      state.error = null;
-    },
-    [uploadFiles.fulfilled]: (state, { payload }) => {
-      state.loadingFile = false;
-      state.success = payload.success;
-      state.message = payload.message;
-    },
-
-    [uploadFiles.rejected]: (state, { payload }) => {
-      state.loadingFile = false;
-      state.error = payload;
-    },
-
-    // getAllByFromDivision
-    [getAllByFromDivision.pending]: (state) => {
+  extraReducers: (builder) => {
+    //upload files
+    builder.addCase(uploadFiles.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getAllByFromDivision.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(uploadFiles.fulfilled, (state, { payload }) => {
+      state.dragFileList.find(
+        (file) => `[${file.file.name}]` === payload.message
+      ).isSent = payload.success;
+      state.loading = false;
+      state.success = payload.success;
+      state.message = payload.message;
+    });
+    builder.addCase(uploadFiles.rejected, (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    });
+
+    // getAllByFromDivision
+    builder.addCase(getAllByFromDivision.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getAllByFromDivision.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.yuborilganFayllar = payload.sort(function (a, b) {
         return a.id - b.id || a.orginalName.localeCompare(b.orginalName);
       });
-    },
-
-    [getAllByFromDivision.rejected]: (state, { payload }) => {
+    });
+    builder.addCase(getAllByFromDivision.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    },
+    });
 
     // getAllByToDivision
-    [getAllByToDivision.pending]: (state) => {
+    builder.addCase(getAllByToDivision.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getAllByToDivision.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getAllByToDivision.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.kelganFayllar = payload.sort(function (a, b) {
         return a.id - b.id || a.orginalName.localeCompare(b.orginalName);
       });
-    },
+    });
 
-    [getAllByToDivision.rejected]: (state, { payload }) => {
+    builder.addCase(getAllByToDivision.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    },
+    });
 
     // setView
-    [setView.pending]: (state) => {
+    builder.addCase(setView.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [setView.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(setView.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.message = payload.message;
       state.success = payload.success;
       state.kelganFayllar = payload.object.sort(function (a, b) {
         return a.id - b.id || a.orginalName.localeCompare(b.orginalName);
       });
-    },
+    });
 
-    [setView.rejected]: (state, { payload }) => {
+    builder.addCase(setView.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    },
+    });
 
     // setPDTV
-    [setPDTV.pending]: (state) => {
+    builder.addCase(setPDTV.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [setPDTV.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(setPDTV.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.message = payload.message;
       state.success = payload.success;
       state.kelganFayllar = payload.object.sort(function (a, b) {
         return a.id - b.id || a.orginalName.localeCompare(b.orginalName);
       });
-    },
+    });
 
-    [setPDTV.rejected]: (state, { payload }) => {
+    builder.addCase(setPDTV.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    },
+    });
 
     // getOneReceivedFile
-    [getOneReceivedFile.pending]: (state) => {
+    builder.addCase(getOneReceivedFile.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getOneReceivedFile.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getOneReceivedFile.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.oneReceivedFile = payload;
-    },
+    });
 
-    [getOneReceivedFile.rejected]: (state, { payload }) => {
+    builder.addCase(getOneReceivedFile.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    },
+    });
 
     // getOneSentFile
-    [getOneSentFile.pending]: (state) => {
+    builder.addCase(getOneSentFile.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [getOneSentFile.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(getOneSentFile.fulfilled, (state, { payload }) => {
       state.loading = false;
       console.log(payload);
       state.oneSentFile = payload;
-    },
+    });
 
-    [getOneSentFile.rejected]: (state, { payload }) => {
+    builder.addCase(getOneSentFile.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    },
+    });
 
     // downloadFileFromFileSystem
-    [downloadFileFromFileSystem.pending]: (state) => {
+    builder.addCase(downloadFileFromFileSystem.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [downloadFileFromFileSystem.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      // state.downloadFileFromFileSystem = payload
-    },
+    });
+    builder.addCase(
+      downloadFileFromFileSystem.fulfilled,
+      (state, { payload }) => {
+        state.loading = false;
+        // state.downloadFileFromFileSystem = payload
+      }
+    );
 
-    [downloadFileFromFileSystem.rejected]: (state, { payload }) => {
-      state.loading = false;
-      state.error = payload;
-    },
+    builder.addCase(
+      downloadFileFromFileSystem.rejected,
+      (state, { payload }) => {
+        state.loading = false;
+        state.error = payload;
+      }
+    );
     // Boshqarmaga fayl kelganmi yoki yo'qmi bilish uchun kerak
-    [baseUpdate.pending]: (state) => {
+    builder.addCase(baseUpdate.pending, (state) => {
       state.loading = true;
       state.error = null;
-    },
-    [baseUpdate.fulfilled]: (state, { payload }) => {
+    });
+    builder.addCase(baseUpdate.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.success = payload.success;
       state.isUpdate = payload.message;
-    },
+    });
 
-    [baseUpdate.rejected]: (state, { payload }) => {
+    builder.addCase(baseUpdate.rejected, (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    },
+    });
   },
 });
 

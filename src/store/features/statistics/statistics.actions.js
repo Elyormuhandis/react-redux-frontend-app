@@ -46,6 +46,7 @@ export const getAllStatisticsFromDivision = createAsyncThunk(
           },
         }
       );
+      console.log(data);
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {

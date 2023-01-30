@@ -33,8 +33,7 @@ const Sent = () => {
               <th>Kimdan</th>
               <th>Kimga</th>
               <th>Holati</th>
-              <th></th>
-              <th></th>
+              <th>Info</th>
             </tr>
           </thead>
           <tbody className='send__table-body'>

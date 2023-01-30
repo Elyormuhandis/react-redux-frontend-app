@@ -16,8 +16,7 @@ const adminRoutes = [
   { path: 'journal', element: <Journal /> },
 ];
 
-const authProtectedRoutes = [
-  { path: 'dashboard', element: <Dashboard /> },
+const userRoutes = [
   { path: 'send', element: <Send /> },
   { path: 'sent', element: <Sent /> },
   { path: 'inbox', element: <Inbox /> },
@@ -27,4 +26,4 @@ const authProtectedRoutes = [
   { path: 'settings', element: <Settings /> },
 ];
 
-export { authProtectedRoutes, adminRoutes, publicRoutes };
+export { userRoutes, adminRoutes, publicRoutes };

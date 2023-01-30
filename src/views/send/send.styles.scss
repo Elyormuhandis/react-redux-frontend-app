@@ -42,6 +42,11 @@
         transition: 0.3s all;
       }
     }
+    .focused {
+      background-color: #d8d8d8;
+      cursor: pointer;
+      transition: 0.3s all;
+    }
 
     &--hidden {
       position: absolute;
