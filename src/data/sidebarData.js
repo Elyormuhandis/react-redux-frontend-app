@@ -47,12 +47,4 @@ export const sidebarData = [
     link: 'journal',
     className: 'sidebar__journal',
   },
-
-  {
-    id: 6,
-    icon: <RiSettingsLine />,
-    text: 'SOZLAMALAR',
-    link: 'settings',
-    className: 'sidebar__settings',
-  },
 ];

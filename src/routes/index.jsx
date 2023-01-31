@@ -5,14 +5,12 @@ import Sent from '../views/sent/sent.component';
 import Drafts from '../views/drafts/drafts.component';
 import Trash from '../views/trash/trash.component';
 import Journal from '../views/journal/journal.component';
-import Settings from '../views/settings/settings.component';
 import Login from '../pages/login/login.component';
 
 const publicRoutes = [{ path: 'login', element: <Login /> }];
 
 const adminRoutes = [
   { path: 'dashboard', element: <Dashboard /> },
-  { path: 'settings', element: <Settings /> },
   { path: 'journal', element: <Journal /> },
 ];
 
@@ -23,7 +21,6 @@ const userRoutes = [
   { path: 'drafts', element: <Drafts /> },
   { path: 'trash', element: <Trash /> },
   { path: 'journal', element: <Journal /> },
-  { path: 'settings', element: <Settings /> },
 ];
 
 export { userRoutes, adminRoutes, publicRoutes };
