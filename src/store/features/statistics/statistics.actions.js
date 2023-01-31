@@ -10,7 +10,7 @@ export const getAllStatistics = createAsyncThunk(
     try {
       const { userToken } = getState().user;
       const { data } = await axios.get(
-        `${BASE_URL}statistics/getallbycreatedatbetween?start=${start}&&end=${end}}`,
+        `${BASE_URL}statistics/getallbycreatedatbetween?start=${start}&&end=${end}`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -18,7 +18,6 @@ export const getAllStatistics = createAsyncThunk(
           },
         }
       );
-
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -46,7 +45,6 @@ export const getAllStatisticsFromDivision = createAsyncThunk(
           },
         }
       );
-      console.log(data);
       return data;
     } catch (error) {
       if (error.response && error.response.data.message) {

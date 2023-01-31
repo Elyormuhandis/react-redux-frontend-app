@@ -16,21 +16,26 @@ const Journal = () => {
   const { divisions } = useSelector((state) => state.division);
   const dispatch = useDispatch();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-  } = useForm({ mode: 'onBlur' });
+  const { register, handleSubmit, reset } = useForm({ mode: 'onBlur' });
 
   const getJournal = (data) => {
-    data.divisionId = userDivision;
     const { sortType } = data;
-    if (sortType === 'HAMMASI') {
-      dispatch(getAllStatistics(data));
-    } else if (sortType === 'YUBORILGANLAR') {
-      dispatch(getAllStatisticsFromDivision(data));
-    } else if (sortType === 'QABUL QILINGANLAR') {
-      dispatch(getAllStatisticsToDivision(data));
+    if (userRole === 'ADMIN') {
+      if (sortType === 'HAMMASI') {
+        dispatch(getAllStatistics(data));
+      } else if (sortType === 'YUBORILGANLAR') {
+        dispatch(getAllStatisticsFromDivision(data));
+      } else if (sortType === 'QABUL QILINGANLAR') {
+        dispatch(getAllStatisticsToDivision(data));
+      }
+    }
+    if (userRole === 'USER') {
+      data.divisionId = userDivision;
+      if (sortType === 'YUBORILGANLAR') {
+        dispatch(getAllStatisticsFromDivision(data));
+      } else if (sortType === 'QABUL QILINGANLAR') {
+        dispatch(getAllStatisticsToDivision(data));
+      }
     }
   };
 
@@ -65,7 +70,15 @@ const Journal = () => {
           className='journal__select'
           id='date-select'
           defaultValue={'DEFAULT'}
-          {...register('sortType')}>
+          {...register('sortType', {
+            onChange: (e) => {
+              if (e.target.value === 'HAMMASI') {
+                reset({
+                  divisionId: 'DEFAULT',
+                });
+              }
+            },
+          })}>
           <option className='' value={'DEFAULT'} disabled hidden>
             TANLANG
           </option>
@@ -142,10 +155,10 @@ const Journal = () => {
                   }
                 </td>
                 <td className='icons'>
-                  {file.fromDivision.createdAt.replace('T', ', ').slice(0, 17)}
+                  {file.createdAt?.replace('T', ', ').slice(0, 17)}
                 </td>
                 <td className='icons'>
-                  {file.toDivision.createdAt.replace('T', ', ').slice(0, 17)}
+                  {file.pdtvTime?.replace('T', ', ').slice(0, 17)}
                 </td>
               </tr>
             ))}

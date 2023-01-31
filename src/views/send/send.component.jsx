@@ -60,10 +60,9 @@ const Send = (props) => {
 
   const dropHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.files);
-    // e.target.files.forEach((file) => {
-    //   dispatch(setDragFileList(file));
-    // });
+    for (const file of e.dataTransfer.files) {
+      dispatch(setDragFileList(file));
+    }
     setDrag(false);
   };
 

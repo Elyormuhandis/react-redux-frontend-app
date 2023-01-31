@@ -1,5 +1,5 @@
 import { MdCancel, MdEdit, MdOutlinePersonOutline } from 'react-icons/md';
-import { BsSearch } from 'react-icons/bs';
+import { BsMoon, BsSun } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/features/user/user.slice';
 import './header.styles.scss';
@@ -15,6 +15,7 @@ import logoLight from '../../assets/logo-light.svg';
 import logoDark from '../../assets/logo-dark.svg';
 
 const Header = () => {
+  const [mode, setMode] = useState(false);
   const [formToggle, setFormTogge] = useState(false);
   const [modalToggle, setModalToggle] = useState(false);
 
@@ -27,10 +28,7 @@ const Header = () => {
 
   const formSchema = Yup.object().shape({
     username: Yup.string().required('Ushbu maydon to`ldirilishi shart!'),
-    passwordNow: Yup.string()
-      .required('Ushbu maydon to`ldirilishi shart!')
-      .min(8, 'Parol eng kam uzunligi 8ta belgi!')
-      .max(20, 'Parol eng ko`p uzunligi 20ta belgi!'),
+    passwordNow: Yup.string().required('Ushbu maydon to`ldirilishi shart!'),
     password: Yup.string()
       .required('Ushbu maydon to`ldirilishi shart!')
       .min(8, 'Parol eng kam uzunligi 8ta belgi!')
@@ -47,15 +45,12 @@ const Header = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
-    getValues,
   } = useForm({
     mode: 'onBlur',
     resolver: yupResolver(formSchema),
   });
 
   const editHandle = (data) => {
-    console.log(data);
     dispatch(editSimpleUser(data));
     setFormTogge(!formToggle);
     reset();
@@ -79,20 +74,30 @@ const Header = () => {
   return (
     <header className='header'>
       <div className='header__icon'>
-        <img src={logoLight} width='150rem' />
-        {/* <img src={logoDark} width='150rem' /> */}
+        <img src={mode ? logoLight : logoDark} width='150rem' />
       </div>
       <div className='header__options'>
-        {/* <div className="searchbox">
-          <input className="searchbox__input" placeholder="Nima qidiramiz..." />
-          <span className="searchbox__icon">
-            <BsSearch />
-          </span>
-        </div> */}
         <span onClick={getUserHandler} className='personal user-info'>
           <MdOutlinePersonOutline />
         </span>
-        <button>Mode</button>
+        <div className='mode-editor'>
+          <BsSun
+            style={{ color: mode ? 'grey' : 'yellow', fontSize: '40px' }}
+          />
+          <div className='mode-editor--toggler'>
+            <lablel className='mode-editor--switch'>
+              <input
+                className='header__mode-editor--input'
+                type='checkbox'
+                onChange={() => setMode(!mode)}
+              />
+              <span className='slider round'></span>
+            </lablel>
+          </div>
+          <BsMoon
+            style={{ color: mode ? '#c96dfd' : 'grey', fontSize: '40px' }}
+          />
+        </div>
         <button className='personal' onClick={() => dispatch(logout())}>
           Logout
         </button>
