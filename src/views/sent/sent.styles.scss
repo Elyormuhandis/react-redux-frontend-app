@@ -48,7 +48,7 @@
     tbody tr {
       transition: background-color 150ms ease-out;
       &:hover {
-        background-color: rgba(198, 0, 0, 0.4);
+        background-color: rgb(250, 0, 0);
       }
     }
   }
@@ -94,9 +94,9 @@
 }
 
 .tasdiqlangan {
-  background-color: rgba(25, 117, 0, 0.3);
+  background-color: rgba(25, 117, 0);
   &:hover {
-    background-color: rgba(33, 151, 0, 0.5) !important;
+    background-color: rgba(33, 151, 0) !important;
   }
   &:active {
     transition: all 0.3s;
@@ -104,5 +104,5 @@
   }
 }
 .tasdiqlanmagan {
-  background-color: rgba(125, 0, 0, 0.3);
+  background-color: rgb(196, 0, 0);
 }

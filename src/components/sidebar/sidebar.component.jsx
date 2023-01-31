@@ -1,19 +1,20 @@
-import { NavLink } from 'react-router-dom';
-import { sidebarData } from '../../data/sidebarData';
+import { NavLink } from "react-router-dom";
+import { sidebarData } from "../../data/sidebarData";
 import {
   HiOutlineChevronDoubleLeft,
   HiOutlineChevronDoubleRight,
-} from 'react-icons/hi';
-import React, { useState } from 'react';
-import './sidebar.styles.scss';
-import { useSelector } from 'react-redux';
-import { SidebarItem } from './sidebar.styles';
+} from "react-icons/hi";
+import React, { useState } from "react";
+import "./sidebar.styles.scss";
+import { useSelector } from "react-redux";
+import { SidebarItem } from "./sidebar.styles";
 
 const Sidebar = () => {
   const [open, setopen] = useState(false);
   const { kelganFayllar, yuborilganFayllar } = useSelector(
     (state) => state.attachment
   );
+  const { mode } = useSelector((state) => state.ui);
   const { userRole } = useSelector((state) => state.user);
   const toggleOpen = () => {
     setopen(!open);
@@ -23,70 +24,121 @@ const Sidebar = () => {
   const sentCount = yuborilganFayllar.length;
 
   return (
-    <div className={open ? 'sidenav' : 'sidenavClosed'}>
-      <button className='menuBtn' onClick={toggleOpen}>
+    <div
+      className={open ? "sidenav" : "sidenavClosed"}
+      style={
+        mode
+          ? {}
+          : {
+              color: "#092c3e",
+              borderRightColor: "#08231c",
+              backgroundColor: "#fafafa",
+              transition: "0.5s",
+            }
+      }
+    >
+      <button className="menuBtn" onClick={toggleOpen}>
         {open ? (
-          <HiOutlineChevronDoubleLeft />
+          <HiOutlineChevronDoubleLeft
+            style={
+              mode
+                ? {}
+                : {
+                    color: "#092c3e",
+                    transition: "0.5s",
+                  }
+            }
+          />
         ) : (
-          <HiOutlineChevronDoubleRight />
+          <HiOutlineChevronDoubleRight
+            style={
+              mode
+                ? {}
+                : {
+                    color: "#092c3e",
+                    transition: "0.5s",
+                  }
+            }
+          />
         )}
       </button>
-      {userRole === 'ADMIN'
+      {userRole === "ADMIN"
         ? sidebarData
             .filter(
               (item) =>
-                item.link !== 'send' &&
-                item.link !== 'sent' &&
-                item.link !== 'drafts' &&
-                item.link !== 'inbox'
+                item.link !== "send" &&
+                item.link !== "sent" &&
+                item.link !== "drafts" &&
+                item.link !== "inbox"
             )
             .map((item) => {
               return (
                 <NavLink
+                  style={
+                    mode
+                      ? {}
+                      : {
+                          color: "#092c3e",
+                          transition: "0.5s",
+                        }
+                  }
                   key={item.id}
                   className={({ isActive }) =>
-                    isActive ? 'sideitem-active' : 'sideitem'
+                    isActive ? "sideitem-active" : "sideitem"
                   }
-                  to={item.link}>
+                  to={item.link}
+                >
                   <SidebarItem>
                     <span
                       className={
                         `${item.className}` +
-                        (open ? ' sidebar-icon' : ' sidebar-icon-toggle')
-                      }>
+                        (open ? " sidebar-icon" : " sidebar-icon-toggle")
+                      }
+                    >
                       {item.icon}
                     </span>
                   </SidebarItem>
-                  <span className={open ? 'linkText' : 'linkTextClosed'}>
+                  <span className={open ? "linkText" : "linkTextClosed"}>
                     {item.text}
                   </span>
                 </NavLink>
               );
             })
         : sidebarData
-            .filter((item) => item.link !== 'dashboard')
+            .filter((item) => item.link !== "dashboard")
             .map((item) => {
               return (
                 <NavLink
+                  style={
+                    mode
+                      ? {}
+                      : {
+                          color: "#092c3e",
+                          transition: "0.5s",
+                        }
+                  }
                   key={item.id}
                   className={({ isActive }) =>
-                    isActive ? 'sideitem-active' : 'sideitem'
+                    isActive ? "sideitem-active" : "sideitem"
                   }
-                  to={item.link}>
+                  to={item.link}
+                >
                   <SidebarItem
                     props
                     sentCount={sentCount}
                     inboxCount={inboxCount}
-                    draftCount={draftCount}>
+                    draftCount={draftCount}
+                  >
                     <span
                       className={
                         `${item.className} sidebar` +
-                        (open ? ' sidebar-icon' : ' sidebar-icon-toggle')
-                      }>
+                        (open ? " sidebar-icon" : " sidebar-icon-toggle")
+                      }
+                    >
                       {item.icon}
                     </span>
                   </SidebarItem>
-                  <span className={open ? 'linkText' : 'linkTextClosed'}>
+                  <span className={open ? "linkText" : "linkTextClosed"}>
                     {item.text}
                   </span>
                 </NavLink>

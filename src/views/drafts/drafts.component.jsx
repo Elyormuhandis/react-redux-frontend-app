@@ -1,20 +1,21 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { MdDone, MdDoneAll } from 'react-icons/md';
-import { FaCloudDownloadAlt, FaInfoCircle, FaTrashAlt } from 'react-icons/fa';
-import './drafts.styles.scss';
-import { getOneReceivedFile } from '../../store/features/attachment/attachment.actions';
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { MdDone, MdDoneAll } from "react-icons/md";
+import { FaCloudDownloadAlt, FaInfoCircle, FaTrashAlt } from "react-icons/fa";
+import "./drafts.styles.scss";
+import { getOneReceivedFile } from "../../store/features/attachment/attachment.actions";
 import {
   deleteOneTo,
   downloadFileFromFileSystem,
   setView,
-} from '../../store/features/attachment/attachment.actions';
-import { formatBytes } from '../../helpers/helper.functions';
+} from "../../store/features/attachment/attachment.actions";
+import { formatBytes } from "../../helpers/helper.functions";
 
 const Drafts = () => {
   const { kelganFayllar, oneReceivedFile } = useSelector(
     (state) => state.attachment
   );
+  const { mode } = useSelector((state) => state.ui);
   const { divisions } = useSelector((state) => state.division);
   const [deleteFileModal, setDeleteFileModal] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,7 +58,7 @@ const Drafts = () => {
   };
 
   const deleteAllFileModal = () => {
-    setDeleteFileModal('all');
+    setDeleteFileModal("all");
   };
 
   const deleteAllFilesHandler = () => {
@@ -68,54 +69,57 @@ const Drafts = () => {
   };
 
   return (
-    <div className='inbox'>
-      <div className='inbox__list'>
-        <h4 className='inbox__header'>Qabul qilingan fayllar</h4>
-        <hr className='dashboard__line' />
-        <table className='inbox__table'>
-          <thead className='inbox__table-header'>
+    <div className="inbox">
+      <div className="inbox__list">
+        <h4 className="inbox__header">Qabul qilingan fayllar</h4>
+        <hr className="dashboard__line" />
+        <table className="inbox__table">
+          <thead className="inbox__table-header">
             <tr>
-              <th style={{ color: 'orange' }}>N</th>
-              <th style={{ color: 'orange' }}>Nomi</th>
-              <th style={{ color: 'orange' }}>Fayl hajmi</th>
-              <th style={{ color: 'orange' }}>Kimdan</th>
-              <th style={{ color: 'orange' }}>Kimga</th>
-              <th style={{ color: 'orange' }}></th>
+              <th style={{ color: "orange" }}>N</th>
+              <th style={{ color: "orange" }}>Nomi</th>
+              <th style={{ color: "orange" }}>Fayl hajmi</th>
+              <th style={{ color: "orange" }}>Kimdan</th>
+              <th style={{ color: "orange" }}>Kimga</th>
+              <th style={{ color: "orange" }}></th>
               <th>
                 <FaCloudDownloadAlt
-                  className='download-file-icon'
-                  style={{ color: 'orange' }}
+                  className="download-file-icon"
+                  style={{ color: "orange" }}
                   onClick={(e) => downloadAll(e)}
                 />
               </th>
               <th>
                 <FaTrashAlt
-                  className='delete-file-icon'
-                  style={{ color: 'orange' }}
+                  className="delete-file-icon"
+                  style={{ color: "orange" }}
                   onClick={deleteAllFileModal}
                 />
-                <div className='delete-file-td'>
+                <div className="delete-file-td">
                   <div
                     className={
-                      deleteFileModal === 'all'
-                        ? 'delete-file-modal '
-                        : 'delete-file-modal-none ' +
-                          'delete-file-modal-handler'
-                    }>
-                    <h5 className='delete-file-modal__header'>
+                      deleteFileModal === "all"
+                        ? "delete-file-modal "
+                        : "delete-file-modal-none " +
+                          "delete-file-modal-handler"
+                    }
+                  >
+                    <h5 className="delete-file-modal__header">
                       Fayl serverdan o'chib ketadi, rozimisiz?
                     </h5>
-                    <div className='delete-file-modal__text'>
+                    <div className="delete-file-modal__text">
                       <p
-                        className='delete-file-modal__yes'
-                        onClick={deleteAllFilesHandler}>
+                        className="delete-file-modal__yes"
+                        onClick={deleteAllFilesHandler}
+                      >
                         Ha
                       </p>
                       <p
-                        className='delete-file-modal__no'
+                        className="delete-file-modal__no"
                         onClick={() => {
                           setDeleteFileModal(undefined);
-                        }}>
+                        }}
+                      >
                         Yo'q
                       </p>
                     </div>
@@ -124,81 +128,89 @@ const Drafts = () => {
               </th>
             </tr>
           </thead>
-          <tbody className='send__table-body'>
+          <tbody className="send__table-body">
             {kelganFayllar
               ?.filter((file) => file.pdtv === true)
               ?.map((file, idx) => (
                 <tr
-                  className=''
+                  style={mode ? {} : { backgroundColor: "#1b4a4c" }}
+                  className=""
                   key={idx}
                   id={file.id}
-                  onClick={(e) => setViewHandler(e)}>
+                  onClick={(e) => setViewHandler(e)}
+                >
                   <td>{idx + 1}</td>
-                  <td className=''>{file.originalName}</td>
-                  <td className=''>{formatBytes(file.size)}</td>
-                  <td className=''>
+                  <td className="">{file.originalName}</td>
+                  <td className="">{formatBytes(file.size)}</td>
+                  <td className="">
                     {
                       divisions?.filter(
                         (division) => division.id === file.fromDivision.id
                       )[0]?.name
                     }
                   </td>
-                  <td className=''>
+                  <td className="">
                     {
                       divisions?.filter(
                         (division) => division.id === file.toDivision.id
                       )[0]?.name
                     }
                   </td>
-                  <td className='icons'>
+                  <td className="icons">
                     <span
-                      className='sent__info-icon'
+                      className="sent__info-icon"
                       onClick={() => {
                         fileInfoHandler(file.id);
-                      }}>
+                      }}
+                    >
                       <FaInfoCircle />
                     </span>
                   </td>
                   <td
-                    className='icons'
+                    className="icons"
                     id={file.id}
-                    onClick={(e) => downloadRow(e, file.originalName)}>
-                    <span className='delete-icon'>
-                      <FaCloudDownloadAlt className='download-file-icon' />
+                    onClick={(e) => downloadRow(e, file.originalName)}
+                  >
+                    <span className="delete-icon">
+                      <FaCloudDownloadAlt className="download-file-icon" />
                     </span>
                   </td>
-                  <td className='icons'>
+                  <td className="icons">
                     <span
-                      className='delete-icon'
+                      className="delete-icon"
                       onClick={(e) => {
                         deleteModalHandler(file.id);
-                      }}>
-                      <FaTrashAlt className='delete-file-icon' />
+                      }}
+                    >
+                      <FaTrashAlt className="delete-file-icon" />
                     </span>
-                    <div className='delete-file-td'>
+                    <div className="delete-file-td">
                       <div
                         className={
                           deleteFileModal == file.id
-                            ? 'delete-file-modal '
-                            : 'delete-file-modal-none ' +
-                              'delete-file-modal-handler'
-                        }>
-                        <h5 className='delete-file-modal__header'>
+                            ? "delete-file-modal "
+                            : "delete-file-modal-none " +
+                              "delete-file-modal-handler"
+                        }
+                      >
+                        <h5 className="delete-file-modal__header">
                           Fayl serverdan o'chib ketadi, rozimisiz?
                         </h5>
-                        <div className='delete-file-modal__text'>
+                        <div className="delete-file-modal__text">
                           <p
-                            className='delete-file-modal__yes'
+                            className="delete-file-modal__yes"
                             onClick={() => {
                               deleteMessageHandler(file.id);
-                            }}>
+                            }}
+                          >
                             Ha
                           </p>
                           <p
-                            className='delete-file-modal__no'
+                            className="delete-file-modal__no"
                             onClick={() => {
                               setDeleteFileModal(undefined);
-                            }}>
+                            }}
+                          >
                             Yo'q
                           </p>
                         </div>
@@ -211,16 +223,18 @@ const Drafts = () => {
         </table>
       </div>
       <div
-        className={isModalOpen ? 'file-info-modal' : 'file-info-modal--close'}>
+        className={isModalOpen ? "file-info-modal" : "file-info-modal--close"}
+      >
         {
           <div>
-            <div className='file-info-modal__header'>
+            <div className="file-info-modal__header">
               <h5>Fayl haqida ma'lumot</h5>
               <button
-                className='file-info-modal__btn'
+                className="file-info-modal__btn"
                 onClick={() => {
                   setIsModalOpen(false);
-                }}>
+                }}
+              >
                 X
               </button>
             </div>
@@ -231,7 +245,7 @@ const Drafts = () => {
                 (division) => division?.id === oneReceivedFile?.fromDivision?.id
               )[0]?.name
             }, ${oneReceivedFile?.createdAt
-              ?.replace('T', ', ')
+              ?.replace("T", ", ")
               .slice(0, 17)}`}</div>
             <div>{`3. Qabul qiluvchi: ${
               divisions?.filter(
@@ -242,7 +256,7 @@ const Drafts = () => {
               oneReceivedFile?.view ? "ko'rildi" : "ko'rilmadi"
             }`}</div>
             <div>{`5. Tasdiq: ${
-              oneReceivedFile?.pdtv ? 'tasdiqlangan' : "yo'q"
+              oneReceivedFile?.pdtv ? "tasdiqlangan" : "yo'q"
             }`}</div>
           </div>
         }
