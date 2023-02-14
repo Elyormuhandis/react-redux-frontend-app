@@ -7,12 +7,18 @@
 }
 
 .file-text-bold {
-  background-color: rgb(255, 0, 0);
+  background-color: rgb(255, 98, 40);
   font-weight: bold;
+  &:hover {
+    background-color: rgb(252, 73, 8);
+  }
 }
 .file-text-normal {
-  background-color: #1e6300;
+  background-color: #4da02a;
   font-weight: normal;
+  &:hover {
+    background-color: #267d00;
+  }
 }
 
 .download-icon {
@@ -67,7 +73,7 @@ table {
   outline: none;
   border-radius: 2px;
   padding: 4px 6px;
-  background-color: #006845;
+  background-color: #0a4c6d;
   color: rgb(241, 251, 246);
   border: none;
   transition: all 0.3s;
@@ -75,7 +81,7 @@ table {
     transition: all 0.3s;
     color: white;
     border: none;
-    background-color: #008d5e;
+    background-color: #00283d;
   }
   &:active {
     transition: all 0.3s;
@@ -84,12 +90,12 @@ table {
 }
 .all-pdtv-btn {
   color: rgb(255, 191, 71);
-  background-color: #00412f;
+  background-color: #185dff;
   border: none;
   &:hover {
     color: rgb(255, 201, 100);
     transition: all 0.3s;
-    background-color: #00553a;
+    background-color: #5c8dfe;
     border: none;
   }
   &:active {

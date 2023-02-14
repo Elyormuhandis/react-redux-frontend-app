@@ -120,6 +120,10 @@ const Journal = () => {
         <button className='journal__btn' type='submit'>
           QIDIRISH
         </button>
+        <span>
+          Umumiy:
+          {' ' + formatBytes(logs.reduce((acc, file) => (acc += file.size), 0))}
+        </span>
       </form>
       {logs.length !== 0 && (
         <table className='sent__table'>

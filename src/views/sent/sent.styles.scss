@@ -48,7 +48,7 @@
     tbody tr {
       transition: background-color 150ms ease-out;
       &:hover {
-        background-color: rgb(250, 0, 0);
+        background-color: rgb(255, 99, 43);
       }
     }
   }
@@ -104,5 +104,5 @@
   }
 }
 .tasdiqlanmagan {
-  background-color: rgb(196, 0, 0);
+  background-color: orangered;
 }

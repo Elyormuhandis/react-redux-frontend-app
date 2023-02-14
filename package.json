@@ -2,7 +2,7 @@
   "name": "redux-user-auth",
   "version": "0.1.0",
   "private": true,
-  "homepage": "frontend",
+  "homepage": "fanex.uz",
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
     "@ramonak/react-progress-bar": "^5.0.3",
