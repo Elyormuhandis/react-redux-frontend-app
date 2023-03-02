@@ -138,7 +138,7 @@ const Header = () => {
           className="personal"
           onClick={() => dispatch(logout())}
         >
-          Logout
+          Chiqish
         </button>
       </div>
       <div

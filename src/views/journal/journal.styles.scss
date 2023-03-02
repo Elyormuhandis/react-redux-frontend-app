@@ -21,7 +21,7 @@
   }
   &__btn {
     color: rgb(225, 225, 225);
-    border: 1px solid rgb(225, 225, 225);
+    border: 1px solid rgb(180, 180, 180);
     outline: none;
     padding: 10px 15px;
     background-color: #0c2d1c;
@@ -29,8 +29,8 @@
     margin-right: 2rem;
     &:hover {
       transition: all 0.3s;
-      color: rgb(255, 255, 255);
-      border: 1px solid rgb(255, 255, 255);
+      color: rgb(154, 154, 154);
+      border: 1px solid rgb(212, 212, 212);
     }
     &:active {
       transition: all 0.3s;

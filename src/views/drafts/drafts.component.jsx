@@ -76,23 +76,89 @@ const Drafts = () => {
         <table className="inbox__table">
           <thead className="inbox__table-header">
             <tr>
-              <th style={{ color: "orange" }}>N</th>
-              <th style={{ color: "orange" }}>Nomi</th>
-              <th style={{ color: "orange" }}>Fayl hajmi</th>
-              <th style={{ color: "orange" }}>Kimdan</th>
-              <th style={{ color: "orange" }}>Kimga</th>
-              <th style={{ color: "orange" }}></th>
-              <th>
+              <th
+                style={
+                  mode
+                    ? { color: "orange" }
+                    : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                }
+              >
+                N
+              </th>
+              <th
+                style={
+                  mode
+                    ? { color: "orange" }
+                    : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                }
+              >
+                Nomi
+              </th>
+              <th
+                style={
+                  mode
+                    ? { color: "orange" }
+                    : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                }
+              >
+                Fayl hajmi
+              </th>
+              <th
+                style={
+                  mode
+                    ? { color: "orange" }
+                    : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                }
+              >
+                Kimdan
+              </th>
+              <th
+                style={
+                  mode
+                    ? { color: "orange" }
+                    : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                }
+              >
+                Kimga
+              </th>
+              <th
+                style={
+                  mode
+                    ? { color: "orange" }
+                    : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                }
+              ></th>
+              <th
+                style={
+                  mode
+                    ? { color: "orange" }
+                    : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                }
+              >
                 <FaCloudDownloadAlt
                   className="download-file-icon"
-                  style={{ color: "orange" }}
+                  style={
+                    mode
+                      ? { color: "orange" }
+                      : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                  }
                   onClick={(e) => downloadAll(e)}
                 />
               </th>
-              <th>
+              <th
+                style={
+                  mode
+                    ? { color: "orange" }
+                    : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                }
+              >
                 <FaTrashAlt
                   className="delete-file-icon"
-                  style={{ color: "orange" }}
+                  style={
+                    mode
+                      ? { color: "orange" }
+                      : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                  }
                   onClick={deleteAllFileModal}
                 />
                 <div className="delete-file-td">
@@ -134,29 +200,71 @@ const Drafts = () => {
               ?.map((file, idx) => (
                 <tr
                   style={mode ? {} : { backgroundColor: "#1b4a4c" }}
-                  className=""
                   key={idx}
                   id={file.id}
                   onClick={(e) => setViewHandler(e)}
                 >
-                  <td>{idx + 1}</td>
-                  <td className="">{file.originalName}</td>
-                  <td className="">{formatBytes(file.size)}</td>
-                  <td className="">
+                  <td
+                    style={
+                      mode
+                        ? {}
+                        : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                    }
+                  >
+                    {idx + 1}
+                  </td>
+                  <td
+                    style={
+                      mode
+                        ? {}
+                        : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                    }
+                  >
+                    {file.originalName}
+                  </td>
+                  <td
+                    style={
+                      mode
+                        ? {}
+                        : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                    }
+                  >
+                    {formatBytes(file.size)}
+                  </td>
+                  <td
+                    style={
+                      mode
+                        ? {}
+                        : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                    }
+                  >
                     {
                       divisions?.filter(
                         (division) => division.id === file.fromDivision.id
                       )[0]?.name
                     }
                   </td>
-                  <td className="">
+                  <td
+                    style={
+                      mode
+                        ? {}
+                        : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                    }
+                  >
                     {
                       divisions?.filter(
                         (division) => division.id === file.toDivision.id
                       )[0]?.name
                     }
                   </td>
-                  <td className="icons">
+                  <td
+                    style={
+                      mode
+                        ? {}
+                        : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                    }
+                    className="icons"
+                  >
                     <span
                       className="sent__info-icon"
                       onClick={() => {
@@ -167,6 +275,11 @@ const Drafts = () => {
                     </span>
                   </td>
                   <td
+                    style={
+                      mode
+                        ? {}
+                        : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                    }
                     className="icons"
                     id={file.id}
                     onClick={(e) => downloadRow(e, file.originalName)}
@@ -175,7 +288,14 @@ const Drafts = () => {
                       <FaCloudDownloadAlt className="download-file-icon" />
                     </span>
                   </td>
-                  <td className="icons">
+                  <td
+                    style={
+                      mode
+                        ? {}
+                        : { backgroundColor: "#fff", color: "#0b2b26cc" }
+                    }
+                    className="icons"
+                  >
                     <span
                       className="delete-icon"
                       onClick={(e) => {
