@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-frontend-app",
+  "name": "fanex.uz",
   "version": "0.1.0",
-  "homepage": "react-redux-frontend-app",
+  "homepage": "fanex.uz",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
