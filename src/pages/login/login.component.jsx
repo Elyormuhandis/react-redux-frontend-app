@@ -38,20 +38,20 @@ const Login = () => {
     if (userToken) {
       navigate(fromPage);
     }
-  }, [navigate, userToken]);
+  }, [fromPage, navigate, userToken]);
 
   const submitForm = (data) => {
     dispatch(userLogin(data));
   };
 
   return (
-    <LoginStyle className="login-style">
+    <LoginStyle className='login-style'>
       <LoginContainerStyle>
         <FromStyle onClick={handleSubmit(submitForm)}>
           <InputLabel>
             <FromControlStyle
-              autoComplete="off"
-              placeholder="Login kiriting..."
+              autoComplete='off'
+              placeholder='Login kiriting...'
               {...register("username", {
                 required: true,
                 minLength: {
@@ -62,15 +62,15 @@ const Login = () => {
               required
             />
             {errors.username && (
-              <ErrorMessage className="error username_error">
+              <ErrorMessage className='error username_error'>
                 {errors.username.message}
               </ErrorMessage>
             )}
           </InputLabel>
           <InputLabel>
             <FromControlStyle
-              placeholder="Parol kiriting..."
-              type="password"
+              placeholder='Parol kiriting...'
+              type='password'
               {...register("password", {
                 required: true,
                 minLength: {
@@ -84,14 +84,14 @@ const Login = () => {
               <ErrorMessage>{errors.password.message}</ErrorMessage>
             )}
           </InputLabel>
-          <BtnStyle type="submit" disabled={!isValid}>
+          <BtnStyle type='submit' disabled={!isValid}>
             KIRISH
           </BtnStyle>
           <PropagateLoader
             cssOverride={override}
             loading={loading}
             size={15}
-            color="green"
+            color='green'
           />
           {error ? <ErrorAuth>Login yoki parol xato</ErrorAuth> : ""}
         </FromStyle>

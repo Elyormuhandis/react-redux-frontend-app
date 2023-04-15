@@ -22,10 +22,7 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  const { userRole, loading, userId, userInfo, userDivision } = useSelector(
-    (state) => state.user
-  );
-  const { message, divisions } = useSelector((state) => state.division);
+  const { userId, userInfo } = useSelector((state) => state.user);
 
   const formSchema = Yup.object().shape({
     username: Yup.string().required("Ushbu maydon to`ldirilishi shart!"),
@@ -74,7 +71,7 @@ const Header = () => {
 
   return (
     <header
-      className="header"
+      className='header'
       style={
         mode
           ? {}
@@ -85,11 +82,11 @@ const Header = () => {
             }
       }
     >
-      <div className="header__icon">
-        <img src={mode ? logoLight : logoDark} width="150rem" />
+      <div className='header__icon'>
+        <img src={mode ? logoLight : logoDark} width='150rem' />
       </div>
-      <div className="header__options">
-        <div className="mode">
+      <div className='header__options'>
+        <div className='mode'>
           <BsSun
             style={{
               color: mode ? "grey" : "orange",
@@ -98,15 +95,15 @@ const Header = () => {
               transition: "0.5s",
             }}
           />
-          <div className="mode__toggler">
-            <label className="mode__label">
+          <div className='mode__toggler'>
+            <label className='mode__label'>
               <input
-                className="mode__input"
+                className='mode__input'
                 checked={mode}
-                type="checkbox"
+                type='checkbox'
                 onChange={() => dispatch(changeMode(!mode))}
               />
-              <span className="mode__check"></span>
+              <span className='mode__check'></span>
             </label>
           </div>
           <BsMoon
@@ -120,7 +117,7 @@ const Header = () => {
         </div>
         <span
           onClick={getUserHandler}
-          className="personal user-info"
+          className='personal user-info'
           style={
             mode
               ? {}
@@ -135,7 +132,7 @@ const Header = () => {
               ? {}
               : { color: "#092c3e", borderColor: "#092c3e", transition: "0.5s" }
           }
-          className="personal"
+          className='personal'
           onClick={() => dispatch(logout())}
         >
           Chiqish
@@ -154,14 +151,14 @@ const Header = () => {
               }
         }
       >
-        <div className="user-info__modal--option">
+        <div className='user-info__modal--option'>
           <MdEdit
-            className="user-info__modal--edit"
+            className='user-info__modal--edit'
             onClick={(e) => editHandler(e)}
           />
           <MdCancel
             onClick={() => setModalToggle(false)}
-            className="user-info__modal--cancel"
+            className='user-info__modal--cancel'
           />
         </div>
         <h4 style={{ marginBottom: "1rem" }}>Foydalanuvchi haqida ma'lumot</h4>
@@ -201,7 +198,7 @@ const Header = () => {
                 }
           }
         >
-          <label className="user-edit__label" htmlFor="login-input">
+          <label className='user-edit__label' htmlFor='login-input'>
             Login kiriting
           </label>
           <input
@@ -214,11 +211,11 @@ const Header = () => {
                     transition: "0.5s",
                   }
             }
-            id="login-input"
-            type="text"
-            autoComplete="off"
-            className="user-edit__input"
-            placeholder="Login..."
+            id='login-input'
+            type='text'
+            autoComplete='off'
+            className='user-edit__input'
+            placeholder='Login...'
             {...register("username", {
               required: "To'ldirilishi shart!",
             })}
@@ -227,7 +224,7 @@ const Header = () => {
           <p className={errors.username ? "alerts" : "alerts v-hidden"}>
             {errors.username?.message}
           </p>
-          <label className="users__label" htmlFor="passwordNow-input">
+          <label className='users__label' htmlFor='passwordNow-input'>
             Joriy parolni kiriting
           </label>
           <input
@@ -240,11 +237,11 @@ const Header = () => {
                     transition: "0.5s",
                   }
             }
-            id="passwordNow-input"
-            type="password"
-            className="user-edit__input"
-            autoComplete="off"
-            placeholder="Parol..."
+            id='passwordNow-input'
+            type='password'
+            className='user-edit__input'
+            autoComplete='off'
+            placeholder='Parol...'
             {...register("passwordNow", {
               required: "To'ldirilishi shart!",
             })}
@@ -253,7 +250,7 @@ const Header = () => {
           <p className={errors.passwordNow ? "alerts" : "alerts v-hidden"}>
             {errors.passwordNow?.message}
           </p>
-          <label className="users__label" htmlFor="password-input">
+          <label className='users__label' htmlFor='password-input'>
             Yangi parolni kiriting
           </label>
           <input
@@ -266,11 +263,11 @@ const Header = () => {
                     transition: "0.5s",
                   }
             }
-            id="password-input"
-            type="password"
-            className="user-edit__input"
-            autoComplete="off"
-            placeholder="Parol..."
+            id='password-input'
+            type='password'
+            className='user-edit__input'
+            autoComplete='off'
+            placeholder='Parol...'
             {...register("password", {
               required: "To'ldirilishi shart!",
             })}
@@ -279,7 +276,7 @@ const Header = () => {
           <p className={errors.password ? "alerts" : "alerts v-hidden"}>
             {errors.password?.message}
           </p>
-          <label className="user-edit__label" htmlFor="prePassword-input">
+          <label className='user-edit__label' htmlFor='prePassword-input'>
             Yangi parolni tasdiqlang
           </label>
           <input
@@ -292,11 +289,11 @@ const Header = () => {
                     transition: "0.5s",
                   }
             }
-            id="prePassword-input"
-            type="password"
-            autoComplete="off"
-            className="user-edit__input"
-            placeholder="Parol..."
+            id='prePassword-input'
+            type='password'
+            autoComplete='off'
+            className='user-edit__input'
+            placeholder='Parol...'
             {...register("prePassword", {
               required: "To'ldirilishi shart!",
             })}
@@ -305,10 +302,10 @@ const Header = () => {
           <p className={errors.prePassword ? "alerts" : "alerts v-hidden"}>
             {errors.prePassword?.message}
           </p>
-          <div className="user-edit__btns">
+          <div className='user-edit__btns'>
             <button
-              type="submit"
-              className="user-edit__ebtn"
+              type='submit'
+              className='user-edit__ebtn'
               style={
                 mode
                   ? {}
@@ -322,8 +319,8 @@ const Header = () => {
               O'ZGARTIRISH
             </button>
             <button
-              type="button"
-              className="user-edit__cbtn"
+              type='button'
+              className='user-edit__cbtn'
               onClick={formToggeHandler}
             >
               BEKOR QILISH

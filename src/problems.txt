@@ -19,3 +19,6 @@ va ketmayotganlar alohida ko'rinsin
 5. Person icon bosilganida user haqida info chiqsin //done
 edit icon bo'lsin (11)
 
+
+15. Admin panelda userAddga indikator qo'yish, usernameni validatsiyasini o'chirish
+16. Boshqarma qo'shishdagi bugni olib tashlash

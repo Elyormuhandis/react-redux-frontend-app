@@ -74,10 +74,10 @@ const Send = (props) => {
   };
 
   return (
-    <div className="send">
-      <form className="send__form" onSubmit={handleSubmit(addFileHandler)}>
-        <div className="send__form--container">
-          <div className="send__form--box">
+    <div className='send'>
+      <form className='send__form' onSubmit={handleSubmit(addFileHandler)}>
+        <div className='send__form--container'>
+          <div className='send__form--box'>
             <input
               style={
                 mode
@@ -87,10 +87,10 @@ const Send = (props) => {
                       border: "1px solid #092c3e",
                     }
               }
-              className="send__form--input"
-              type="search"
-              autoComplete="off"
-              placeholder="Qayerga fayl yuborasiz?"
+              className='send__form--input'
+              type='search'
+              autoComplete='off'
+              placeholder='Qayerga fayl yuborasiz?'
               onKeyDown={(e) => {
                 switch (e.keyCode) {
                   case 40:
@@ -140,16 +140,14 @@ const Send = (props) => {
                   setIsFocus(true);
                   setFilteredDivisions(
                     divisions.filter((division) =>
-                      division.name
-                        .toLocaleLowerCase()
-                        .includes(watch("toDivision").toLocaleLowerCase())
+                      division.name.includes(watch("toDivision"))
                     )
                   );
                 },
                 required: true,
               })}
             />
-            <ul className="send__form--autocomplete">
+            <ul className='send__form--autocomplete'>
               {isFocus &&
                 filteredDivisions
                   ?.filter((division) => division.active === true)
@@ -172,13 +170,13 @@ const Send = (props) => {
                     </li>
                   ))}
             </ul>
-            <div className="send__form--picker">
+            <div className='send__form--picker'>
               <input
-                id="file-input-field"
-                type="file"
+                id='file-input-field'
+                type='file'
                 multiple
                 // accept="image/*, .png, .jpg, .gif"
-                className="send__form--hidden"
+                className='send__form--hidden'
                 {...register("files", {
                   onChange: (e) => {
                     for (const file of e.target.files) {
@@ -197,7 +195,7 @@ const Send = (props) => {
                           border: "1px solid #092c3e",
                         }
                   }
-                  className="send__form--drop-area"
+                  className='send__form--drop-area'
                   onDragStart={(e) => dragStartHandler(e)}
                   onDragLeave={(e) => dragOverHandler(e)}
                   onDragOver={(e) => dragStartHandler(e)}
@@ -215,20 +213,20 @@ const Send = (props) => {
                           border: "1px solid #092c3e",
                         }
                   }
-                  className="send__form--drag"
+                  className='send__form--drag'
                   onClick={(e) => handlePick(e)}
                   onDragStart={(e) => dragStartHandler(e)}
                   onDragLeave={(e) => dragOverHandler(e)}
                   onDragOver={(e) => dragStartHandler(e)}
                 >
-                  <FaPlusCircle className="upload-icon" />
+                  <FaPlusCircle className='upload-icon' />
                   <span>Fayllarni yuklash...</span>
                 </div>
               )}
             </div>
             <button
-              className="send__form--btn"
-              type="submit"
+              className='send__form--btn'
+              type='submit'
               style={
                 mode
                   ? {}
@@ -238,7 +236,7 @@ const Send = (props) => {
                     }
               }
             >
-              <MdSend className="send-icon" />
+              <MdSend className='send-icon' />
               <span>YUBORISH</span>
             </button>
           </div>
@@ -251,8 +249,8 @@ const Send = (props) => {
         {errors.toDivision?.message}
       </p>
       {dragFileList.length !== 0 && (
-        <div className="send__selected-files">
-          <div className="send__selected-files--header">Tanlangan fayllar</div>
+        <div className='send__selected-files'>
+          <div className='send__selected-files--header'>Tanlangan fayllar</div>
           <table>
             <thead>
               <tr>
@@ -300,7 +298,7 @@ const Send = (props) => {
                   }
                 >
                   <FaTrashAlt
-                    className="send__selected-files--clr-icon"
+                    className='send__selected-files--clr-icon'
                     onClick={() => {
                       dispatch(clearDragFileList());
                     }}
@@ -308,7 +306,7 @@ const Send = (props) => {
                 </th>
               </tr>
             </thead>
-            <tbody className="send__table-body">
+            <tbody className='send__table-body'>
               {dragFileList?.map((file, idx) => (
                 <tr
                   key={idx}
@@ -320,30 +318,30 @@ const Send = (props) => {
                   </td>
                   <td
                     style={mode ? { color: "white" } : { color: "#092c3e" }}
-                    className="table-head-name"
+                    className='table-head-name'
                   >
                     {file.file.name}
                   </td>
                   <td
                     style={mode ? { color: "white" } : { color: "#092c3e" }}
-                    className="table-head-name"
+                    className='table-head-name'
                   >
                     {formatBytes(file.file.size)}
                   </td>
                   <td
                     style={mode ? { color: "white" } : { color: "#092c3e" }}
-                    className="table-head-name"
+                    className='table-head-name'
                   >
                     {file.progress < 100 ? (
                       <ProgressBar
                         completed={file.progress}
-                        height="0.8rem"
-                        labelSize="8px"
-                        transitionDuration=".3s"
-                        transitionTimingFunction="linear"
+                        height='0.8rem'
+                        labelSize='8px'
+                        transitionDuration='.3s'
+                        transitionTimingFunction='linear'
                         maxCompleted={100}
-                        baseBgColor="#b2bac2"
-                        bgColor="rgb(245, 93, 49)"
+                        baseBgColor='#b2bac2'
+                        bgColor='rgb(245, 93, 49)'
                       />
                     ) : (
                       <MdDoneOutline />
@@ -351,10 +349,10 @@ const Send = (props) => {
                   </td>
                   <td
                     style={mode ? { color: "white" } : { color: "#092c3e" }}
-                    className="table-head-name"
+                    className='table-head-name'
                   >
                     <FaTrashAlt
-                      className="send__selected-files--clr-icon"
+                      className='send__selected-files--clr-icon'
                       onClick={(e) => {
                         dispatch(
                           editDragFileList(

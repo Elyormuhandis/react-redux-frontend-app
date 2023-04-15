@@ -1,15 +1,15 @@
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BASE_URL } from '../../url';
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { BASE_URL } from "../../url";
 
 export const getDivisions = createAsyncThunk(
-  'division/get',
+  "division/get",
   async (arg, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().user;
       const { data } = await axios.get(`${BASE_URL}api/division`, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${userToken}`,
         },
       });
@@ -24,16 +24,16 @@ export const getDivisions = createAsyncThunk(
   }
 );
 export const addDivision = createAsyncThunk(
-  'division/add',
-  async ({ name, active }, { getState, rejectWithValue }) => {
+  "division/add",
+  async ({ name }, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().division;
       const { data } = await axios.post(
         `${BASE_URL}api/division`,
-        { name, active },
+        { name },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${userToken}`,
           },
         }
@@ -49,7 +49,7 @@ export const addDivision = createAsyncThunk(
   }
 );
 export const editDivision = createAsyncThunk(
-  'division/edit',
+  "division/edit",
   async ({ id, name, active }, { getState, rejectWithValue }) => {
     try {
       const { userToken } = getState().division;
@@ -58,7 +58,7 @@ export const editDivision = createAsyncThunk(
         { id, name, active },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${userToken}`,
           },
         }
@@ -74,9 +74,8 @@ export const editDivision = createAsyncThunk(
   }
 );
 export const deleteDivision = createAsyncThunk(
-  'division/edit',
+  "division/edit",
   async ({ id, name, active }, { getState, rejectWithValue }) => {
-    console.log(id, name, active);
     try {
       const { userToken } = getState().division;
       const { data } = await axios.put(
@@ -84,7 +83,7 @@ export const deleteDivision = createAsyncThunk(
         { id, name, active },
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${userToken}`,
           },
         }

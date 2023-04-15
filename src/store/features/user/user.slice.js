@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getUser,
   addUser,
@@ -9,20 +9,20 @@ import {
   getRole,
   deleteUser,
   editSimpleUser,
-} from './user.actions';
+} from "./user.actions";
 
 // initialize userToken from local storage
-const userId = localStorage.getItem('userId')
-  ? localStorage.getItem('userId')
+const userId = localStorage.getItem("userId")
+  ? localStorage.getItem("userId")
   : null;
-const userToken = localStorage.getItem('Token')
-  ? localStorage.getItem('Token')
+const userToken = localStorage.getItem("Token")
+  ? localStorage.getItem("Token")
   : null;
-const userRole = localStorage.getItem('role')
-  ? localStorage.getItem('role')
+const userRole = localStorage.getItem("role")
+  ? localStorage.getItem("role")
   : null;
-const userDivision = localStorage.getItem('divisionId')
-  ? localStorage.getItem('divisionId')
+const userDivision = localStorage.getItem("divisionId")
+  ? localStorage.getItem("divisionId")
   : null;
 
 const initialState = {
@@ -36,18 +36,18 @@ const initialState = {
   userInfo: null,
   error: null,
   success: false,
-  message: '',
+  message: "",
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem('Token'); // delete token from storage
-      localStorage.removeItem('role'); // delete role from storage
-      localStorage.removeItem('divisionId'); // delete divisionId from storage
-      localStorage.removeItem('userId'); // delete divisionId from storage
+      localStorage.removeItem("Token"); // delete token from storage
+      localStorage.removeItem("role"); // delete role from storage
+      localStorage.removeItem("divisionId"); // delete divisionId from storage
+      localStorage.removeItem("userId"); // delete divisionId from storage
       state.loading = false;
       state.users = [];
       state.roles = [];
@@ -56,7 +56,7 @@ const userSlice = createSlice({
       state.userDivision = null;
       state.userId = null;
       state.error = null;
-      state.message = '';
+      state.message = "";
     },
   },
   extraReducers: {
@@ -67,9 +67,9 @@ const userSlice = createSlice({
     },
     [userLogin.fulfilled]: (state, { payload }) => {
       localStorage.setItem(`${payload.message}`, payload.token);
-      localStorage.setItem('role', payload.object.name);
-      localStorage.setItem('divisionId', payload.object2?.id);
-      localStorage.setItem('userId', payload.userId);
+      localStorage.setItem("role", payload.object.name);
+      localStorage.setItem("divisionId", payload.object2?.id);
+      localStorage.setItem("userId", payload.userId);
       state.userDivision = payload.object2?.id;
       state.userId = payload.userId;
       state.userToken = payload.token;
@@ -87,11 +87,13 @@ const userSlice = createSlice({
     },
     [addUser.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      state.users = payload.object.sort(
-        (a, b) => a.id - b.id || a.name.localeCompare(b.name)
-      );
-      state.success = payload.success;
-      state.message = payload.message;
+      state.users = payload.object
+        ? payload.object.sort(
+            (a, b) => a.id - b.id || a.name.localeCompare(b.name)
+          )
+        : [...state.users];
+      state.success = payload?.success;
+      state.message = payload?.message;
     },
     [addUser.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -190,7 +192,7 @@ const userSlice = createSlice({
       state.loading = true;
     },
     [getRole.fulfilled]: (state, { payload }) => {
-      localStorage.setItem('role', payload.name);
+      localStorage.setItem("role", payload.name);
       state.loading = false;
       state.userRole = payload.name;
     },
