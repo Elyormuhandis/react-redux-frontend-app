@@ -33,59 +33,17 @@ const Users = () => {
     username: Yup.string().required("Ushbu maydon to`ldirilishi shart!"),
     password: Yup.string()
       .required("Ushbu maydon to`ldirilishi shart!")
-      .min(8, "Parol uzunligi 8tadan kam")
-      .test(
-        "isValidPass",
-        "Parol uzunligi 8tadan kam va katta harf, belgi, raqamlardan iborat emas!",
-        (value, context) => {
-          const hasUpperCase = /[A-Z]/.test(value);
-          const hasLowerCase = /[a-z]/.test(value);
-          const hasNumber = /[0-9]/.test(value);
-          const hasSymbole = /[!@#%&]/.test(value);
-          let validConditions = 0;
-          const numberOfMustBeValidConditions = 3;
-          const conditions = [
-            hasLowerCase,
-            hasUpperCase,
-            hasNumber,
-            hasSymbole,
-          ];
-          conditions.forEach((condition) =>
-            condition ? validConditions++ : null
-          );
-          if (validConditions === numberOfMustBeValidConditions) {
-            return true;
-          }
-          return false;
-        }
+      .min(8, "Parol uzunligi 8 tadan kam")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\+\-~`\/\.\,\<\>\{\}\[\]])(?=.{8,})/,
+        "Parolda katta va kichik harflar, maxsus belgilar ishlatilmagan"
       ),
     prePassword: Yup.string()
       .required("Parolni tasdiqlanishi shart")
-      .min(8, "Parol uzunligi 8tadan kam")
-      .test(
-        "isValidPass",
-        "Parol uzunligi 8tadan kam va katta harf, belgi, raqamlardan iborat emas!",
-        (value, context) => {
-          const hasUpperCase = /[A-Z]/.test(value);
-          const hasLowerCase = /[a-z]/.test(value);
-          const hasNumber = /[0-9]/.test(value);
-          const hasSymbole = /[!@#%&]/.test(value);
-          let validConditions = 0;
-          const numberOfMustBeValidConditions = 3;
-          const conditions = [
-            hasLowerCase,
-            hasUpperCase,
-            hasNumber,
-            hasSymbole,
-          ];
-          conditions.forEach((condition) =>
-            condition ? validConditions++ : null
-          );
-          if (validConditions === numberOfMustBeValidConditions) {
-            return true;
-          }
-          return false;
-        }
+      .min(8, "Parol uzunligi 8 tadan kam")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\+\-~`\/\.\,\<\>\{\}\[\]])(?=.{8,})/,
+        "Parolda katta va kichik harflar, maxsus belgilar ishlatilmagan"
       )
       .oneOf([Yup.ref("password")], "Parollar mos emas!"),
   });

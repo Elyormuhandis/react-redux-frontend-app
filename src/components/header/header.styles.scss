@@ -136,7 +136,7 @@
     position: absolute;
     padding: 2rem;
     width: 24rem;
-    height: 32rem;
+    height: 33rem;
     top: 10rem;
     left: 50%;
     transform: translateX(-50%);
@@ -154,7 +154,7 @@
   }
   &__input {
     color: #b2bac2;
-    padding: 5px 20px;
+    padding: 6px 20px;
     border: 1px solid #b2bac2;
     outline: none;
     border-radius: 50px;
@@ -164,6 +164,7 @@
     }
   }
   &__btns {
+    margin-top: 1rem;
     display: flex;
     justify-content: space-between;
   }

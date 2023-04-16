@@ -17,6 +17,7 @@ import { changeMode } from "../../store/features/ui/ui.slice";
 
 const Header = () => {
   const { mode } = useSelector((state) => state.ui);
+  const { message } = useSelector((state) => state.user);
   const [formToggle, setFormTogge] = useState(false);
   const [modalToggle, setModalToggle] = useState(false);
 
@@ -29,12 +30,18 @@ const Header = () => {
     passwordNow: Yup.string().required("Ushbu maydon to`ldirilishi shart!"),
     password: Yup.string()
       .required("Ushbu maydon to`ldirilishi shart!")
-      .min(8, "Parol eng kam uzunligi 8ta belgi!")
-      .max(20, "Parol eng ko`p uzunligi 20ta belgi!"),
+      .min(8, "Parol uzunligi 8 tadan kam")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\+\-~`\/\.\,\<\>\{\}\[\]])(?=.{8,})/,
+        "Parolda katta va kichik harflar, maxsus belgilar ishlatilmagan"
+      ),
     prePassword: Yup.string()
       .required("Parolni tasdiqlanishi shart")
-      .min(8, "Parol eng kam uzunligi 8ta belgi bo`lsin!")
-      .max(20, "Parol eng ko`p uzunligi 20ta belgi bo`lsin!")
+      .min(8, "Parol uzunligi 8 tadan kam")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*\+\-~`\/\.\,\<\>\{\}\[\]])(?=.{8,})/,
+        "Parolda katta va kichik harflar, maxsus belgilar ishlatilmagan"
+      )
       .oneOf([Yup.ref("password")], "Parollar mos emas!"),
   });
 
@@ -67,6 +74,7 @@ const Header = () => {
   };
   const formToggeHandler = () => {
     setFormTogge(!formToggle);
+    reset();
   };
 
   return (
@@ -85,6 +93,7 @@ const Header = () => {
       <div className='header__icon'>
         <img src={mode ? logoLight : logoDark} width='150rem' />
       </div>
+      {message && <div>{message}</div>}
       <div className='header__options'>
         <div className='mode'>
           <BsSun
@@ -199,7 +208,7 @@ const Header = () => {
           }
         >
           <label className='user-edit__label' htmlFor='login-input'>
-            Login kiriting
+            Login
           </label>
           <input
             style={
@@ -213,6 +222,7 @@ const Header = () => {
             }
             id='login-input'
             type='text'
+            disabled={true}
             autoComplete='off'
             className='user-edit__input'
             placeholder='Login...'
