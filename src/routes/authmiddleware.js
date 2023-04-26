@@ -4,7 +4,7 @@ import { Navigate } from "react-router";
 const Authmiddleware = ({ children }) => {
   const { userToken } = useSelector((state) => state.user);
 
-  if (!userToken) {
+  if (userToken) {
     return <Navigate to='/login' />;
   }
 
