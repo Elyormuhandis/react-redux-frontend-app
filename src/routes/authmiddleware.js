@@ -1,5 +1,5 @@
-import { useSelector } from 'react-redux';
-import { Navigate, useLocation } from 'react-router';
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router";
 
 const Authmiddleware = ({ children }) => {
   const { userToken } = useSelector((state) => state.user);
